@@ -6,7 +6,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
 @EnableWebMvc
@@ -17,7 +20,18 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 		SupportContextConfig.class, 
 		BuilderContextConfig.class,
 		ValidatorContextConfig.class})
-public class WebMvcContextConfig {
+public class WebMvcContextConfig extends WebMvcConfigurerAdapter {
+	
+	@Override
+	public void configureDefaultServletHandling(
+			DefaultServletHandlerConfigurer configurer) {
+		configurer.enable();
+	}
+	
+	@Override
+	public void addViewControllers(ViewControllerRegistry registry) {
+		registry.addViewController("/").setViewName("home");
+	}
 	
 	@Bean
 	public MessageSource messageSource(){

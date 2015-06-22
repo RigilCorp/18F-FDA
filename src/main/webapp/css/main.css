@@ -1,0 +1,73 @@
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	background-color: #eee;
+}
+
+.content {
+	background-color: #fff;
+	padding: 20px;
+	margin: auto;
+	-webkit-border-radius: 10px 10px 10px 10px;
+	-moz-border-radius: 10px 10px 10px 10px;
+	border-radius: 10px 10px 10px 10px;
+	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+	-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+}
+
+.load-spinner {
+	margin-left: 20px;
+	margin-top: 15px;
+}
+
+.login-content {
+	width: 400px;
+}
+
+.login-form {
+	margin-left: 25%;
+}
+
+.login-form input.form-control {
+	width: 200px;
+}
+
+.registration-form {
+	width: 500px;
+	margin-left: 25%;
+}
+
+input, button, select, textarea {
+	margin-top: 15px; /*or whatever you want the spacing to be*/
+	padding: 5px;
+}
+
+.form-group {
+	margin-bottom: 0px;
+}
+
+.navbar-default {
+	background-color: #428bca;
+}
+
+.navbar-default .navbar-brand, .navbar-default .navbar-brand:hover,
+	.navbar-default .navbar-brand:focus {
+	color: #fff;
+	background-color: transparent;
+	font-weight: 700;
+	font-size: 25px;
+}
+
+.navbar-default .navbar-text {
+	color: #fff;
+}
+
+.navbar-default .navbar-nav>li>a {
+	color: #fff;
+}
+
+.custom-alert-danger {
+	color: #a94442;
+	padding-top: 10px;
+	padding-left: 0px;
+}
