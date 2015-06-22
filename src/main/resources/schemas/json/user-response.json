@@ -1,0 +1,53 @@
+{
+  "enterpriseDocument": {
+    "documentTimeStamp": 1434907186405,
+    "documentBody": {
+      "response": {
+        "responseMessage": {
+          "user": {
+            "userEmail": "ravi@rigil.com",
+            "firstName": "Ravi",
+            "middleName": "Varma",
+            "lastName": "Samanthapudi",
+            "phone": "703-272-0117",
+            "zipcode": "20148",
+            "preferencesList": [
+              {
+                "fdaData": {
+                  "dataName": "Advil",
+                  "dataCode": "Advil",
+                  "dataDesc": "Advil Pain Reliever"
+                },
+                "fdaResponse": "Response from FDA Web Service"
+              },
+              {
+                "fdaData": {
+                  "dataName": "Tylenol",
+                  "dataCode": "Tylenol",
+                  "dataDesc": "Tylenol Pain Reliever"
+                },
+                "fdaResponse": "Response from FDA Web Service"
+              },
+              {
+                "fdaData": {
+                  "dataName": "Spinach",
+                  "dataCode": "Spinach",
+                  "dataDesc": "Spinach"
+                },
+                "fdaResponse": "Response from FDA Web Service"
+              },
+              {
+                "fdaData": {
+                  "dataName": "Defibrillator",
+                  "dataCode": "Defibrillator",
+                  "dataDesc": "Implantable cardioverter-defibrillator"
+                },
+                "fdaResponse": "Response from FDA Web Service"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

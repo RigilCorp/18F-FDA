@@ -1,0 +1,24 @@
+{
+    "enterpriseDocument": {
+        "documentTimeStamp": "",
+        "documentHeader": {
+            "documentServiceId": "",
+            "documentBusinessHeader": ""
+        },
+        "documentBody": {
+            "request": {
+                "requestMethod": "GET",
+                "requestCriteria": "email",
+                "requestMessage": {
+                    "userRequest": {
+                        "email": "ravi@rigil.com",
+                        "firstName": "",
+                        "middleName": "",
+                        "lastName": "",
+                        "phone": ""
+                    }
+                }
+            }
+        }
+    }
+}
