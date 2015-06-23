@@ -4,26 +4,28 @@
 			<h2>Login</h2>
 			<form name="loginForm" ng-submit="signin(loginForm.$valid)"
 				novalidate role="form">
-				<div class="form-group"
-					ng-class="{ 'has-error' : loginForm.username.$invalid && !loginForm.username.$pristine }">
-					<input name="username" class="form-control" type="text"
-						placeholder="Username" ng-model="data.username" required />
-					<p ng-show="loginForm.username.$invalid && !loginForm.username.$pristine"
-						class="help-block">Username is required.</p>
-				</div>
-				<!-- .form-group -->
-				<div class="form-group"
-					ng-class="{ 'has-error' : loginForm.password.$invalid && !loginForm.password.$pristine }">
-					<input name="password" class="form-control" type="password"
-						placeholder="Password" ng-model="data.password" required>
-					<p ng-show="loginForm.password.$invalid && !loginForm.password.$pristine"
-						class="help-block">Password is required.</p>
-				</div>
-				<!-- .form-group -->
-				<button class="btn btn-primary" type="submit"
-					ng-disabled="loginForm.$invalid">Sign in</button>
-				<dataload-spinner dataloading='dataloading'></dataload-spinner>
-				<div ng-show="error" class="custom-alert-danger">{{error}}</div>
+				<fieldset>
+                    <div class="form-group"
+                        ng-class="{ 'has-error' : loginForm.username.$invalid && !loginForm.username.$pristine }">
+                        <input name="username" class="form-control" type="text"
+                            placeholder="Username" ng-model="data.username" required />
+                        <p ng-show="loginForm.username.$invalid && !loginForm.username.$pristine"
+                            class="help-block">Username is required.</p>
+                    </div>
+                    <!-- .form-group -->
+                    <div class="form-group"
+                        ng-class="{ 'has-error' : loginForm.password.$invalid && !loginForm.password.$pristine }">
+                        <input name="password" class="form-control" type="password"
+                            placeholder="Password" ng-model="data.password" required>
+                        <p ng-show="loginForm.password.$invalid && !loginForm.password.$pristine"
+                            class="help-block">Password is required.</p>
+                    </div>
+                    <!-- .form-group -->
+                    <button class="btn btn-primary" type="submit"
+                        ng-disabled="loginForm.$invalid">Sign in</button>
+                    <dataload-spinner dataloading='dataloading'></dataload-spinner>
+                    <div ng-show="error" class="custom-alert-danger">{{error}}</div>
+                </fieldset>
 			</form>
 			<p>
 				<a href="#/registration">Register an account</a>

@@ -3,36 +3,13 @@ var fdaServices = angular.module('fda.services', []);
 fdaServices.factory('UserService', [
 	'$http',
 	function($http) {
+        var URL = '/rigil-18f/authentication';
 		var service = {};
-
-		function getAll() {
-			return $http.get('/api/users').then(handleSuccess,
-					handleError('Error getting all users'));
-		}
-
-		function getById(id) {
-			return $http.get('/api/users/' + id).then(handleSuccess,
-					handleError('Error getting user by id'));
-		}
-
-		function getByUsername(username) {
-			return $http.get('/api/users/' + username).then(handleSuccess,
+		
+        function getByUsername(username) {
+			
+            return $http.post(URL, request).then(handleSuccess,
 					handleError('Error getting user by username'));
-		}
-
-		function create(user) {
-			return $http.post('/api/users', user).then(handleSuccess,
-					handleError('Error creating user'));
-		}
-
-		/*
-		 * function delete(id) { return $http.delete('/api/users/' +
-		 * id).then(handleSuccess, handleError('Error deleting user')); }
-		 */
-
-		function update(user) {
-			return $http.put('/api/users/' + user.id, user).then(
-					handleSuccess, handleError('Error updating user'));
 		}
 
 		// private functions
@@ -82,9 +59,62 @@ fdaServices.factory('AuthenticationService', [ '$http', '$cookieStore',
 	'$rootScope', '$timeout', '$log', 'FakeUserService',
 	function($http, $cookieStore, $rootScope, $timeout, $log, UserService) {
 
+        var URL = '/rigil-18f/authentication';
+       
+        var requestTemplate = {
+           "enterpriseDocument": {
+               "documentTimeStamp": "",
+               "documentHeader": {
+                   "documentServiceId": "",
+                   "documentBusinessHeader": ""
+               },
+               "documentBody": {
+                   "request": {
+                       "requestMethod": "",
+                       "requestCriteria": "",
+                       "requestMessage": {
+                           "authenticationRequest": {
+                               "username": "",
+                               "password": ""     
+                             }
+                           }
+                       }
+                   }
+               }
+           };
+        
 		function login(username, password, callback) {
-            $log.log('Username: ', username);
-			$timeout(function() {
+           
+            var request = angular.copy(requestTemplate);
+    
+            request.enterpriseDocument.documentBody.request.requestMethod = 'GET';
+            request.enterpriseDocument.documentBody.request.requestMessage.authenticationRequest.username = username;
+            request.enterpriseDocument.documentBody.request.requestMessage.authenticationRequest.password = password;
+           
+            $log.info('request: ', request)
+            $http.post(URL, request)
+            .success(function(data, status, headers, config) {
+                var result = data.enterpriseDocument.documentBody.response.responseMessage.authenticationResponse.result;
+                var response = {}
+                if(result === 'SUCCESS'){
+                     response.success = true;
+                }
+                else {
+                    response.success = false,
+                    response.message = "Invalid username or password"
+                }
+                callback(response);	
+            })
+            .error(function(data, status, headers, config) {
+                response = {
+                    success : false,
+                     message : 'Unable to connect to server'
+                };
+                callback(response);	
+            });
+            
+            
+			/*$timeout(function() {
 				var response = UserService.getByUsername(username);
 				response.then(function(user) {
 					if (user !== null && user.password === password) {
@@ -101,7 +131,7 @@ fdaServices.factory('AuthenticationService', [ '$http', '$cookieStore',
 					callback(response);
 				});
 			}, 1000);
-
+*/
 			/*
 			 * Use this for real authentication
 			 * ----------------------------------------------
@@ -224,3 +254,63 @@ fdaServices.factory('AuthenticationService', [ '$http', '$cookieStore',
 		return service;
 
 	}]);
+
+fdaServices.factory('RegistrationService', ['$http','$log', function($http, $log){
+    var service = {};
+    
+    var requestTemplate = {
+        "enterpriseDocument": {
+            "documentTimeStamp": "",
+            "documentHeader": {
+                "documentServiceId": "",
+                "documentBusinessHeader": ""
+            },
+            "documentBody": {
+                "request": {
+                    "requestMethod": "",
+                    "requestCriteria": "",
+                    "requestMessage": {
+                        "userRequest": {
+                            "email": "",
+                            "firstName": "",
+                            "middleName": "",
+                            "lastName": "",
+                            "phone": "",
+                            "zipcode": ""
+                        }
+                    }
+                }
+            }
+        }
+    };
+    
+    function register(userRegistrationData, callback){
+        var request = angular.copy(requestTemplate);
+        var url = '/rigil-18f/user';
+        request.enterpriseDocument.documentBody.request.requestMethod = 'PUT';
+        request.enterpriseDocument.documentBody.request.requestMessage.userRequest.firstName = userRegistrationData.firstname;
+        request.enterpriseDocument.documentBody.request.requestMessage.userRequest.middleName = userRegistrationData.middlename;
+        request.enterpriseDocument.documentBody.request.requestMessage.userRequest.lastName = userRegistrationData.lastname;
+        request.enterpriseDocument.documentBody.request.requestMessage.userRequest.email = userRegistrationData.email;
+        request.enterpriseDocument.documentBody.request.requestMessage.userRequest.phone = userRegistrationData.phone;
+        request.enterpriseDocument.documentBody.request.requestMessage.userRequest.zipcode = userRegistrationData.zipcode;
+        $log.info('request: ', request)
+        $http.post(url, request)
+        .success(function(data, status, headers, config) {
+            var response = {
+                success : true
+            };
+            callback(response);	
+		})
+        .error(function(data, status, headers, config) {
+            response = {
+                success : false,
+			     message : 'Unable to save data.'
+            };
+            callback(response);	
+		});
+    }
+    
+    service.register = register;
+    return service;
+}]);
