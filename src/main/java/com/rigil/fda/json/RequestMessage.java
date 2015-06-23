@@ -20,11 +20,19 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
 @JsonPropertyOrder({
-    "userRequest"
+    "authenticationRequest",
+	"userRequest"
 
 })
 public class RequestMessage {
 
+    /**
+     * Authentication Request Details
+     * 
+     */
+    @JsonProperty("authenticationRequest")
+    private AuthenticationRequest authenticationRequest;
+	
     /**
      * User Request Details
      * 
@@ -35,12 +43,34 @@ public class RequestMessage {
    
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    
+    /**
+     * User Request Details
+     * 
+     * @return
+     *     The authenticationRequest
+     */
+    @JsonProperty("authenticationRequest")
+    public AuthenticationRequest getAuthenticationRequest() {
+        return authenticationRequest;
+    }
+
+    /**
+     * authenticationRequest Details
+     * 
+     * @param authenticationRequest
+     *     The authenticationRequest
+     */
+    @JsonProperty("authenticationRequest")
+    public void setAuthenticationRequest(AuthenticationRequest authenticationRequest) {
+        this.authenticationRequest = authenticationRequest;
+    }
 
     /**
      * User Request Details
      * 
      * @return
-     *     The facilityRequest
+     *     The userRequest
      */
     @JsonProperty("userRequest")
     public UserRequest getUserRequest() {

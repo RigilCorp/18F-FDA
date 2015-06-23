@@ -1,5 +1,6 @@
 package com.rigil.fda.config;
 
+import com.rigil.fda.support.AuthenticationEnterpriseDocumentSupport;
 import com.rigil.fda.support.UserEnterpriseDocumentSupport;
 
 import org.springframework.beans.factory.annotation.Configurable;
@@ -11,6 +12,11 @@ public class SupportContextConfig {
 	@Bean
 	public UserEnterpriseDocumentSupport userEnterpriseDocumentSupport(){
 		return new UserEnterpriseDocumentSupport();
+	}
+	
+	@Bean
+	public AuthenticationEnterpriseDocumentSupport authenticationEnterpriseDocumentSupport(){
+		return new AuthenticationEnterpriseDocumentSupport();
 	}
 
 }

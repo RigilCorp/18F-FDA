@@ -19,14 +19,37 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
 @JsonPropertyOrder({
+	"authenticationResponse",
      "user"
     })
 public class ResponseMessage {
 
+	@JsonProperty("authenticationResponse")
+    private AuthenticationResponse authenticationResponse = new AuthenticationResponse();
     @JsonProperty("user")
     private User user = new User();
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
+    
+    /**
+    * 
+    * @return
+    *     The authenticationResponse
+    */
+   @JsonProperty("authenticationResponse")
+   public AuthenticationResponse getAuthenticationResponse() {
+       return authenticationResponse;
+   }
+
+   /**
+    * 
+    * @param authenticationResponse
+    *     The authenticationResponse
+    */
+   @JsonProperty("authenticationResponse")
+   public void setAuthenticationResponse(AuthenticationResponse authenticationResponse) {
+       this.authenticationResponse = authenticationResponse;
+   }
  
     /**
     * 
@@ -66,7 +89,7 @@ public class ResponseMessage {
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(user).append(additionalProperties).toHashCode();
+        return new HashCodeBuilder().append(user).append(authenticationResponse).append(additionalProperties).toHashCode();
     }
 
     @Override
@@ -78,7 +101,7 @@ public class ResponseMessage {
             return false;
         }
         ResponseMessage rhs = ((ResponseMessage) other);
-        return new EqualsBuilder().append(user, rhs.user).append(additionalProperties, rhs.additionalProperties).isEquals();
+        return new EqualsBuilder().append(user, rhs.user).append(authenticationResponse, rhs.authenticationResponse).append(additionalProperties, rhs.additionalProperties).isEquals();
     }
 
 }
