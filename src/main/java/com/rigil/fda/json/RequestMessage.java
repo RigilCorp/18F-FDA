@@ -21,7 +21,8 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 @Generated("org.jsonschema2pojo")
 @JsonPropertyOrder({
     "authenticationRequest",
-	"userRequest"
+	"userRequest",
+	"fdaDataRequest"
 
 })
 public class RequestMessage {
@@ -39,6 +40,13 @@ public class RequestMessage {
      */
     @JsonProperty("userRequest")
     private UserRequest userRequest;
+    
+    /**
+     * User Request Details
+     * 
+     */
+    @JsonProperty("fdaDataRequest")
+    private FDADataRequest fdaDataRequest;
  
    
     @JsonIgnore
@@ -87,6 +95,29 @@ public class RequestMessage {
     public void setUserRequest(UserRequest userRequest) {
         this.userRequest = userRequest;
     }
+    
+    /**
+     * fdaDataRequest Details
+     * 
+     * @return
+     *     The fdaDataRequest
+     */
+    @JsonProperty("fdaDataRequest")
+    public FDADataRequest getFDADataRequest() {
+        return fdaDataRequest;
+    }
+
+    /**
+     * fdaDataRequestDetails
+     * 
+     * @param fdaDataRequest
+     *     The fdaDataRequest
+     */
+    @JsonProperty("fdaDataRequest")
+    public void setFDADataRequest(FDADataRequest fdaDataRequest) {
+        this.fdaDataRequest = fdaDataRequest;
+    }
+
 
    
     @Override

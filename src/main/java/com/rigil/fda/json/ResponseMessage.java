@@ -1,7 +1,9 @@
 
 package com.rigil.fda.json;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Generated;
@@ -20,7 +22,8 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 @Generated("org.jsonschema2pojo")
 @JsonPropertyOrder({
 	"authenticationResponse",
-     "user"
+     "user",
+     "fdaDataList"
     })
 public class ResponseMessage {
 
@@ -28,6 +31,8 @@ public class ResponseMessage {
     private AuthenticationResponse authenticationResponse = new AuthenticationResponse();
     @JsonProperty("user")
     private User user = new User();
+    @JsonProperty("fdaDataList")
+    private List<FDAData> fdaDataList = new ArrayList<FDAData>();
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     
@@ -70,6 +75,26 @@ public class ResponseMessage {
    public void setUser(User user) {
        this.user = user;
    }
+   
+   /**
+   * 
+   * @return
+   *     The fdaDataList
+   */
+  @JsonProperty("fdaDataList")
+  public List<FDAData> getFDADataList() {
+      return fdaDataList;
+  }
+
+  /**
+   * 
+   * @param fdaDataList
+   *     The fdaDataList
+   */
+  @JsonProperty("fdaDataList")
+  public void setFDADataList(List<FDAData> fdaDataList) {
+      this.fdaDataList = fdaDataList;
+  }
 
     
     @Override

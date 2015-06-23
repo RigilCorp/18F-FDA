@@ -2,6 +2,8 @@ package com.rigil.fda.config;
 
 import com.rigil.fda.service.AuthenticationService;
 import com.rigil.fda.service.AuthenticationServiceImpl;
+import com.rigil.fda.service.FDADataService;
+import com.rigil.fda.service.FDADataServiceImpl;
 import com.rigil.fda.service.UserService;
 import com.rigil.fda.service.UserServiceImpl;
 
@@ -19,5 +21,10 @@ public class ServiceContextConfig {
 	@Bean
 	public AuthenticationService authenticationService(){
 		return new AuthenticationServiceImpl();
+	}	
+	
+	@Bean
+	public FDADataService fdaDataService(){
+		return new FDADataServiceImpl();
 	}	
 }
