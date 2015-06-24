@@ -1,3 +1,4 @@
+
 var fdaApp = angular.module('fda.app',[
     'ngRoute',
     'ngCookies',
@@ -6,6 +7,7 @@ var fdaApp = angular.module('fda.app',[
     'fda.directives'
 ]);
 
+//Configure routeProvider 
 fdaApp.config(function($routeProvider){
     $routeProvider
     .when('/login', {
@@ -34,7 +36,7 @@ fdaApp.run(function($rootScope, $location, $cookieStore, $http, $log){
     //Keep user logged in after page refresh
     $rootScope.globals = $cookieStore.get('globals') || {};
     if ($rootScope.globals.currentUser) {
-            $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
+            $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; 
     }
     
     $rootScope.$on('$locationChangeStart', function(event, next, current){

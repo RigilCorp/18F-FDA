@@ -1,63 +1,11 @@
 var fdaServices = angular.module('fda.services', []);
 
-fdaServices.factory('UserService', [
-	'$http',
-	function($http) {
-        var URL = '/rigil-18f/authentication';
-		var service = {};
-		
-        function getByUsername(username) {
-			
-            return $http.post(URL, request).then(handleSuccess,
-					handleError('Error getting user by username'));
-		}
-
-		// private functions
-
-		function handleSuccess(data) {
-			return data;
-		}
-
-		function handleError(error) {
-			return function() {
-				return {
-					success : false,
-					message : error
-				};
-			};
-		}
-	}]);
-
-fdaServices.factory('FakeUserService', [ '$timeout', '$filter', '$q', '$log',
-	function($timeout, $filter, $q, $log) {
-
-		var users = [ {
-			username : 'john@fake.com',
-			password : 'johnfake'
-		}, {
-			username : 'mike@fake.com',
-			password : 'mikefake'
-		} ];
-
-		function getByUsername(username) {
-			var deferred = $q.defer();
-			var filtered = $filter('filter')(users, {
-				username : username
-			});
-			var user = filtered.length ? filtered[0] : null;
-			$log.info('users', user);
-			deferred.resolve(user);
-			return deferred.promise;
-		}
-
-		var service = {};
-		service.getByUsername = getByUsername;
-		return service;
-	}]);
-
+/*
+ * LOGIN SERVICE
+ */
 fdaServices.factory('AuthenticationService', [ '$http', '$cookieStore',
-	'$rootScope', '$timeout', '$log', 'FakeUserService',
-	function($http, $cookieStore, $rootScope, $timeout, $log, UserService) {
+	'$rootScope', '$timeout', '$log',
+	function($http, $cookieStore, $rootScope, $timeout, $log) {
 
         var URL = '/rigil-18f/authentication';
        
@@ -83,15 +31,14 @@ fdaServices.factory('AuthenticationService', [ '$http', '$cookieStore',
                }
            };
         
+        //Login method
 		function login(username, password, callback) {
            
             var request = angular.copy(requestTemplate);
-    
             request.enterpriseDocument.documentBody.request.requestMethod = 'GET';
             request.enterpriseDocument.documentBody.request.requestMessage.authenticationRequest.username = username;
             request.enterpriseDocument.documentBody.request.requestMessage.authenticationRequest.password = password;
-           
-            $log.info('request: ', request)
+     
             $http.post(URL, request)
             .success(function(data, status, headers, config) {
                 var result = data.enterpriseDocument.documentBody.response.responseMessage.authenticationResponse.result;
@@ -112,37 +59,7 @@ fdaServices.factory('AuthenticationService', [ '$http', '$cookieStore',
                 };
                 callback(response);	
             });
-            
-            
-			/*$timeout(function() {
-				var response = UserService.getByUsername(username);
-				response.then(function(user) {
-					if (user !== null && user.password === password) {
-						
-						response = {
-							success : true
-						};
-					} else {
-						response = {
-							success : false,
-							message : 'Username or password is incorrect'
-						};
-					}
-					callback(response);
-				});
-			}, 1000);
-*/
-			/*
-			 * Use this for real authentication
-			 * ----------------------------------------------
-			 */
-			// $http.post('/api/authenticate', { username: username,
-			// password:
-			// password })
-			// .success(function (response) {
-			// callback(response);
-			// });
-		}
+    	}
 
 		 function setCredentials(username, password) {
 			var authdata = Base64.encode(username + ':' + password);
@@ -254,7 +171,7 @@ fdaServices.factory('AuthenticationService', [ '$http', '$cookieStore',
 		return service;
 
 	}]);
-
+//REGISTRATION SERVICE to register new user.
 fdaServices.factory('RegistrationService', ['$http','$log', function($http, $log){
     var service = {};
     
@@ -284,6 +201,7 @@ fdaServices.factory('RegistrationService', ['$http','$log', function($http, $log
         }
     };
     
+    //Register method
     function register(userRegistrationData, callback){
         var request = angular.copy(requestTemplate);
         var url = '/rigil-18f/user';
