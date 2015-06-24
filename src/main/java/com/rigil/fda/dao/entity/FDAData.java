@@ -14,10 +14,9 @@ import org.hibernate.annotations.Parameter;
 public class FDAData {
 	
 	@Id
-	@GenericGenerator(name="table-hilo-generator", strategy="org.hibernate.id.TableHiLoGenerator", 
-		parameters={@Parameter(value="hibernate_id_generation",name="table")})
-	@GeneratedValue(generator="table-hilo-generator")
-	@Column(name="FDA_DATA_ID")
+	@GenericGenerator(name="gen",strategy="increment")
+	@GeneratedValue(generator="gen")
+	@Column(name = "FDA_DATA_ID", unique = true, nullable = false, precision = 15, scale = 0)
 	private Long id;
 		
 	@Column(name="FDA_DATA_NAME", length =45, nullable=false)

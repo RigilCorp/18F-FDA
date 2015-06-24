@@ -11,12 +11,17 @@ import com.rigil.fda.dao.entity.FDAData;
 public interface FDADataRepository extends
 JpaRepository<FDAData, Integer> {
 
-	@Query("Select f from FDAData f where f.dataCode=:dataCode")
+	@Query("Select f from FDAData f where f.dataCode=:dataCode order by f.dataName")
 	public List<FDAData> findFDADataByCode(
 			@Param("dataCode") String dataCode);
 	
 	@Query("Select f from FDAData f where f.dataName=:dataName")
 	public List<FDAData> findFDADataByName(
 			@Param("dataName") String dataName);
+	
+	@Query("Select f from FDAData f where f.dataName=:dataName and f.dataCode=:dataCode")
+	public FDAData findFDADataByNameAndCode(
+			@Param("dataName") String dataName, @Param("dataCode") String dataCode);
+	
 }
 
