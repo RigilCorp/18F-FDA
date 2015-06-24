@@ -1,3 +1,4 @@
+
 var fdaApp = angular.module('fda.app',[
     'ngRoute',
     'ngCookies',
@@ -6,6 +7,7 @@ var fdaApp = angular.module('fda.app',[
     'fda.directives'
 ]);
 
+//Configure routeProvider 
 fdaApp.config(function($routeProvider){
     $routeProvider
     .when('/login', {

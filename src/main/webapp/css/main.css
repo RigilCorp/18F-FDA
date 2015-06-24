@@ -37,10 +37,6 @@ body {
 	margin-left: 25%;
 }
 
-.left-margin-15{
-	margin-left: 15px;
-}
-
 input, button, select, textarea {
 	margin-top: 15px; /*or whatever you want the spacing to be*/
 	padding: 5px;
