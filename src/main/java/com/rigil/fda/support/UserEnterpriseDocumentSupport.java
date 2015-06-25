@@ -195,8 +195,19 @@ public class UserEnterpriseDocumentSupport {
 					String.format("User[email: %s]", userRequest.getEmail()));
 		}
 
-		user = userBuilder.updateUserFromRequestUser(user, userRequest,
-				criteria);
+		//Update the preferences
+		List<Preference> preferences = userRequest.getPreferencesList();
+		for (Preference preference : preferences) {
+			if (preference != null) {
+				System.out.println("Processing preference - " + preference.getFdaData().getDataName());
+				com.rigil.fda.dao.entity.Preference preferenceEntity = userBuilder
+						.parseEnterpiseDocumentUserPreference(user, preference);
+				System.out.println("Saving Preference Entity - " + preferenceEntity.getId());
+				List<com.rigil.fda.dao.entity.Preference> preferenceList = preferencesRepo.findPreferencesByEmailAndDataName(userRequest.getEmail(), preference.getFdaData().getDataName());
+				if(preferenceList.size() == 0)
+					preferencesRepo.save(preferenceEntity);
+			}
+		}
 
 		return generateResponseMessage(userService.save(user));
 	}
