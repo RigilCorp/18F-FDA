@@ -76,7 +76,7 @@ controllers.controller('preferenceController', ['$scope', '$log', '$filter', '$t
     
     //Holds all preferences choice. 
 	$scope.preferences = [];
-    $scope.searchPlaceholder = {Device : "Search for a device"};
+    $scope.searchPlaceholder = {Device: "Search for a device", Drug: "Search for a Drug"};
     
     (function initController(){
     	FdaDataService.getPreference(function(response){
