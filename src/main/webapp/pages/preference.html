@@ -1,6 +1,8 @@
 <div class="content">
-	<div class="preference-form">
-		<h2 class="push-right-10">Set your preferences</h2>
+	<div class="preference-form height-50-per">
+		<div class="row">
+			<h2 class="col-sm-12 margin-left-15">Set your preferences</h2>
+		</div>
 		<form class="form-horizontal" name="PreferenceForm" novalidate role="form">
 			<fieldset>
 				<div class="form-group row" ng-repeat="prefernce in preferences track by $index">
@@ -26,9 +28,12 @@
 							inputclass="form-control form-control-small"
 							matchclass="highlight" />
 					</div><!-- .col-sm-3 -->
-					<button class="btn btn-danger" ng-click="addSearchKeyword($index)"
-						ng-show="prefernce.showAddButton && prefernce.searchedKeyword"
+					<button class="btn btn-danger col-sm-2" ng-click="addSearchKeyword($index)"
+						ng-show="prefernce.showAddButton && prefernce.searchedKeyword && prefernce.status !== 'saved'"
 						ng-disabled="prefernce.isSearchKeywordAdded">Add Keyword</button>
+					<button class="btn btn-info col-sm-2" ng-click="viewReport($index)"
+						ng-show="prefernce.status === 'saved'"
+						ng-disabled="false">View Report</button>
 				</div><!-- .form-group .row -->
 				<div class="form-group row" >
 					<button class="btn btn-info col-sm-2 col-sm-offset-2 push-right-10" 
@@ -41,9 +46,56 @@
 				</div>
 			</fieldset>
 		</form>
-	</div>
-	<!-- login-form -->
-
-</div>
-<!-- .content -->
+	</div><!-- login-form -->
+	<hr class="hr-weight-6">
+	<div class="height-50-per" id="resultPage">
+		<div class="container" ng-show="adverseReportData">
+		  <h2>Adverse Events</h2>
+		  <p>A cras aliquam dolor! Nascetur in tempor rhoncus! Nisi tincidunt, tristique habitasse vut cras risus dis aliquam, arcu, tincidunt lacus</p>            
+		  <table class="table .table-striped .table-hover">
+		    <thead>
+		      <tr>
+		        <th>Manufacture Name</th>
+		        <th>Generic Name</th>
+		        <th>Model Number</th>
+		        <th>Event Type</th>
+		        <th>Date Of Event</th>
+		      </tr>
+		    </thead>
+		    <tbody>
+		      <tr ng-repeat="adverse in adverseReportData">
+		        <td>{{adverse.manufacturerName}}</td>
+		        <td>{{adverse.genericName}}</td>
+		        <td>{{adverse.modelNumber}}</td>
+		        <td>{{adverse.eventType}}</td>
+		        <td>{{adverse.dateOfEvent}}</td>
+		      </tr>
+		    </tbody>
+		  </table>
+		</div><!-- .container -->
+		<div class="container" ng-show="enforcementReportData">
+			  <h2>Enforcement Reports</h2>
+			  <p>A cras aliquam dolor! Nascetur in tempor rhoncus! Nisi tincidunt, tristique habitasse vut cras risus dis aliquam, arcu, tincidunt lacus</p>            
+			  <table class="table .table-striped .table-hover">
+			    <thead>
+			      <tr>
+			        <th>Recalling Firm</th>
+			        <th>Product Description</th>
+			        <th>Reason for Recall</th>
+			        <th>Recall Initiation Date</th>
+			      </tr>
+			    </thead>
+			    <tbody>
+			      <tr ng-repeat="enforcement in enforcementReportData">
+			        <td>{{enforcement.recallingFirm}}</td>
+			        <td>{{enforcement.productDescription}}</td>
+			        <td>{{enforcement.reasonForRecall}}</td>
+			        <td>{{enforcement.recallInitiationDate}}</td>
+			      </tr>
+			    </tbody>
+			  </table>
+		</div><!-- .container -->
+		<div ng-show="!enforcementReportData && !adverseReportData"><h1>Click on 'View Report' for reports</h1></div>
+	</div><!-- height-50-percentage -->
+</div><!-- .content -->
 

@@ -159,7 +159,7 @@ public class UserEnterpriseDocumentSupport {
 		if (userService.findByEmail(userRequest.getEmail()) != null) {
 			throw new ServiceException(
 					ServiceErrorCode.QUERY_RECORD_ALREADY_EXIST, String.format(
-							"User[faaId: %s]", userRequest.getEmail()));
+							"User[id: %s]", userRequest.getEmail()));
 		}
 
 		User user = userBuilder.parseEnterpiseDocumentUser(userRequest);
