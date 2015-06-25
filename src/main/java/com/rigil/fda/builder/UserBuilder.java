@@ -138,28 +138,34 @@ public class UserBuilder {
 		System.out.println("uriSB - "+ uriSB.toString());
 		//uriSB.append("https://api.fda.gov/device/event.json?search=device.generic_name:x-ray&limit=1");
         RestTemplate restTemplate = new RestTemplate();
-        FDADeviceResponse fdaDeviceResponse = restTemplate.getForObject(uriSB.toString(), FDADeviceResponse.class);
-        List<Result> resultsList = fdaDeviceResponse.getResults();
-        for(Result result : resultsList)
+        try{
+	        FDADeviceResponse fdaDeviceResponse = restTemplate.getForObject(uriSB.toString(), FDADeviceResponse.class);
+	        List<Result> resultsList = fdaDeviceResponse.getResults();
+	        for(Result result : resultsList)
+	        {
+	        	FDADeviceEventResult deviceEventResult = new FDADeviceEventResult();
+	        	List<Device> deviceList = result.getDevice();
+	            Device device = deviceList.get(0);
+	            System.out.println("manufacturer_name - " + device.getManufacturerDName());
+	            deviceEventResult.setManufacturerName(device.getManufacturerDName());
+	            System.out.println("generic_name - " + device.getGenericName());
+	            deviceEventResult.setGenericName(device.getGenericName());
+	            System.out.println("model_number - " + device.getModelNumber());
+	            deviceEventResult.setModelNumber(device.getModelNumber());
+	            System.out.println("event_type - " + result.getEventType());
+	            deviceEventResult.setEventType(result.getEventType());
+	            System.out.println("date_of_event - " + result.getDateOfEvent());
+	            deviceEventResult.setDateOfEvent(result.getDateOfEvent());
+	            eventResulstList.add(deviceEventResult);
+	            
+	        }
+	        fdaDataResponse.setEventResultsList(eventResulstList);
+	        fdaDataResponse.setEnforcementResultsList(enforcementResultsList);
+        }catch(Exception e)
         {
-        	FDADeviceEventResult deviceEventResult = new FDADeviceEventResult();
-        	List<Device> deviceList = result.getDevice();
-            Device device = deviceList.get(0);
-            logger.debug("manufacturer_name - " + device.getManufacturerDName());
-            deviceEventResult.setManufacturerName(device.getManufacturerDName());
-            logger.debug("generic_name - " + device.getGenericName());
-            deviceEventResult.setGenericName(device.getGenericName());
-            logger.debug("model_number - " + device.getModelNumber());
-            deviceEventResult.setModelNumber(device.getModelNumber());
-            logger.debug("event_type - " + result.getEventType());
-            deviceEventResult.setEventType(result.getEventType());
-            logger.debug("date_of_event - " + result.getDateOfEvent());
-            deviceEventResult.setDateOfEvent(result.getDateOfEvent());
-            eventResulstList.add(deviceEventResult);
-            
+        	logger.error("Error while querying the FDA Web Service for Device - " + dataName, e);
+        	e.printStackTrace();
         }
-        fdaDataResponse.setEventResultsList(eventResulstList);
-        fdaDataResponse.setEnforcementResultsList(enforcementResultsList);
         return fdaDataResponse;
 	}
 

@@ -101,7 +101,7 @@ public class Result {
     @JsonProperty("event_type")
     private String eventType;
     @JsonProperty("source_type")
-    private List<Object> sourceType = new ArrayList<Object>();
+    private Object sourceType;
     @JsonProperty("manufacturer_g1_address_1")
     private String manufacturerG1Address1;
     @JsonProperty("manufacturer_contact_pcountry")
@@ -329,7 +329,7 @@ public class Result {
      *     The sourceType
      */
     @JsonProperty("source_type")
-    public List<Object> getSourceType() {
+    public Object getSourceType() {
         return sourceType;
     }
 
@@ -339,7 +339,7 @@ public class Result {
      *     The source_type
      */
     @JsonProperty("source_type")
-    public void setSourceType(List<Object> sourceType) {
+    public void setSourceType(Object sourceType) {
         this.sourceType = sourceType;
     }
 

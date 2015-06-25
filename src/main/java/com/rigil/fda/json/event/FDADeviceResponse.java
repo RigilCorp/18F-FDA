@@ -1,6 +1,5 @@
 package com.rigil.fda.json.event;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +27,7 @@ public class FDADeviceResponse {
     @JsonProperty("meta")
     private Meta meta;
     @JsonProperty("results")
-    private List<Result> results = new ArrayList<Result>();
+    private List<Result> results;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
