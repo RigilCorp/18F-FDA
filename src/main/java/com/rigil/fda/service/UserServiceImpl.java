@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 	private List<String> userList = new ArrayList<String>();
 	private ScheduledFuture<?> scheduledFuture;
 	
-	private int threadDelay = 10;	
+	private int threadDelay = 60;	
 	
 	@Autowired
 	UserRepository repository;
@@ -108,27 +108,35 @@ public class UserServiceImpl implements UserService {
 				StringBuilder uriSB = new StringBuilder();
 				uriSB.append("https://api.fda.gov/device/event.json?search=device.generic_name:\"");
 				uriSB.append(dataName);
-				uriSB.append("\"&limit=1");
+				uriSB.append("\"&limit=1`");
 				System.out.println("uriSB - "+ uriSB.toString());
 				RestTemplate restTemplate = new RestTemplate();
-		        FDADeviceResponse fdaDeviceResponse = restTemplate.getForObject(uriSB.toString(), FDADeviceResponse.class);
-		        List<Result> resultsList = fdaDeviceResponse.getResults();
-		        for(Result result : resultsList)
+			    try{
+					List<Result> resultsList = restTemplate.getForObject(uriSB.toString(), FDADeviceResponse.class).getResults();
+			       
+			        //List<Result> resultsList = fdaDeviceResponse.getResults();
+			        for(Result result : resultsList)
+			        {
+			        	List<Device> deviceList = result.getDevice();
+			            Device device = deviceList.get(0);
+			            logger.debug("manufacturer_name - " + device.getManufacturerDName());
+			            emailMsgSB.append("\n" + "Manufacturer Name: " + device.getManufacturerDName());
+			            logger.debug("generic_name: " + device.getGenericName());
+			            emailMsgSB.append("\n" + "Generic Name: " + device.getGenericName());
+			            logger.debug("model_number: " + device.getModelNumber());
+			            emailMsgSB.append("\n" + "Model Number: " + device.getModelNumber());
+			            logger.debug("event_type - " + result.getEventType());
+			            emailMsgSB.append("\n" + "Event Type: " + result.getEventType());
+			            logger.debug("date_of_event - " + result.getDateOfEvent());
+			            emailMsgSB.append("\n" + "Date of Event: " + result.getDateOfEvent());	
+			        }
+			        mailService.sendMail("ravi@rigil.com", "Alert Notification - " + dataName, emailMsgSB.toString());
+			    }catch(Exception e)
 		        {
-		        	List<Device> deviceList = result.getDevice();
-		            Device device = deviceList.get(0);
-		            logger.debug("manufacturer_name - " + device.getManufacturerDName());
-		            emailMsgSB.append("\n" + "Manufacturer Name: " + device.getManufacturerDName());
-		            logger.debug("generic_name: " + device.getGenericName());
-		            emailMsgSB.append("\n" + "Generic Name: " + device.getGenericName());
-		            logger.debug("model_number: " + device.getModelNumber());
-		            emailMsgSB.append("\n" + "Model Number: " + device.getModelNumber());
-		            logger.debug("event_type - " + result.getEventType());
-		            emailMsgSB.append("\n" + "Event Type: " + result.getEventType());
-		            logger.debug("date_of_event - " + result.getDateOfEvent());
-		            emailMsgSB.append("\n" + "Date of Event: " + result.getDateOfEvent());	
+		        	logger.error("Error while querying the FDA Web Service for Device - " + dataName, e);
+		        	e.printStackTrace();
 		        }
-		        mailService.sendMail("ravi@rigil.com", "Alert Notification - " + dataName, emailMsgSB.toString());
+
 			}
 		}
 	}

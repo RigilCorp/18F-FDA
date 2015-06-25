@@ -14,17 +14,7 @@ public class MailServiceImpl implements MailService {
 	
 	@Override
 	public void sendMail(String sendTo, String subject, String body) {	
-		try{		
-			/*
-			SimpleMailMessage message = new SimpleMailMessage();
-			message.setTo(sendTo.split(","));
-			message.setSubject(subject);
-			message.setText(body);
-			System.out.println("mailSender - " + mailSender.toString());
-			mailSender.send(message);
-			System.out.println("---Done---");
-			 */ 
-			  
+		try{		  
 			
 			JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 			mailSender.setHost("smtp.gmail.com");
