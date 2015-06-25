@@ -42,8 +42,22 @@ input, button, select, textarea {
 	padding: 5px;
 }
 
-label.col-sm-3.control-label {
+label.col-sm-3.control-label,
+label.col-sm-2.control-label,
+label.col-sm-1.control-label {
     margin-top: 15px;
+}
+
+#dataSaved{
+	margin-top: 15px;
+	margin-left: 15px;
+	color: #002E0F;
+	font-weight: 700;
+	font-size: 16px;
+}
+
+.push-right-10 {
+  left: 10px;
 }
 
 .form-group {

@@ -15,6 +15,10 @@ JpaRepository<Preference, Integer> {
 	public List<Preference> findPreferencesByEmail(
 			@Param("email") String email);
 	
+	@Query("Select p from Preference p where p.preferenceUser.email=:email and p.fdaData.dataName=:dataName")
+	public List<Preference> findPreferencesByEmailAndDataName(
+			@Param("email") String email, @Param("dataName") String dataName);
+	
 	@Query("Select p from Preference p where p.preferenceUser.phone=:phone")
 	public List<Preference> findPreferencesByPhone(
 			@Param("phone") String phone);

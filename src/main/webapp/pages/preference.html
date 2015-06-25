@@ -1,60 +1,49 @@
 <div class="content">
-	<div class="row">
-		<div class="preference-form">
-			<h2>Set your preferences</h2>
-			<form class="form-horizontal" name="PreferenceForm" novalidate role="form">
-				<fieldset>
-				<div class="row">
-                   
+	<div class="preference-form">
+		<h2 class="push-right-10">Set your preferences</h2>
+		<form class="form-horizontal" name="PreferenceForm" novalidate role="form">
+			<fieldset>
+				<div class="form-group row" ng-repeat="prefernce in preferences track by $index">
+					<label class="col-sm-2 control-label">Preference</label>
+					<div class="col-sm-2">
+						<select class="form-control" placeholder="Select preference"
+							ng-model="prefernce.category"
+							ng-change="preferenceSelectChanged($index)"
+							ng-disabled="prefernce.status === 'saved'">
+							<option>Drug</option>
+							<option>Device</option>
+							<option>Food</option>
+						</select>
+					</div><!-- .col-sm-2 -->
+					<label class="col-sm-1 control-label" ng-show="prefernce.category">Search</label>
+					<div class="col-sm-3" ng-show="prefernce.category">
+						<angucomplete
+							placeholder="{{searchPlaceholder[prefernce.category]}}"
+							prefernce="prefernce" pause="100"
+							selectedobject="prefernce.selectedObject"
+							localdata="prefernce.searchData" searchedobject="prefernce"
+							searchfields="dataName" titlefield="dataName" minlength="1"
+							inputclass="form-control form-control-small"
+							matchclass="highlight" />
+					</div><!-- .col-sm-3 -->
+					<button class="btn btn-danger" ng-click="addSearchKeyword($index)"
+						ng-show="prefernce.showAddButton && prefernce.searchedKeyword"
+						ng-disabled="prefernce.isSearchKeywordAdded">Add Keyword</button>
+				</div><!-- .form-group .row -->
+				<div class="form-group row" >
+					<button class="btn btn-info col-sm-2 col-sm-offset-2 push-right-10" 
+						ng-click="addPreference()">Set Preferences</button>
+					<button class="btn btn-primary col-sm-2 col-sm-offset-1 push-right-10"
+						ng-click="savePreferences()">Save</button>
+					<label id="dataSaved" class="col-sm-2 control-label"
+						ng-show="dataSaved">Data Saved.</label>
+					<dataload-spinner dataloading='dataloading'></dataload-spinner>
 				</div>
-				<div class="form-group row" ng-repeat="prefernce in preferences">
-				    <label class="col-sm-2 control-label">Preference</label>
-				    <div class="col-sm-2">
-                        <select class="form-control" placeholder="Select preference" ng-model="prefernce.category">
-                            <option>Drugs</option>
-                            <option>Devices</option>
-                            <option>Food</option>
-                        </select>
-				    </div>  
-				    <label class="col-sm-1 control-label">Search</label>
-				    <div class="col-sm-3">
-                        <input class="form-control" placeholder="Enter your search term" ng-model="prefernce.search">
-                   </div>          
-				</div>
-				
-				<!--<button id="setPreferenceBtn" ng-click="setPreference()">Set Preference</button>-->
-				<!--<div class="form-group"
-					ng-class="{ 'has-error' : loginForm.username.$invalid && !loginForm.username.$pristine }">
-					<input name="username" class="form-control" type="text"
-						placeholder="Username" ng-model="data.username" required />
-					<p ng-show="loginForm.username.$invalid && !loginForm.username.$pristine"
-						class="help-block">Username is required.</p>
-				</div>-->
-				<!-- .form-group -->
-<!--
-				<div class="form-group"
-					ng-class="{ 'has-error' : loginForm.password.$invalid && !loginForm.password.$pristine }">
-
-					<input name="password" class="form-control" type="password"
-						placeholder="Password" ng-model="data.password" required>
-					<p ng-show="loginForm.password.$invalid && !loginForm.password.$pristine"
-						class="help-block">Password is required.</p>
-				</div>
--->
-				<!-- .form-group -->
-				<div class="row">
-					<button class="btn btn-info col-sm-2 col-sm-offset-1" ng-click="addPreference()">Set Preferences</button>
-				    <button class="btn btn-primary col-sm-2 col-sm-offset-1" type="submit" ng-disabled="loginForm.$invalid">Save</button>
-				    <dataload-spinner dataloading='dataloading'></dataload-spinner>
-				    
-                    
-				</div>
-                </fieldset>
-			</form>
-		</div>
-		<!-- login-form -->
+			</fieldset>
+		</form>
 	</div>
-	<!-- .row -->
+	<!-- login-form -->
+
 </div>
 <!-- .content -->
 

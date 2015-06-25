@@ -80,6 +80,7 @@ public class UserBuilder {
 		if(fdaDataList.size() > 0)
 		{
 			FDAData fdaData = fdaDataList.get(0);
+			System.out.println("FDA Data - " + fdaData.getDataName());
 			preferenceEntity.setPreferenceUser(user);
 			preferenceEntity.setFdaData(fdaData);
 		}		
