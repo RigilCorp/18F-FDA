@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/fdadata")
 public class FDADataRestController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(UserRestController.class);
+	private static final Logger logger = LoggerFactory.getLogger(FDADataRestController.class);
 	
 	@Autowired
 	FDADataEnterpriseDocumentSupport enterpriseDocumentSupport;
