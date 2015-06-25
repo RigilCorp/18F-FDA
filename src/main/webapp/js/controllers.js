@@ -72,7 +72,7 @@ controllers.controller('registrationController', ['$scope', '$log', '$location',
 }]);
 
 
-controllers.controller('preferenceController', ['$scope', '$log', '$filter', 'FdaDataService', function($scope, $log, $filter ,FdaDataService){
+controllers.controller('preferenceController', ['$scope', '$log', '$filter', '$timeout', 'FdaDataService', function($scope, $log, $filter, $timeout, FdaDataService){
     
     //Holds all preferences choice. 
 	$scope.preferences = [];
@@ -95,7 +95,6 @@ controllers.controller('preferenceController', ['$scope', '$log', '$filter', 'Fd
             				searchStr: searchStr,
                     		status : 'saved'};
     				$scope.preferences.push(preference);
-    				$log.log('preferences: ', $scope.preferences);
     			}
     		}
     		
@@ -166,12 +165,16 @@ controllers.controller('preferenceController', ['$scope', '$log', '$filter', 'Fd
     
     $scope.savePreferences = function(){
     	$scope.dataloading = true;
-    	FdaDataService.savePreference($scope.preferences, function(response){
+    	FdaDataService.savePreferences($scope.preferences, function(response){
     		if(response.success){
     			for(var i = 0; i < $scope.preferences.length; i ++){
     				$scope.preferences[i].status = 'saved';
     			}
     			$scope.dataloading = false;
+    			$scope.dataSaved = true;
+    			$timeout(function(){
+    				$scope.dataSaved = false;
+    			}, 2000);
     		}
     		else {
     			$log.log('savePreference Error');
@@ -182,8 +185,8 @@ controllers.controller('preferenceController', ['$scope', '$log', '$filter', 'Fd
 }]);
 
 controllers.controller('mainController', ['$scope', '$log', '$location', function($scope, $log, $location){
-    $log.info('MainController executing....');
-    $scope.showLogin = function(){
+
+	$scope.showLogin = function(){
         return !($.inArray($location.path(), ['/registration']) === -1); 
     }
     

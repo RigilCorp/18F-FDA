@@ -83,8 +83,8 @@ var requestTemplates = {
 	},
 	preferenceObject : {
 		"fdaData" : {
-			"dataName" : "Advil",
-			"dataCode" : "Drug"
+			"dataName" : "",
+			"dataCode" : ""
 		}
 	},
 	createPreferenceObject : function() {
@@ -108,9 +108,10 @@ var requestTemplates = {
 							"middleName" : "",
 							"lastName" : "",
 							"phone" : "",
-							"zipcode" : ""
-						},
-						"preferencesList" : []
+							"zipcode" : "",
+							"preferencesList" : []
+
+						}
 					}
 				}
 			}

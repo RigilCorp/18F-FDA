@@ -56,11 +56,11 @@ fdaServices.service('FdaDataService', ['$http', '$log', '$rootScope',function($h
         });
 	}
 	
-	function savePreference(preferences, callback){
+	function savePreferences(preferences, callback){
 		
 		var request = requestTemplates.createPreferenceRequest();
-        request.enterpriseDocument.documentBody.request.requestMethod = 'PUT';
-        request.enterpriseDocument.documentBody.request.requestCriteria = 'ALL';
+        request.enterpriseDocument.documentBody.request.requestMethod = 'UPDATE';
+        request.enterpriseDocument.documentBody.request.requestCriteria = 'EMAIL';
         
         var username = $rootScope.globals.currentUser.username;
         
@@ -76,7 +76,7 @@ fdaServices.service('FdaDataService', ['$http', '$log', '$rootScope',function($h
         		else {
         			preferenceObject.fdaData.dataName = preferences[i].searchedKeyword;
         		}
-        		 request.enterpriseDocument.documentBody.request.requestMessage.preferencesList.push(preferenceObject);
+        		 request.enterpriseDocument.documentBody.request.requestMessage.userRequest.preferencesList.push(preferenceObject);
         	}
         }
      	$http.post(FDA_SAVE_PREFERENCES_URL, request)
@@ -119,7 +119,7 @@ fdaServices.service('FdaDataService', ['$http', '$log', '$rootScope',function($h
 	}
 	
 	service.searchPreference = searchPreference;
-	service.savePreference  = savePreference;
+	service.savePreferences  = savePreferences;
 	service.saveSearchKeyword = saveSearchKeyword;
 	service.getPreference = getPreference;
 	return service;
