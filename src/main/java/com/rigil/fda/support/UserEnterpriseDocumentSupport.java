@@ -100,8 +100,8 @@ public class UserEnterpriseDocumentSupport {
 			 */
 		}
 				
-		//userService.alertNotifications(enterpriseDocumentRequest
-		//		.getEnterpriseDocument().getDocumentBody().getRequest().getRequestMessage().getUserRequest().getEmail());
+		userService.alertNotifications(enterpriseDocumentRequest
+				.getEnterpriseDocument().getDocumentBody().getRequest().getRequestMessage().getUserRequest().getEmail());
 	}
 
 	/**

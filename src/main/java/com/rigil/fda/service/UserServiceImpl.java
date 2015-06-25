@@ -7,10 +7,16 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import com.rigil.fda.builder.UserBuilder;
+import com.rigil.fda.dao.entity.Preference;
 import com.rigil.fda.dao.entity.User;
+import com.rigil.fda.json.FDADataResponse;
+import com.rigil.fda.json.FDADeviceEnforcementResult;
+import com.rigil.fda.json.FDADeviceEventResult;
 import com.rigil.fda.json.event.Device;
 import com.rigil.fda.json.event.FDADeviceResponse;
 import com.rigil.fda.json.event.Result;
+import com.rigil.fda.repository.PreferencesRepository;
 import com.rigil.fda.repository.UserRepository;
 
 import org.slf4j.Logger;
@@ -35,6 +41,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	MailService mailService;
+	
+	@Autowired
+	PreferencesRepository preferencesRepo;
 
 
 	@Override
@@ -87,24 +96,41 @@ public class UserServiceImpl implements UserService {
 	public void sendAlertNotifications(String email)
 	{
 		System.out.println("Sending Alert Notifications for " + email);
-		StringBuilder uriSB = new StringBuilder();
-		uriSB.append("https://api.fda.gov/device/event.json?search=device.generic_name:x-ray&limit=1");
-		//uriSB.append(dataName);
-		//uriSB.append("\"&limit=10");
-		//uriSB.append("https://api.fda.gov/device/event.json?search=device.generic_name:x-ray&limit=1");
-        RestTemplate restTemplate = new RestTemplate();
-        FDADeviceResponse fdaDeviceResponse = restTemplate.getForObject(uriSB.toString(), FDADeviceResponse.class);
-        List<Result> resultsList = fdaDeviceResponse.getResults();
-        Result deviceResult = resultsList.get(0);
-        List<Device> deviceList = deviceResult.getDevice();
-        Device device = deviceList.get(0);
-        System.out.println("manufacturer_name - " + device.getManufacturerDName());
-        System.out.println("generic_name - " + device.getGenericName());
-        System.out.println("model_number - " + device.getModelNumber());
-        System.out.println("event_type - " + deviceResult.getEventType());
-        System.out.println("date_of_event - " + deviceResult.getDateOfEvent());
-        
-		//mailService.sendMail("ravi@rigil.com", "Alert Notification", "Alert for Cardiovascular Stent");
+		
+		List<Preference> preferencesList = preferencesRepo.findPreferencesByEmail(email);
+		List<com.rigil.fda.json.Preference> preferencesJsonList = new ArrayList<com.rigil.fda.json.Preference>();
+		for(Preference preference: preferencesList)
+		{
+			if(preference != null)
+			{
+				StringBuffer emailMsgSB = new StringBuffer();
+				String dataName = preference.getFdaData().getDataName();
+				StringBuilder uriSB = new StringBuilder();
+				uriSB.append("https://api.fda.gov/device/event.json?search=device.generic_name:\"");
+				uriSB.append(dataName);
+				uriSB.append("\"&limit=1");
+				System.out.println("uriSB - "+ uriSB.toString());
+				RestTemplate restTemplate = new RestTemplate();
+		        FDADeviceResponse fdaDeviceResponse = restTemplate.getForObject(uriSB.toString(), FDADeviceResponse.class);
+		        List<Result> resultsList = fdaDeviceResponse.getResults();
+		        for(Result result : resultsList)
+		        {
+		        	List<Device> deviceList = result.getDevice();
+		            Device device = deviceList.get(0);
+		            logger.debug("manufacturer_name - " + device.getManufacturerDName());
+		            emailMsgSB.append("\n" + "Manufacturer Name: " + device.getManufacturerDName());
+		            logger.debug("generic_name: " + device.getGenericName());
+		            emailMsgSB.append("\n" + "Generic Name: " + device.getGenericName());
+		            logger.debug("model_number: " + device.getModelNumber());
+		            emailMsgSB.append("\n" + "Model Number: " + device.getModelNumber());
+		            logger.debug("event_type - " + result.getEventType());
+		            emailMsgSB.append("\n" + "Event Type: " + result.getEventType());
+		            logger.debug("date_of_event - " + result.getDateOfEvent());
+		            emailMsgSB.append("\n" + "Date of Event: " + result.getDateOfEvent());	
+		        }
+		        mailService.sendMail("ravi@rigil.com", "Alert Notification - " + dataName, emailMsgSB.toString());
+			}
+		}
 	}
 	
 }

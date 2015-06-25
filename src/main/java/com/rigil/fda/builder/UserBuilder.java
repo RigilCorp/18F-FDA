@@ -5,6 +5,7 @@ import com.rigil.fda.dao.entity.Preference;
 import com.rigil.fda.dao.entity.User;
 import com.rigil.fda.repository.FDADataRepository;
 import com.rigil.fda.repository.PreferencesRepository;
+import com.rigil.fda.service.MailService;
 import com.rigil.fda.support.UserEnterpriseDocumentSupport;
 import com.rigil.fda.json.FDADataResponse;
 import com.rigil.fda.json.FDADeviceEnforcementResult;
@@ -39,6 +40,9 @@ public class UserBuilder {
 	
 	@Autowired
 	FDADataRepository fdaDataRepo;
+	
+	@Autowired
+	MailService mailService;
 	
 	/**
 	 * @param userRequest.

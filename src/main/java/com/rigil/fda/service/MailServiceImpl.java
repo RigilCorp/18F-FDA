@@ -12,29 +12,25 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 
 public class MailServiceImpl implements MailService {
 	
-	//@Autowired
-	//JavaMailSenderImpl mailSender;
-	
 	@Override
 	public void sendMail(String sendTo, String subject, String body) {	
 		try{		
 			/*
-		   MimeMessage mimeMessage = mailSender.createMimeMessage();
-		   MimeMessageHelper mailMsg = new MimeMessageHelper(mimeMessage);
-	       mailMsg.setFrom("fdademoalert@gmail.com");
-	       mailMsg.setTo(sendTo);
-	       mailMsg.setSubject(subject);
-	       mailMsg.setText(body);
-		   mailSender.send(mimeMessage);
-		   System.out.println("---Done---");
-			 */  
-			  /*
+			SimpleMailMessage message = new SimpleMailMessage();
+			message.setTo(sendTo.split(","));
+			message.setSubject(subject);
+			message.setText(body);
+			System.out.println("mailSender - " + mailSender.toString());
+			mailSender.send(message);
+			System.out.println("---Done---");
+			 */ 
+			  
 			
 			JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 			mailSender.setHost("smtp.gmail.com");
 			mailSender.setPort(465);
-			mailSender.setUsername(username);
-			mailSender.setPassword(password);
+			mailSender.setUsername("fdademoalert");
+			mailSender.setPassword("m^BvPw0086v)");
 			mailSender.setProtocol("smtps");
 			Properties javaMailProperties = new Properties();
 			javaMailProperties.setProperty("mail.smtps.auth", "true");
@@ -46,9 +42,8 @@ public class MailServiceImpl implements MailService {
 			message.setTo(sendTo.split(","));
 			message.setSubject(subject);
 			message.setText(body);
-			message.setFrom(username);
 			mailSender.send(message);
-			*/
+			
 			System.out.println("Sucessfully sent the email to " + sendTo);
 		}
 		catch(Exception mailException)
