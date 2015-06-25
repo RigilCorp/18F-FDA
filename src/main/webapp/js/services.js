@@ -1,45 +1,147 @@
 var fdaServices = angular.module('fda.services', []);
 
+
+
+/*
+ *FDA DATA SERVICE 
+ */
+
+fdaServices.service('FdaDataService', ['$http', '$log', '$rootScope',function($http, $log, $rootScope){
+
+	var service = {};
+
+	function searchPreference(category, callback){
+		var request = requestTemplates.createFdaDataRequest();
+        request.enterpriseDocument.documentBody.request.requestMethod = 'GET';
+        request.enterpriseDocument.documentBody.request.requestCriteria = category;
+
+
+		$http.post(FDA_FDA_DATA_URL, request)
+		.success(function(data, status, headers, config) {
+            var response = {};
+            response.success = true;
+            response.searchData = data.enterpriseDocument.documentBody.response.responseMessage.fdaDataList;
+            callback(response);
+        })
+		.error(function(data, status, headers, config) {
+            response = {
+                    success : false,
+                    message : 'Unknown error'
+                };
+                callback(response);	
+        });
+	}
+	
+	function getPreference(callback){
+		var request = requestTemplates.createPreferenceRequest();
+        request.enterpriseDocument.documentBody.request.requestMethod = 'GET';
+        request.enterpriseDocument.documentBody.request.requestCriteria = 'email';
+        var email = $rootScope.globals.currentUser.username;
+        
+        request.enterpriseDocument.documentBody.request.requestMessage.userRequest.email = email;
+        
+        $http.post(FDA_SAVE_PREFERENCES_URL, request)
+		.success(function(data, status, headers, config) {
+            var response = {};
+            response.success = true;
+            response.preferenceObjects = data.enterpriseDocument.documentBody.response.responseMessage.user.preferencesList;
+            callback(response);
+        })
+		.error(function(data, status, headers, config) {
+            response = {
+                    success : false,
+                    message : 'Unknown error'
+                };
+                callback(response);	
+        });
+	}
+	
+	function savePreferences(preferences, callback){
+		
+		var request = requestTemplates.createPreferenceRequest();
+        request.enterpriseDocument.documentBody.request.requestMethod = 'UPDATE';
+        request.enterpriseDocument.documentBody.request.requestCriteria = 'EMAIL';
+        
+        var username = $rootScope.globals.currentUser.username;
+        
+        request.enterpriseDocument.documentBody.request.requestMessage.userRequest.email = username;
+        
+        for(var i = 0; i < preferences.length; i++){
+        	if(preferences[i].status === 'new'){
+        		var preferenceObject = requestTemplates.createPreferenceObject();
+        		preferenceObject.fdaData.dataCode = preferences[i].category;
+        		if(preferences[i].match > 0 && preferences[i].selectedObject){
+        			preferenceObject.fdaData.dataName = preferences[i].selectedObject.title;
+        		}
+        		else {
+        			preferenceObject.fdaData.dataName = preferences[i].searchedKeyword;
+        		}
+        		 request.enterpriseDocument.documentBody.request.requestMessage.userRequest.preferencesList.push(preferenceObject);
+        	}
+        }
+     	$http.post(FDA_SAVE_PREFERENCES_URL, request)
+		.success(function(data, status, headers, config) {
+            var response = {};
+            response.success = true;
+            callback(response);
+        })
+		.error(function(data, status, headers, config) {
+            response = {
+                    success : false,
+                    message : 'Unknown error'
+                };
+                callback(response);	
+        });
+	}
+	
+	function saveSearchKeyword(category, keyword, callback){
+	
+		var request = requestTemplates.createFdaDataRequest();
+        request.enterpriseDocument.documentBody.request.requestMethod = 'PUT';
+        request.enterpriseDocument.documentBody.request.requestCriteria = category;
+        request.enterpriseDocument.documentBody.request.requestMessage.fdaDataRequest.dataCode = category;
+        request.enterpriseDocument.documentBody.request.requestMessage.fdaDataRequest.dataName = keyword;
+        request.enterpriseDocument.documentBody.request.requestMessage.fdaDataRequest.dataDesc = keyword;
+        
+		$http.post(FDA_FDA_DATA_URL, request)
+		.success(function(data, status, headers, config) {
+            var response = {};
+            response.success = true;
+            callback(response);
+        })
+		.error(function(data, status, headers, config) {
+            response = {
+                    success : false,
+                    message : 'Unknown error'
+                };
+                callback(response);	
+        });
+	}
+	
+	service.searchPreference = searchPreference;
+	service.savePreferences  = savePreferences;
+	service.saveSearchKeyword = saveSearchKeyword;
+	service.getPreference = getPreference;
+	return service;
+	
+}]);
+
+
 /*
  * LOGIN SERVICE
  */
-fdaServices.factory('AuthenticationService', [ '$http', '$cookieStore',
-	'$rootScope', '$timeout', '$log',
-	function($http, $cookieStore, $rootScope, $timeout, $log) {
+fdaServices.factory('AuthenticationService', [ '$http', '$cookieStore', '$rootScope', '$log',
+	function($http, $cookieStore, $rootScope, $log) {
 
-        var URL = '/rigil-18f/authentication';
-       
-        var requestTemplate = {
-           "enterpriseDocument": {
-               "documentTimeStamp": "",
-               "documentHeader": {
-                   "documentServiceId": "",
-                   "documentBusinessHeader": ""
-               },
-               "documentBody": {
-                   "request": {
-                       "requestMethod": "",
-                       "requestCriteria": "",
-                       "requestMessage": {
-                           "authenticationRequest": {
-                               "username": "",
-                               "password": ""     
-                             }
-                           }
-                       }
-                   }
-               }
-           };
-        
         //Login method
 		function login(username, password, callback) {
            
-            var request = angular.copy(requestTemplate);
-            request.enterpriseDocument.documentBody.request.requestMethod = 'GET';
+            var request = requestTemplates.createAuthenticationRequest();
+			request.enterpriseDocument.documentBody.request.requestMethod = 'GET';
             request.enterpriseDocument.documentBody.request.requestMessage.authenticationRequest.username = username;
             request.enterpriseDocument.documentBody.request.requestMessage.authenticationRequest.password = password;
      
-            $http.post(URL, request)
+            $http.post(FDA_AUTHENTICATION_URL, request)
             .success(function(data, status, headers, config) {
                 var result = data.enterpriseDocument.documentBody.response.responseMessage.authenticationResponse.result;
                 var response = {}
@@ -171,40 +273,17 @@ fdaServices.factory('AuthenticationService', [ '$http', '$cookieStore',
 		return service;
 
 	}]);
+
+
 //REGISTRATION SERVICE to register new user.
 fdaServices.factory('RegistrationService', ['$http','$log', function($http, $log){
+
     var service = {};
-    
-    var requestTemplate = {
-        "enterpriseDocument": {
-            "documentTimeStamp": "",
-            "documentHeader": {
-                "documentServiceId": "",
-                "documentBusinessHeader": ""
-            },
-            "documentBody": {
-                "request": {
-                    "requestMethod": "",
-                    "requestCriteria": "",
-                    "requestMessage": {
-                        "userRequest": {
-                            "email": "",
-                            "firstName": "",
-                            "middleName": "",
-                            "lastName": "",
-                            "phone": "",
-                            "zipcode": ""
-                        }
-                    }
-                }
-            }
-        }
-    };
     
     //Register method
     function register(userRegistrationData, callback){
-        var request = angular.copy(requestTemplate);
-        var url = '/rigil-18f/user';
+    
+        var request = requestTemplates.createRegistrationRequest()
         request.enterpriseDocument.documentBody.request.requestMethod = 'PUT';
         request.enterpriseDocument.documentBody.request.requestMessage.userRequest.firstName = userRegistrationData.firstname;
         request.enterpriseDocument.documentBody.request.requestMessage.userRequest.middleName = userRegistrationData.middlename;
@@ -212,8 +291,8 @@ fdaServices.factory('RegistrationService', ['$http','$log', function($http, $log
         request.enterpriseDocument.documentBody.request.requestMessage.userRequest.email = userRegistrationData.email;
         request.enterpriseDocument.documentBody.request.requestMessage.userRequest.phone = userRegistrationData.phone;
         request.enterpriseDocument.documentBody.request.requestMessage.userRequest.zipcode = userRegistrationData.zipcode;
-        $log.info('request: ', request)
-        $http.post(url, request)
+
+        $http.post(FDA_REGISTRATION_URL, request)
         .success(function(data, status, headers, config) {
             var response = {
                 success : true

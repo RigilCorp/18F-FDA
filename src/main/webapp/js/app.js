@@ -2,9 +2,11 @@
 var fdaApp = angular.module('fda.app',[
     'ngRoute',
     'ngCookies',
+    'angucomplete',
     'fda.controllers',
     'fda.services',
-    'fda.directives'
+    'fda.directives',
+    'fda.filters'
 ]);
 
 //Configure routeProvider 

@@ -70,6 +70,7 @@ public class UserBuilder {
 		if(fdaDataList.size() > 0)
 		{
 			FDAData fdaData = fdaDataList.get(0);
+			System.out.println("FDA Data - " + fdaData.getDataName());
 			preferenceEntity.setPreferenceUser(user);
 			preferenceEntity.setFdaData(fdaData);
 		}		
@@ -106,7 +107,8 @@ public class UserBuilder {
 				fdaData.setDataCode(preference.getFdaData().getDataCode());
 				fdaData.setDataDesc(preference.getFdaData().getDataDescription());
 				preferenceJson.setFdaData(fdaData);
-				preferenceJson.setFdaResponse(getFDAResponse(preference.getFdaData().getDataName()));
+				preferenceJson.setFdaResponse("FDA Response");
+				//preferenceJson.setFdaResponse(getFDAResponse(preference.getFdaData().getDataName()));
 				preferencesJsonList.add(preferenceJson);
 			}
 		}
