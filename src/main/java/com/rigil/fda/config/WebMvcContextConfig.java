@@ -19,7 +19,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 		ServiceContextConfig.class, 
 		SupportContextConfig.class, 
 		BuilderContextConfig.class,
-		ValidatorContextConfig.class})
+		ValidatorContextConfig.class,
+		MailConfig.class})
 public class WebMvcContextConfig extends WebMvcConfigurerAdapter {
 	
 	@Override

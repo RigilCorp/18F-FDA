@@ -25,7 +25,7 @@ public class Preference {
     @JsonProperty("fdaData")
     private FDAData fdaData;
     @JsonProperty("fdaResponse")
-    private String fdaResponse;
+    private FDADataResponse fdaResponse;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -55,7 +55,7 @@ public class Preference {
      *     The fdaResponse
      */
     @JsonProperty("fdaResponse")
-    public String getFdaResponse() {
+    public FDADataResponse getFdaResponse() {
         return fdaResponse;
     }
 
@@ -65,7 +65,7 @@ public class Preference {
      *     The fdaResponse
      */
     @JsonProperty("fdaResponse")
-    public void setFdaResponse(String fdaResponse) {
+    public void setFdaResponse(FDADataResponse fdaResponse) {
         this.fdaResponse = fdaResponse;
     }
 
