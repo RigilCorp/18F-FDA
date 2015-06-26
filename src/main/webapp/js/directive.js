@@ -1,5 +1,5 @@
 var directives = angular.module('fda.directives',[]);
-
+//Directive for wait spinner for ajax call.
 directives.directive('dataloadSpinner', [function(){
     return {
         restrict: 'EA',

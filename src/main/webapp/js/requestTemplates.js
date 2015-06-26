@@ -1,5 +1,5 @@
 /**
- * Object return a copy of request empty contact.
+ * Object return a copy of request contract.
  */
 
 var requestTemplates = {

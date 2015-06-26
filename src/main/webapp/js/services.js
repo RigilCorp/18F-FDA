@@ -4,12 +4,15 @@ var fdaServices = angular.module('fda.services', []);
 
 /*
  *FDA DATA SERVICE 
+ * service to communicate to preference backend service. service uses json contract to communicate with backend. 
+ * 
  */
 
 fdaServices.service('FdaDataService', ['$http', '$log', '$rootScope',function($http, $log, $rootScope){
 
 	var service = {};
 
+	//Search for a preference list using category [device, drug, and food] 
 	function searchPreference(category, callback){
 		var request = requestTemplates.createFdaDataRequest();
         request.enterpriseDocument.documentBody.request.requestMethod = 'GET';

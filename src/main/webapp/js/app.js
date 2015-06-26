@@ -50,10 +50,7 @@ fdaApp.run(function($rootScope, $location, $cookieStore, $http, $log){
         //Redirect to login page if not logged in and trying to access a restricted page
         var restrictedPage = $.inArray($location.path(),['/login', '/registration']) === -1;
         var loggedIn = $rootScope.globals.currentUser;
-        $log.info('$location.path: ', $location.path());
-        if(loggedIn && $.inArray($location.path(),['/logout']) === -1){
-           // $location.path('/preference');
-        }
+       
         if(restrictedPage && !loggedIn){
         	if(!$rootScope.redirectTo){
         		$rootScope.redirectTo = $location.path();

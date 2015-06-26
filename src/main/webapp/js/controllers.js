@@ -18,9 +18,8 @@ controllers.controller('loginController', ['$rootScope', '$scope', '$log', '$loc
         
         //Sign in user
          $scope.signin = function(isValid){
-             $log.info('isValid: ', isValid);
+       
              if(!isValid){
-                 $log.info('Login in form is not valid');
                  return;
              }
              $scope.dataloading = true;   
@@ -41,7 +40,7 @@ controllers.controller('loginController', ['$rootScope', '$scope', '$log', '$loc
 
 //LOGOUT CONTROLLER
 controllers.controller('logoutController', ['$scope', '$log', '$location', 'AuthenticationService', function($scope, $log, $location, AuthenticationService){
-    $log.info('logoutController Executing');
+   
     (function initController(){
         AuthenticationService.clearCredentials();
         $location.path('/login');
@@ -232,7 +231,6 @@ controllers.controller('mainController', ['$scope', '$log', '$location', functio
     
     $scope.showLogout = function(){
         return !($location.path().indexOf('/preference') === -1);
-    	
     	//return !($.inArray($location.path(), ['/preference']) === -1);
     }
 }])
