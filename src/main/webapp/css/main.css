@@ -69,8 +69,11 @@ label.col-sm-1.control-label {
 
 .height-50-per {
   max-height: 50%;
-  overflow-x: hidden;
   overflow-y: scroll;
+}
+
+.no-x-overflow {
+	overflow-x:hidden;
 }
 
 .form-group {

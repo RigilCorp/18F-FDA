@@ -28,15 +28,20 @@ fdaApp.config(function($routeProvider){
         templateUrl: 'pages/preference.html',
         controller: 'preferenceController'
     })
+    .when('/preference/:device/:name', {
+        templateUrl: 'pages/preference.html',
+        controller: 'preferenceController'
+    })
     .otherwise({
         redirectTo: '/preference'
     });
 });
 
 fdaApp.run(function($rootScope, $location, $cookieStore, $http, $log){
-    $log.info('Executing Run...');
+ 
     //Keep user logged in after page refresh
     $rootScope.globals = $cookieStore.get('globals') || {};
+ 
     if ($rootScope.globals.currentUser) {
             $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; 
     }
@@ -45,10 +50,14 @@ fdaApp.run(function($rootScope, $location, $cookieStore, $http, $log){
         //Redirect to login page if not logged in and trying to access a restricted page
         var restrictedPage = $.inArray($location.path(),['/login', '/registration']) === -1;
         var loggedIn = $rootScope.globals.currentUser;
+        $log.info('$location.path: ', $location.path());
         if(loggedIn && $.inArray($location.path(),['/logout']) === -1){
-            $location.path('/preference');
+           // $location.path('/preference');
         }
         if(restrictedPage && !loggedIn){
+        	if(!$rootScope.redirectTo){
+        		$rootScope.redirectTo = $location.path();
+        	}
             $location.path('/login');
         }
     });

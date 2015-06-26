@@ -1,5 +1,5 @@
 <div class="content">
-	<div class="preference-form height-50-per">
+	<div class="preference-form height-50-per no-x-overflow">
 		<div class="row">
 			<h2 class="col-sm-12 margin-left-15">Set your preferences</h2>
 		</div>
@@ -68,7 +68,7 @@
 		        <td>{{adverse.genericName}}</td>
 		        <td>{{adverse.modelNumber}}</td>
 		        <td>{{adverse.eventType}}</td>
-		        <td>{{adverse.dateOfEvent}}</td>
+		        <td>{{adverse.dateOfEvent | date: 'MM-dd-yyyy'}}</td>
 		      </tr>
 		    </tbody>
 		  </table>

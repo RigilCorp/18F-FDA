@@ -1,8 +1,8 @@
 var controllers = angular.module('fda.controllers',[]);
 
 //LOGIN CONTROLLER
-controllers.controller('loginController', ['$scope', '$log', '$location', 'AuthenticationService', 
-    function($scope, $log, $location, AuthenticationService){
+controllers.controller('loginController', ['$rootScope', '$scope', '$log', '$location', 'AuthenticationService', 
+    function($rootScope, $scope, $log, $location, AuthenticationService){
         
 	//Initialize Controller
         (function initController(){
@@ -27,7 +27,10 @@ controllers.controller('loginController', ['$scope', '$log', '$location', 'Authe
              AuthenticationService.login($scope.data.username, $scope.data.password, function (response) {
                  if (response.success) {
                     AuthenticationService.setCredentials($scope.data.username, $scope.data.password);
-                    $location.path('/preference');
+                    var redirectTo = $rootScope.redirectTo;
+                	$rootScope.redirectTo = null;
+                	$location.path(redirectTo);
+                    
                 } else {
                      $scope.dataloading = false;
                      $scope.error = response.message;
@@ -76,7 +79,7 @@ controllers.controller('registrationController', ['$scope', '$log', '$location',
 }]);
 
 
-controllers.controller('preferenceController', ['$scope', '$log', '$filter', '$timeout', 'FdaDataService', function($scope, $log, $filter, $timeout, FdaDataService){
+controllers.controller('preferenceController', ['$scope', '$log', '$filter', '$timeout', '$routeParams', 'FdaDataService', function($scope, $log, $filter, $timeout, $routeParams, FdaDataService){
     
     //Holds all preferences choice. 
 	$scope.preferences = [];
@@ -108,6 +111,16 @@ controllers.controller('preferenceController', ['$scope', '$log', '$filter', '$t
                     	};
     				$scope.preferences.push(preference);
     			}
+    			if($routeParams.device && $routeParams.name){
+    				var category = $filter('capitalize')($routeParams.device);
+        			var preferences = $filter('filter')($scope.preferences, {category:category});
+        			var preference = $filter('filter')(preferences, {searchStr:$routeParams.name});
+        			if(preference.length > 0){
+        				$scope.adverseReportData =  $filter('orderBy')(preference[0].eventResultsList, ['-dateOfEvent']); // preference[0].eventResultsList;
+            			$scope.enforcementReportData = $filter('orderBy')(preference[0].enforcementResultsList, ['-recallInitiationDate']); //preference[0].enforcementResultsList;
+        			}
+    			}
+    			
     		}
     		
     	});
@@ -187,7 +200,7 @@ controllers.controller('preferenceController', ['$scope', '$log', '$filter', '$t
     				var eventResultsList = response.preferenceObjects[i].fdaResponse.eventResultsList;
     				var enforcementResultsList = response.preferenceObjects[i].fdaResponse.enforcementResultsList;
     				$scope.preferences[i].eventResultsList = eventResultsList;
-    				$scope.preferences[i].enforcementResultsList = enforcementResultsList;
+    				$scope.preferences[i].enforcementResultsList =  enforcementResultsList;
     				
     			}
     			$scope.dataloading = false;
@@ -205,8 +218,8 @@ controllers.controller('preferenceController', ['$scope', '$log', '$filter', '$t
     
     //populate report data to result.
     $scope.viewReport = function(index){
-    	$scope.adverseReportData = $scope.preferences[index].eventResultsList;
-        $scope.enforcementReportData = $scope.preferences[index].enforcementResultsList;
+    	$scope.adverseReportData =  $filter('orderBy')($scope.preferences[index].eventResultsList, ['-dateOfEvent']); //$scope.preferences[index].eventResultsList;
+        $scope.enforcementReportData = $filter('orderBy')($scope.preferences[index].enforcementResultsList, ['-recallInitiationDate']); //$scope.preferences[index].enforcementResultsList;
     }
 }]);
 
@@ -218,7 +231,9 @@ controllers.controller('mainController', ['$scope', '$log', '$location', functio
     }
     
     $scope.showLogout = function(){
-        return !($.inArray($location.path(), ['/preference']) === -1);
+        return !($location.path().indexOf('/preference') === -1);
+    	
+    	//return !($.inArray($location.path(), ['/preference']) === -1);
     }
 }])
 
