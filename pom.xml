@@ -90,7 +90,7 @@
         <repository>
             <id>rigil-common-spring-starter</id>
             <name>Rigil Common Spring Starter</name>
-            <url>file://${project.basedir}/src/main/resources/lib</url>
+            <url>file://${project.basedir}/src/main/resources/lib/</url>
         </repository>
     </repositories>
 
@@ -209,7 +209,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.6</version>
+            <version>5.1.35</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
