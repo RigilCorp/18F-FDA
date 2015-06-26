@@ -101,20 +101,20 @@
 			<artifactId>common-spring-starter</artifactId>
 			<version>1.0.0-RELEASE</version>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.35</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/src/main/resources/lib/mysql-connector-java-5.1.35.jar</systemPath>
-		</dependency>
-		<dependency>
+		</dependency> -->
+		<!-- <dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
 			<version>1.4</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/src/main/resources/lib/mail-1.4.jar</systemPath>
-		</dependency>
+		</dependency> -->
 		
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -247,17 +247,17 @@
  			<version>5.1.6</version>
  		</dependency>
  		<dependency>
- 			<groupId>javax.mail</groupId>
- 			<artifactId>mail</artifactId>
- 			<version>1.4</version>
- 		</dependency>
- 		<dependency>
  			<groupId>org.springframework</groupId>
  			<artifactId>spring-context-support</artifactId>
  		</dependency>
  		<dependency>
  			<groupId>org.springframework</groupId>
  			<artifactId>spring-jdbc</artifactId>
+ 		</dependency>
+ 		<dependency>
+ 			<groupId>javax.mail</groupId>
+ 			<artifactId>mail</artifactId>
+ 			<version>1.4</version>
  		</dependency>
 	</dependencies>
 
