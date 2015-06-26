@@ -1,11 +1,7 @@
 package com.rigil.fda.json;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import javax.annotation.Generated;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -25,7 +21,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
     "dataDesc"
 })
 
-public class FDAData {
+public class FDAJsonDataObject {
 
     @JsonProperty("dataName")
     private String dataName;
@@ -37,7 +33,7 @@ public class FDAData {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
-     * 
+     *
      * @return
      *     The dataName
      */
@@ -47,7 +43,7 @@ public class FDAData {
     }
 
     /**
-     * 
+     *
      * @param dataName
      *     The dataName
      */
@@ -57,7 +53,7 @@ public class FDAData {
     }
 
     /**
-     * 
+     *
      * @return
      *     The dataCode
      */
@@ -67,7 +63,7 @@ public class FDAData {
     }
 
     /**
-     * 
+     *
      * @param dataCode
      *     The dataCode
      */
@@ -77,7 +73,7 @@ public class FDAData {
     }
 
     /**
-     * 
+     *
      * @return
      *     The dataDesc
      */
@@ -87,7 +83,7 @@ public class FDAData {
     }
 
     /**
-     * 
+     *
      * @param dataDesc
      *     The dataDesc
      */
@@ -121,10 +117,10 @@ public class FDAData {
         if (other == this) {
             return true;
         }
-        if ((other instanceof FDAData) == false) {
+        if ((other instanceof FDAJsonDataObject) == false) {
             return false;
         }
-        FDAData rhs = ((FDAData) other);
+        FDAJsonDataObject rhs = ((FDAJsonDataObject) other);
         return new EqualsBuilder().append(dataName, rhs.dataName).append(dataCode, rhs.dataCode).append(dataDesc, rhs.dataDesc).append(additionalProperties, rhs.additionalProperties).isEquals();
     }
 

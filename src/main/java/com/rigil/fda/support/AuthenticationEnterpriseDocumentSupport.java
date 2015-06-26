@@ -1,9 +1,7 @@
 package com.rigil.fda.support;
 
-import com.rigil.fda.dao.entity.User;
 import com.rigil.fda.repository.PreferencesRepository;
 import com.rigil.fda.service.AuthenticationService;
-import com.rigil.fda.service.UserService;
 import com.rigil.fda.json.AuthenticationRequest;
 import com.rigil.fda.json.AuthenticationResponse;
 import com.rigil.fda.json.DocumentBody;
@@ -22,84 +20,84 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class AuthenticationEnterpriseDocumentSupport {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(AuthenticationEnterpriseDocumentSupport.class);
+    private static final Logger logger = LoggerFactory
+            .getLogger(AuthenticationEnterpriseDocumentSupport.class);
 
-	@Autowired
-	AuthenticationService authenticationService;
-	
-	@Autowired
-	PreferencesRepository preferencesRepo;
+    @Autowired
+    AuthenticationService authenticationService;
 
-	public void processRequest(EnterpriseDocument enterpriseDocumentRequest,
-			EnterpriseDocument enterpriseDocumentResponse) {
+    @Autowired
+    PreferencesRepository preferencesRepo;
 
-		enterpriseDocumentResponse
-				.setEnterpriseDocument(new EnterpriseDocument_());
-		enterpriseDocumentResponse.getEnterpriseDocument().setDocumentBody(
-				new DocumentBody());
-		enterpriseDocumentResponse.getEnterpriseDocument().getDocumentBody()
-				.setResponse(new Response());
-		enterpriseDocumentResponse.getEnterpriseDocument()
-				.setDocumentTimeStamp(new Date());
+    public void processRequest(EnterpriseDocument enterpriseDocumentRequest,
+            EnterpriseDocument enterpriseDocumentResponse) {
 
-		final String requestMethod = enterpriseDocumentRequest
-				.getEnterpriseDocument().getDocumentBody().getRequest()
-				.getRequestMethod().toUpperCase().trim();
+        enterpriseDocumentResponse
+                .setEnterpriseDocument(new EnterpriseDocument_());
+        enterpriseDocumentResponse.getEnterpriseDocument().setDocumentBody(
+                new DocumentBody());
+        enterpriseDocumentResponse.getEnterpriseDocument().getDocumentBody()
+                .setResponse(new Response());
+        enterpriseDocumentResponse.getEnterpriseDocument()
+                .setDocumentTimeStamp(new Date());
 
-		ResponseMessage responseMessage = null;
+        final String requestMethod = enterpriseDocumentRequest
+                .getEnterpriseDocument().getDocumentBody().getRequest()
+                .getRequestMethod().toUpperCase().trim();
 
-		switch (requestMethod) {
-		case "GET": // handles GET request.
+        ResponseMessage responseMessage;
 
-			logger.debug("Processing user GET request.");
-			responseMessage = processGetRequest(enterpriseDocumentRequest
-					.getEnterpriseDocument().getDocumentBody().getRequest());
-			enterpriseDocumentResponse.getEnterpriseDocument()
-					.getDocumentBody().getResponse()
-					.setResponseMessage(responseMessage);
-			break;
-		default:
-			/*
-			 * throw new EnterpriseDocumentException(
-			 * String.format("RequestMethod: [%s] is not supported. ",
-			 * requestMethod), EnterpriseDocumentException.ErrorCodeType.
-			 * REQUEST_METHOD_NOT_SUPPORTED);
-			 */
-		}
-	}
+        switch (requestMethod) {
+        case "GET": // handles GET request.
 
-	/**
-	 * 
-	 * @param request
-	 * @return ResponseMessage Process all GET requestMethod requests
-	 */
-	private ResponseMessage processGetRequest(Request request) {
+            logger.debug("Processing user GET request.");
+            responseMessage = processGetRequest(enterpriseDocumentRequest
+                    .getEnterpriseDocument().getDocumentBody().getRequest());
+            enterpriseDocumentResponse.getEnterpriseDocument()
+                    .getDocumentBody().getResponse()
+                    .setResponseMessage(responseMessage);
+            break;
+        default:
+            /*
+             * throw new EnterpriseDocumentException(
+             * String.format("RequestMethod: [%s] is not supported. ",
+             * requestMethod), EnterpriseDocumentException.ErrorCodeType.
+             * REQUEST_METHOD_NOT_SUPPORTED);
+             */
+        }
+    }
 
-		logger.debug("ProcessGetRequest method invoked to authenticate user.");
+    /**
+     *
+     * @param request
+     * @return ResponseMessage Process all GET requestMethod requests
+     */
+    private ResponseMessage processGetRequest(Request request) {
 
-		String result = "";
-		final AuthenticationRequest authRequest = request.getRequestMessage().getAuthenticationRequest();
-		result = authenticationService.authenticateUser(authRequest.getUsername(), authRequest.getPassword());	
+        logger.debug("ProcessGetRequest method invoked to authenticate user.");
 
-		return generateResponseMessage(result);
-	}
+        String result = "";
+        final AuthenticationRequest authRequest = request.getRequestMessage().getAuthenticationRequest();
+        result = authenticationService.authenticateUser(authRequest.getUsername(), authRequest.getPassword());
+
+        return generateResponseMessage(result);
+    }
 
 
-	/**
-	 * 
-	 * @param String result
-	 * @return com.rigil.fda.fs.json.response.user.ResponseMessage This method
-	 *         generate ResponseMessage object of authentication result.
-	 */
-	private ResponseMessage generateResponseMessage(String result) {
+    /**
+     *
+     * @param result String
+     * @return ResponseMessage This method
+     *         generate ResponseMessage object of authentication result.
+     */
+    private ResponseMessage generateResponseMessage(String result) {
 
-		logger.debug("GenerateResponseMesasge method called.");
-		ResponseMessage responseMessage = new ResponseMessage();
-		AuthenticationResponse authResponse = new AuthenticationResponse();
-		authResponse.setResult(result);
-		responseMessage.setAuthenticationResponse(authResponse);
-		return responseMessage;
-	}
+        logger.debug("GenerateResponseMesasge method called.");
+        ResponseMessage responseMessage = new ResponseMessage();
+        AuthenticationResponse authResponse = new AuthenticationResponse();
+        authResponse.setResult(result);
+        responseMessage.setAuthenticationResponse(authResponse);
+        return responseMessage;
+    }
 
 }

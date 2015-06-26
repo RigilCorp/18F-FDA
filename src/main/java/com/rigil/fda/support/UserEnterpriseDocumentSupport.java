@@ -3,17 +3,18 @@ package com.rigil.fda.support;
 import com.rigil.common.exception.ServiceErrorCode;
 import com.rigil.common.exception.ServiceException;
 import com.rigil.fda.builder.UserBuilder;
-import com.rigil.fda.dao.entity.User;
+import com.rigil.fda.dao.entity.PreferenceEntity;
+import com.rigil.fda.dao.entity.UserEntity;
+import com.rigil.fda.json.PreferenceJsonDataObject;
 import com.rigil.fda.repository.PreferencesRepository;
 import com.rigil.fda.service.UserService;
 import com.rigil.fda.json.DocumentBody;
 import com.rigil.fda.json.EnterpriseDocument;
 import com.rigil.fda.json.EnterpriseDocument_;
-import com.rigil.fda.json.Preference;
 import com.rigil.fda.json.Request;
 import com.rigil.fda.json.Response;
 import com.rigil.fda.json.ResponseMessage;
-import com.rigil.fda.json.UserRequest;
+import com.rigil.fda.json.UserRequestJsonDataObject;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -27,213 +28,213 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class UserEnterpriseDocumentSupport {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(UserEnterpriseDocumentSupport.class);
+    private static final Logger logger = LoggerFactory
+            .getLogger(UserEnterpriseDocumentSupport.class);
 
-	public static final String USER_EMAIL = "email".toUpperCase();
-	public static final String USER_FIRST_NAME = "firstName".toUpperCase();
-	public static final String USER_MIDDLE_NAME = "middleName".toUpperCase();
-	public static final String USER_LAST_NAME = "lastName".toUpperCase();
-	public static final String USER_PHONE = "phone".toUpperCase();
-	public static final String USER_ZIPCODE = "zipcode".toUpperCase();
-	public static final String USER_ALL = "ALL";
+    public static final String USER_EMAIL = "email".toUpperCase();
+    public static final String USER_FIRST_NAME = "firstName".toUpperCase();
+    public static final String USER_MIDDLE_NAME = "middleName".toUpperCase();
+    public static final String USER_LAST_NAME = "lastName".toUpperCase();
+    public static final String USER_PHONE = "phone".toUpperCase();
+    public static final String USER_ZIPCODE = "zipcode".toUpperCase();
+    public static final String USER_ALL = "ALL";
 
-	@Autowired
-	UserBuilder userBuilder;
+    @Autowired
+    UserBuilder userBuilder;
 
-	@Autowired
-	UserService userService;
-	
-	@Autowired
-	PreferencesRepository preferencesRepo;
+    @Autowired
+    UserService userService;
 
-	public void processRequest(EnterpriseDocument enterpriseDocumentRequest,
-			EnterpriseDocument enterpriseDocumentResponse) {
+    @Autowired
+    PreferencesRepository preferencesRepo;
 
-		enterpriseDocumentResponse
-				.setEnterpriseDocument(new EnterpriseDocument_());
-		enterpriseDocumentResponse.getEnterpriseDocument().setDocumentBody(
-				new DocumentBody());
-		enterpriseDocumentResponse.getEnterpriseDocument().getDocumentBody()
-				.setResponse(new Response());
-		enterpriseDocumentResponse.getEnterpriseDocument()
-				.setDocumentTimeStamp(new Date());
+    public void processRequest(EnterpriseDocument enterpriseDocumentRequest,
+            EnterpriseDocument enterpriseDocumentResponse) {
 
-		final String requestMethod = enterpriseDocumentRequest
-				.getEnterpriseDocument().getDocumentBody().getRequest()
-				.getRequestMethod().toUpperCase().trim();
+        enterpriseDocumentResponse
+                .setEnterpriseDocument(new EnterpriseDocument_());
+        enterpriseDocumentResponse.getEnterpriseDocument().setDocumentBody(
+                new DocumentBody());
+        enterpriseDocumentResponse.getEnterpriseDocument().getDocumentBody()
+                .setResponse(new Response());
+        enterpriseDocumentResponse.getEnterpriseDocument()
+                .setDocumentTimeStamp(new Date());
 
-		ResponseMessage responseMessage = null;
+        final String requestMethod = enterpriseDocumentRequest
+                .getEnterpriseDocument().getDocumentBody().getRequest()
+                .getRequestMethod().toUpperCase().trim();
 
-		switch (requestMethod) {
-		case "GET": // handles GET request.
+        ResponseMessage responseMessage = null;
 
-			logger.debug("Processing user GET request.");
-			responseMessage = processGetRequest(enterpriseDocumentRequest
-					.getEnterpriseDocument().getDocumentBody().getRequest());
-			enterpriseDocumentResponse.getEnterpriseDocument()
-					.getDocumentBody().getResponse()
-					.setResponseMessage(responseMessage);
-			break;
-		case "PUT": // handles create[PUT] request.
-			logger.debug("Processing user PUT request.");
-			responseMessage = processPutRequest(enterpriseDocumentRequest
-					.getEnterpriseDocument().getDocumentBody().getRequest());
-			enterpriseDocumentResponse.getEnterpriseDocument()
-					.getDocumentBody().getResponse()
-					.setResponseMessage(responseMessage);
-			break;
-		case "UPDATE": // handles UPDATE request.
-			logger.debug("Processing user UPDATE request.");
-			responseMessage = processUpdateRequest(enterpriseDocumentRequest
-					.getEnterpriseDocument().getDocumentBody().getRequest());
-			enterpriseDocumentResponse.getEnterpriseDocument()
-					.getDocumentBody().getResponse()
-					.setResponseMessage(responseMessage);
-			break;
-		default:
-			/*
-			 * throw new EnterpriseDocumentException(
-			 * String.format("RequestMethod: [%s] is not supported. ",
-			 * requestMethod), EnterpriseDocumentException.ErrorCodeType.
-			 * REQUEST_METHOD_NOT_SUPPORTED);
-			 */
-		}
-				
-		userService.alertNotifications(enterpriseDocumentRequest
-				.getEnterpriseDocument().getDocumentBody().getRequest().getRequestMessage().getUserRequest().getEmail());
-	}
+        switch (requestMethod) {
+        case "GET": // handles GET request.
 
-	/**
-	 * 
-	 * @param request
-	 * @return ResponseMessage Process all GET requestMethod requests
-	 */
-	private ResponseMessage processGetRequest(Request request) {
+            logger.debug("Processing userEntity GET request.");
+            responseMessage = processGetRequest(enterpriseDocumentRequest
+                    .getEnterpriseDocument().getDocumentBody().getRequest());
+            enterpriseDocumentResponse.getEnterpriseDocument()
+                    .getDocumentBody().getResponse()
+                    .setResponseMessage(responseMessage);
+            break;
+        case "PUT": // handles create[PUT] request.
+            logger.debug("Processing userEntity PUT request.");
+            responseMessage = processPutRequest(enterpriseDocumentRequest
+                    .getEnterpriseDocument().getDocumentBody().getRequest());
+            enterpriseDocumentResponse.getEnterpriseDocument()
+                    .getDocumentBody().getResponse()
+                    .setResponseMessage(responseMessage);
+            break;
+        case "UPDATE": // handles UPDATE request.
+            logger.debug("Processing userEntity UPDATE request.");
+            responseMessage = processUpdateRequest(enterpriseDocumentRequest
+                    .getEnterpriseDocument().getDocumentBody().getRequest());
+            enterpriseDocumentResponse.getEnterpriseDocument()
+                    .getDocumentBody().getResponse()
+                    .setResponseMessage(responseMessage);
+            break;
+        default:
+            /*
+             * throw new EnterpriseDocumentException(
+             * String.format("RequestMethod: [%s] is not supported. ",
+             * requestMethod), EnterpriseDocumentException.ErrorCodeType.
+             * REQUEST_METHOD_NOT_SUPPORTED);
+             */
+        }
 
-		logger.debug("ProcessGetRequest method invoked to query user.");
+        userService.alertNotifications(enterpriseDocumentRequest
+                .getEnterpriseDocument().getDocumentBody().getRequest().getRequestMessage().getUserRequestJsonDataObject().getEmail());
+    }
 
-		final Set<String> criteria = new HashSet<>(Arrays.asList(request
-				.getRequestCriteria().replaceAll("\\s", "").toUpperCase()
-				.split(",")));
-		final UserRequest userRequest = request.getRequestMessage()
-				.getUserRequest();
+    /**
+     *
+     * @param request
+     * @return ResponseMessage Process all GET requestMethod requests
+     */
+    private ResponseMessage processGetRequest(Request request) {
 
-		User user = null;
+        logger.debug("ProcessGetRequest method invoked to query userEntity.");
 
-		switch (criteria.size()) {
-		case 1:
+        final Set<String> criteria = new HashSet<>(Arrays.asList(request
+                .getRequestCriteria().replaceAll("\\s", "").toUpperCase()
+                .split(",")));
+        final UserRequestJsonDataObject userRequestJsonDataObject = request.getRequestMessage()
+                .getUserRequestJsonDataObject();
 
-			if (criteria.contains("EMAIL")) {
-				user = userService.findByEmail(userRequest.getEmail());
-			} else if (criteria.contains("PHONE")) {
-				user = userService.findByEmail(userRequest.getPhone());
-			} else {
-				throw new ServiceException(
-						ServiceErrorCode.JSON_REQUEST_CRITERIA_NOT_SUPPORTED,
-						request.getRequestCriteria());
-			}
-			break;
+        UserEntity userEntity = null;
 
-		default:
-			throw new ServiceException(
-					ServiceErrorCode.JSON_REQUEST_CRITERIA_NOT_SUPPORTED,
-					request.getRequestCriteria());
-		}
+        switch (criteria.size()) {
+        case 1:
 
-		return generateResponseMessage(user);
-	}
+            if (criteria.contains("EMAIL")) {
+                userEntity = userService.findByEmail(userRequestJsonDataObject.getEmail());
+            } else if (criteria.contains("PHONE")) {
+                userEntity = userService.findByEmail(userRequestJsonDataObject.getPhone());
+            } else {
+                throw new ServiceException(
+                        ServiceErrorCode.JSON_REQUEST_CRITERIA_NOT_SUPPORTED,
+                        request.getRequestCriteria());
+            }
+            break;
 
-	/**
-	 * 
-	 * @param request
-	 * @return ResponseMessage Process all PUT requestMethod requests
-	 */
-	private ResponseMessage processPutRequest(Request request) {
+        default:
+            throw new ServiceException(
+                    ServiceErrorCode.JSON_REQUEST_CRITERIA_NOT_SUPPORTED,
+                    request.getRequestCriteria());
+        }
 
-		logger.debug("ProcessPutRequest method called.");
+        return generateResponseMessage(userEntity);
+    }
 
-		final UserRequest userRequest = request.getRequestMessage()
-				.getUserRequest();
+    /**
+     *
+     * @param request
+     * @return ResponseMessage Process all PUT requestMethod requests
+     */
+    private ResponseMessage processPutRequest(Request request) {
 
-		if (userService.findByEmail(userRequest.getEmail()) != null) {
-			throw new ServiceException(
-					ServiceErrorCode.QUERY_RECORD_ALREADY_EXIST, String.format(
-							"User[id: %s]", userRequest.getEmail()));
-		}
+        logger.debug("ProcessPutRequest method called.");
 
-		User user = userBuilder.parseEnterpiseDocumentUser(userRequest);
-		user = userService.save(user);
-		// Process the Preferences
-		List<Preference> preferences = userRequest.getPreferencesList();
-		for (Preference preference : preferences) {
-			if (preference != null) {
-				com.rigil.fda.dao.entity.Preference preferenceEntity = userBuilder
-						.parseEnterpiseDocumentUserPreference(user, preference);
-				preferencesRepo.save(preferenceEntity);
-			}
-		}
+        final UserRequestJsonDataObject userRequestJsonDataObject = request.getRequestMessage()
+                .getUserRequestJsonDataObject();
 
-		return generateResponseMessage(user);
-	}
+        if (userService.findByEmail(userRequestJsonDataObject.getEmail()) != null) {
+            throw new ServiceException(
+                    ServiceErrorCode.QUERY_RECORD_ALREADY_EXIST, String.format(
+                            "UserEntity[id: %s]", userRequestJsonDataObject.getEmail()));
+        }
 
-	/**
-	 * 
-	 * @param request
-	 * @return ResponseMessage Process all UPDATE requestMethod requests
-	 */
-	private ResponseMessage processUpdateRequest(Request request) {
+        UserEntity userEntity = userBuilder.parseEnterpiseDocumentUser(userRequestJsonDataObject);
+        userEntity = userService.save(userEntity);
+        // Process the Preferences
+        List<PreferenceJsonDataObject> preferenceJsonDataObjects = userRequestJsonDataObject.getPreferencesList();
+        for (PreferenceJsonDataObject preferenceJsonDataObject : preferenceJsonDataObjects) {
+            if (preferenceJsonDataObject != null) {
+                PreferenceEntity preferenceEntityEntity = userBuilder
+                        .parseEnterpriseDocumentUserPreference(userEntity, preferenceJsonDataObject);
+                preferencesRepo.save(preferenceEntityEntity);
+            }
+        }
 
-		logger.debug("ProcessUpdateRequest method called.");
-		final UserRequest userRequest = request.getRequestMessage()
-				.getUserRequest();
-		final Set<String> criteria = new HashSet<>(Arrays.asList(request
-				.getRequestCriteria().replaceAll("\\s", "").toUpperCase()
-				.split(",")));
+        return generateResponseMessage(userEntity);
+    }
 
-		User user = userService.findByEmail(userRequest.getEmail());
+    /**
+     *
+     * @param request
+     * @return ResponseMessage Process all UPDATE requestMethod requests
+     */
+    private ResponseMessage processUpdateRequest(Request request) {
 
-		if (user == null) {
-			throw new ServiceException(ServiceErrorCode.QUERY_RECORD_NOT_FOUND,
-					String.format("User[email: %s]", userRequest.getEmail()));
-		}
+        logger.debug("ProcessUpdateRequest method called.");
+        final UserRequestJsonDataObject userRequestJsonDataObject = request.getRequestMessage()
+                .getUserRequestJsonDataObject();
+        final Set<String> criteria = new HashSet<>(Arrays.asList(request
+                .getRequestCriteria().replaceAll("\\s", "").toUpperCase()
+                .split(",")));
 
-		//Update the preferences
-		List<Preference> preferences = userRequest.getPreferencesList();
-		for (Preference preference : preferences) {
-			if (preference != null) {
-				System.out.println("Processing preference - " + preference.getFdaData().getDataName());
-				com.rigil.fda.dao.entity.Preference preferenceEntity = userBuilder
-						.parseEnterpiseDocumentUserPreference(user, preference);
-				System.out.println("Saving Preference Entity - " + preferenceEntity.getId());
-				List<com.rigil.fda.dao.entity.Preference> preferenceList = preferencesRepo.findPreferencesByEmailAndDataName(userRequest.getEmail(), preference.getFdaData().getDataName());
-				if(preferenceList.size() == 0)
-					preferencesRepo.save(preferenceEntity);
-			}
-		}
+        UserEntity userEntity = userService.findByEmail(userRequestJsonDataObject.getEmail());
 
-		return generateResponseMessage(userService.save(user));
-	}
+        if (userEntity == null) {
+            throw new ServiceException(ServiceErrorCode.QUERY_RECORD_NOT_FOUND,
+                    String.format("UserEntity[email: %s]", userRequestJsonDataObject.getEmail()));
+        }
 
-	/**
-	 * 
-	 * @param List
-	 *            <com.rigil.fda.fs.dao.entity.User>
-	 * @return com.rigil.fda.fs.json.response.user.ResponseMessage This method
-	 *         generate ResponseMessage object of user.
-	 */
-	private ResponseMessage generateResponseMessage(User user) {
+        //Update the preferenceJsonDataObjects
+        List<PreferenceJsonDataObject> preferenceJsonDataObjects = userRequestJsonDataObject.getPreferencesList();
+        for (PreferenceJsonDataObject preferenceJsonDataObject : preferenceJsonDataObjects) {
+            if (preferenceJsonDataObject != null) {
+                System.out.println("Processing preferenceJsonDataObject - " + preferenceJsonDataObject.getFdaJsonDataObject().getDataName());
+                PreferenceEntity preferenceEntityEntity = userBuilder
+                        .parseEnterpriseDocumentUserPreference(userEntity, preferenceJsonDataObject);
+                System.out.println("Saving PreferenceEntity Entity - " + preferenceEntityEntity.getId());
+                List<PreferenceEntity> preferenceEntityList = preferencesRepo.findPreferencesByEmailAndDataName(userRequestJsonDataObject.getEmail(), preferenceJsonDataObject.getFdaJsonDataObject().getDataName());
+                if(preferenceEntityList.size() == 0)
+                    preferencesRepo.save(preferenceEntityEntity);
+            }
+        }
 
-		logger.debug("GenerateResponseMesasge method called.");
-		com.rigil.fda.json.User jsonUser = null;
-		ResponseMessage responseMessage = new ResponseMessage();
+        return generateResponseMessage(userService.save(userEntity));
+    }
 
-		if (user != null) {
-			jsonUser = userBuilder.generateEnterpiseUser(user);
+    /**
+     *
+     * @param List
+     *            <com.rigil.fda.fs.dao.entity.UserEntity>
+     * @return com.rigil.fda.fs.json.response.userEntity.ResponseMessage This method
+     *         generate ResponseMessage object of userEntity.
+     */
+    private ResponseMessage generateResponseMessage(UserEntity userEntity) {
 
-		}
-		responseMessage.setUser(jsonUser);
-		return responseMessage;
-	}
+        logger.debug("GenerateResponseMesasge method called.");
+        com.rigil.fda.json.User jsonUser = null;
+        ResponseMessage responseMessage = new ResponseMessage();
+
+        if (userEntity != null) {
+            jsonUser = userBuilder.generateEnterpriseUser(userEntity);
+
+        }
+        responseMessage.setUser(jsonUser);
+        return responseMessage;
+    }
 
 }

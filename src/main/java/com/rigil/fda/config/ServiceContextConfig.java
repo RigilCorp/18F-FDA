@@ -14,26 +14,26 @@ import org.springframework.context.annotation.Bean;
 
 @Configurable
 public class ServiceContextConfig {
-	
-	@Bean
-	public UserService userService(){
-		return new UserServiceImpl();
-	}	
-	
-	@Bean
-	public AuthenticationService authenticationService(){
-		return new AuthenticationServiceImpl();
-	}	
-	
-	@Bean
-	public FDADataService fdaDataService(){
-		return new FDADataServiceImpl();
-	}	
-	
-	@Bean
-	public MailService mailService(){
-		return new MailServiceImpl();
-	}
-	
-	
+
+    @Bean
+    public UserService userService(){
+        return new UserServiceImpl();
+    }
+
+    @Bean
+    public AuthenticationService authenticationService(){
+        return new AuthenticationServiceImpl();
+    }
+
+    @Bean
+    public FDADataService fdaDataService(){
+        return new FDADataServiceImpl();
+    }
+
+    @Bean
+    public MailService mailService(){
+        return new MailServiceImpl();
+    }
+
+
 }

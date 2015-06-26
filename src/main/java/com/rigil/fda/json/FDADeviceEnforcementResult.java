@@ -1,8 +1,6 @@
 package com.rigil.fda.json;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -38,9 +36,9 @@ public class FDADeviceEnforcementResult {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
-     * 
+     *
      * @return
-		recallingFirm
+        recallingFirm
      */
     @JsonProperty("recallingFirm")
     public String getRecallingFirm() {
@@ -48,7 +46,7 @@ public class FDADeviceEnforcementResult {
     }
 
     /**
-     * 
+     *
      * @param recallingFirm
      *     The recallingFirm
      */
@@ -58,7 +56,7 @@ public class FDADeviceEnforcementResult {
     }
 
     /**
-     * 
+     *
      * @return
      *     The productDescription
      */
@@ -68,7 +66,7 @@ public class FDADeviceEnforcementResult {
     }
 
     /**
-     * 
+     *
      * @param productDescription
      *     The productDescription
      */
@@ -78,7 +76,7 @@ public class FDADeviceEnforcementResult {
     }
 
     /**
-     * 
+     *
      * @return
      *     The reasonForRecall
      */
@@ -88,7 +86,7 @@ public class FDADeviceEnforcementResult {
     }
 
     /**
-     * 
+     *
      * @param reasonForRecall
      *     The reasonForRecall
      */
@@ -98,7 +96,7 @@ public class FDADeviceEnforcementResult {
     }
 
     /**
-     * 
+     *
      * @return
      *     The recallInitiationDate
      */
@@ -108,7 +106,7 @@ public class FDADeviceEnforcementResult {
     }
 
     /**
-     * 
+     *
      * @param recallInitiationDate
      *     The recallInitiationDate
      */
@@ -117,7 +115,7 @@ public class FDADeviceEnforcementResult {
         this.recallInitiationDate = recallInitiationDate;
     }
 
-       
+
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);

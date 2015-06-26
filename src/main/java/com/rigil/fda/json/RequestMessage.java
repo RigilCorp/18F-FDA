@@ -21,40 +21,40 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 @Generated("org.jsonschema2pojo")
 @JsonPropertyOrder({
     "authenticationRequest",
-	"userRequest",
-	"fdaDataRequest"
+    "userRequestJsonDataObject",
+    "fdaDataRequest"
 
 })
 public class RequestMessage {
 
     /**
      * Authentication Request Details
-     * 
+     *
      */
     @JsonProperty("authenticationRequest")
     private AuthenticationRequest authenticationRequest;
-	
+
     /**
-     * User Request Details
-     * 
+     * UserEntity Request Details
+     *
      */
-    @JsonProperty("userRequest")
-    private UserRequest userRequest;
-    
+    @JsonProperty("userRequestJsonDataObject")
+    private UserRequestJsonDataObject userRequestJsonDataObject;
+
     /**
-     * User Request Details
-     * 
+     * UserEntity Request Details
+     *
      */
     @JsonProperty("fdaDataRequest")
     private FDADataRequest fdaDataRequest;
- 
-   
+
+
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-    
+
     /**
-     * User Request Details
-     * 
+     * UserEntity Request Details
+     *
      * @return
      *     The authenticationRequest
      */
@@ -65,7 +65,7 @@ public class RequestMessage {
 
     /**
      * authenticationRequest Details
-     * 
+     *
      * @param authenticationRequest
      *     The authenticationRequest
      */
@@ -75,30 +75,30 @@ public class RequestMessage {
     }
 
     /**
-     * User Request Details
-     * 
+     * UserEntity Request Details
+     *
      * @return
-     *     The userRequest
+     *     The userRequestJsonDataObject
      */
-    @JsonProperty("userRequest")
-    public UserRequest getUserRequest() {
-        return userRequest;
+    @JsonProperty("userRequestJsonDataObject")
+    public UserRequestJsonDataObject getUserRequestJsonDataObject() {
+        return userRequestJsonDataObject;
     }
 
     /**
      * Facility Request Details
-     * 
-     * @param userRequest
-     *     The userRequest
+     *
+     * @param userRequestJsonDataObject
+     *     The userRequestJsonDataObject
      */
-    @JsonProperty("userRequest")
-    public void setUserRequest(UserRequest userRequest) {
-        this.userRequest = userRequest;
+    @JsonProperty("userRequestJsonDataObject")
+    public void setUserRequestJsonDataObject(UserRequestJsonDataObject userRequestJsonDataObject) {
+        this.userRequestJsonDataObject = userRequestJsonDataObject;
     }
-    
+
     /**
      * fdaDataRequest Details
-     * 
+     *
      * @return
      *     The fdaDataRequest
      */
@@ -109,7 +109,7 @@ public class RequestMessage {
 
     /**
      * fdaDataRequestDetails
-     * 
+     *
      * @param fdaDataRequest
      *     The fdaDataRequest
      */
@@ -119,7 +119,7 @@ public class RequestMessage {
     }
 
 
-   
+
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
@@ -137,7 +137,7 @@ public class RequestMessage {
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(userRequest).append(additionalProperties).toHashCode();
+        return new HashCodeBuilder().append(userRequestJsonDataObject).append(additionalProperties).toHashCode();
     }
 
     @Override
@@ -149,7 +149,7 @@ public class RequestMessage {
             return false;
         }
         RequestMessage rhs = ((RequestMessage) other);
-        return new EqualsBuilder().append(userRequest, rhs.userRequest).append(additionalProperties, rhs.additionalProperties).isEquals();
+        return new EqualsBuilder().append(userRequestJsonDataObject, rhs.userRequestJsonDataObject).append(additionalProperties, rhs.additionalProperties).isEquals();
     }
 
 }

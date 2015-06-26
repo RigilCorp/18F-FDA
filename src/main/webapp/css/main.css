@@ -1,18 +1,18 @@
 body {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	background-color: #eee;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: #eee;
 }
 
 .content {
-	background-color: #fff;
-	padding: 20px;
-	margin: auto;
-	-webkit-border-radius: 10px 10px 10px 10px;
-	-moz-border-radius: 10px 10px 10px 10px;
-	border-radius: 10px 10px 10px 10px;
-	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
-	-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
-	box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+    background-color: #fff;
+    padding: 20px;
+    margin: auto;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 10px 10px 10px;
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
 }
 
 .about-content {
@@ -20,30 +20,30 @@ body {
 }
 
 .load-spinner {
-	margin-left: 20px;
-	margin-top: 15px;
+    margin-left: 20px;
+    margin-top: 15px;
 }
 
 .login-content {
-	width: 400px;
+    width: 400px;
 }
 
 .login-form {
-	margin-left: 25%;
+    margin-left: 25%;
 }
 
 .login-form input.form-control {
-	width: 200px;
+    width: 200px;
 }
 
 .registration-form {
-	width: 500px;
-	margin-left: 25%;
+    width: 500px;
+    margin-left: 25%;
 }
 
 input, button, select, textarea {
-	margin-top: 15px; /*or whatever you want the spacing to be*/
-	padding: 5px;
+    margin-top: 15px; /*or whatever you want the spacing to be*/
+    padding: 5px;
 }
 
 label.col-sm-3.control-label,
@@ -53,22 +53,22 @@ label.col-sm-1.control-label {
 }
 
 #dataSaved{
-	margin-top: 15px;
-	margin-left: 15px;
-	color: #002E0F;
-	font-weight: 700;
-	font-size: 16px;
+    margin-top: 15px;
+    margin-left: 15px;
+    color: #002E0F;
+    font-weight: 700;
+    font-size: 16px;
 }
 
 .push-right-10 {
-  	left: 10px;
+      left: 10px;
 }
 .hr-weight-6 {
-	  border-top: 6px solid #eee;
+      border-top: 6px solid #eee;
 }
 
 .margin-left-15{
-	margin-left: 15px;
+    margin-left: 15px;
 }
 
 .height-50-per {
@@ -77,38 +77,38 @@ label.col-sm-1.control-label {
 }
 
 .no-x-overflow {
-	overflow-x:hidden;
+    overflow-x:hidden;
 }
 
 .form-group {
-	margin-bottom: 0px;
+    margin-bottom: 0px;
 }
 
 .navbar-default {
-	background-color: #428bca;
+    background-color: #428bca;
 }
 
 .navbar-default .navbar-brand, .navbar-default .navbar-brand:hover,
-	.navbar-default .navbar-brand:focus {
-	color: #fff;
-	background-color: transparent;
-	font-weight: 700;
-	font-size: 25px;
+    .navbar-default .navbar-brand:focus {
+    color: #fff;
+    background-color: transparent;
+    font-weight: 700;
+    font-size: 25px;
 }
 
 .navbar-default .navbar-text {
-	color: #fff;
+    color: #fff;
 }
 
 .navbar-default .navbar-nav>li>a,
 .navbar-default .navbar-nav>li>a:hover {
-	color: #fff;
+    color: #fff;
 }
 
 .custom-alert-danger {
-	color: #a94442;
-	padding-top: 10px;
-	padding-left: 0px;
+    color: #a94442;
+    padding-top: 10px;
+    padding-left: 0px;
 }
 
 
@@ -117,7 +117,7 @@ bs-callout+.bs-callout {
 }
 
 .bs-callout-info {
-  border-left-color: #1b809e !important; 
+  border-left-color: #1b809e !important;
 }
 
 .bs-callout {
@@ -129,5 +129,5 @@ bs-callout+.bs-callout {
 }
 
 .bs-callout > h4 {
-    color: #1b809e; 
+    color: #1b809e;
 }

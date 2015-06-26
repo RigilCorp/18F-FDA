@@ -16,10 +16,9 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-
 /**
- * User Request Details
- * 
+ * UserEntity Request Details
+ *
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -31,7 +30,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
     "zipcode",
     "preferencesList"
 })
-public class UserRequest {
+public class UserRequestJsonDataObject {
 
     @JsonProperty("email")
     private String email;
@@ -46,12 +45,12 @@ public class UserRequest {
     @JsonProperty("zipcode")
     private String zipcode;
     @JsonProperty("preferencesList")
-    private List<Preference> preferencesList = new ArrayList<Preference>();
+    private List<PreferenceJsonDataObject> preferencesList = new ArrayList<PreferenceJsonDataObject>();
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-    
+
     /**
-     * 
+     *
      * @return
      *     The email
      */
@@ -61,7 +60,7 @@ public class UserRequest {
     }
 
     /**
-     * 
+     *
      * @param email
      *     The email
      */
@@ -71,7 +70,7 @@ public class UserRequest {
     }
 
     /**
-     * 
+     *
      * @return
      *     The firstName
      */
@@ -81,7 +80,7 @@ public class UserRequest {
     }
 
     /**
-     * 
+     *
      * @param firstName
      *     The firstName
      */
@@ -91,7 +90,7 @@ public class UserRequest {
     }
 
     /**
-     * 
+     *
      * @return
      *     The middleName
      */
@@ -101,7 +100,7 @@ public class UserRequest {
     }
 
     /**
-     * 
+     *
      * @param middleName
      *     The middleName
      */
@@ -111,7 +110,7 @@ public class UserRequest {
     }
 
     /**
-     * 
+     *
      * @return
      *     The lastName
      */
@@ -121,7 +120,7 @@ public class UserRequest {
     }
 
     /**
-     * 
+     *
      * @param lastName
      *     The lastName
      */
@@ -131,7 +130,7 @@ public class UserRequest {
     }
 
     /**
-     * 
+     *
      * @return
      *     The phone
      */
@@ -141,7 +140,7 @@ public class UserRequest {
     }
 
     /**
-     * 
+     *
      * @param phone
      *     The phone
      */
@@ -151,7 +150,7 @@ public class UserRequest {
     }
 
     /**
-     * 
+     *
      * @return
      *     The zipcode
      */
@@ -161,7 +160,7 @@ public class UserRequest {
     }
 
     /**
-     * 
+     *
      * @param zipcode
      *     The zipcode
      */
@@ -169,25 +168,25 @@ public class UserRequest {
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
     }
-    
+
 
     /**
-     * 
+     *
      * @return
      *     The preferencesList
      */
     @JsonProperty("preferencesList")
-    public List<Preference> getPreferencesList() {
+    public List<PreferenceJsonDataObject> getPreferencesList() {
         return preferencesList;
     }
 
     /**
-     * 
+     *
      * @param preferencesList
      *     The preferencesList
      */
     @JsonProperty("preferencesList")
-    public void setPreferencesList(List<Preference> preferencesList) {
+    public void setPreferencesList(List<PreferenceJsonDataObject> preferencesList) {
         this.preferencesList = preferencesList;
     }
 
@@ -220,7 +219,7 @@ public class UserRequest {
         if ((other instanceof User) == false) {
             return false;
         }
-        UserRequest rhs = ((UserRequest) other);
+        UserRequestJsonDataObject rhs = ((UserRequestJsonDataObject) other);
         return new EqualsBuilder().append(email, rhs.email).append(firstName, rhs.firstName).append(middleName, rhs.middleName).append(lastName, rhs.lastName).append(phone, rhs.phone).append(zipcode, rhs.zipcode).append(additionalProperties, rhs.additionalProperties).isEquals();
     }
 

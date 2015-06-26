@@ -1,8 +1,6 @@
 package com.rigil.fda.json;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -19,7 +17,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
  * Authentication Request Details
- * 
+ *
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -34,9 +32,9 @@ public class AuthenticationRequest {
     private String password;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-    
+
     /**
-     * 
+     *
      * @return
      *     The username
      */
@@ -46,7 +44,7 @@ public class AuthenticationRequest {
     }
 
     /**
-     * 
+     *
      * @param username
      *     The username
      */
@@ -56,7 +54,7 @@ public class AuthenticationRequest {
     }
 
     /**
-     * 
+     *
      * @return
      *     The password
      */
@@ -66,14 +64,14 @@ public class AuthenticationRequest {
     }
 
     /**
-     * 
+     *
      * @param password
      *     The password
      */
     @JsonProperty("password")
     public void setPassword(String password) {
         this.password = password;
-    }     
+    }
 
 
     @Override

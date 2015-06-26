@@ -4,6 +4,8 @@
 /.springBeans
 /.tern-project
 /target
+.idea
+*.iml
 /*.sh
 /**/.classpath
 /**/.settings

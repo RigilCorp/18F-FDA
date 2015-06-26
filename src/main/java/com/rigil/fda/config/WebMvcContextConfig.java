@@ -15,30 +15,30 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @EnableWebMvc
 @ComponentScan(basePackages={"com.rigil.fda.controller"})
 @Import(value={
-		BeanContextConfig.class,
-		ServiceContextConfig.class, 
-		SupportContextConfig.class, 
-		BuilderContextConfig.class,
-		ValidatorContextConfig.class,
-		MailConfig.class})
+        BeanContextConfig.class,
+        ServiceContextConfig.class,
+        SupportContextConfig.class,
+        BuilderContextConfig.class,
+        ValidatorContextConfig.class,
+        MailConfig.class})
 public class WebMvcContextConfig extends WebMvcConfigurerAdapter {
-	
-	@Override
-	public void configureDefaultServletHandling(
-			DefaultServletHandlerConfigurer configurer) {
-		configurer.enable();
-	}
-	
-	@Override
-	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/").setViewName("home");
-	}
-	
-	@Bean
-	public MessageSource messageSource(){
-		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-		messageSource.setBasename("classpath:message/messages");
-		messageSource.setUseCodeAsDefaultMessage(true);
-		return messageSource;
-	}
+
+    @Override
+    public void configureDefaultServletHandling(
+            DefaultServletHandlerConfigurer configurer) {
+        configurer.enable();
+    }
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/").setViewName("home");
+    }
+
+    @Bean
+    public MessageSource messageSource(){
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        messageSource.setBasename("classpath:message/messages");
+        messageSource.setUseCodeAsDefaultMessage(true);
+        return messageSource;
+    }
 }

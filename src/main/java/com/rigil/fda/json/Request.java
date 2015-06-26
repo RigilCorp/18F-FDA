@@ -14,10 +14,9 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-
 /**
  * Request Data that also can refer to another JSON (schema) definition
- * 
+ *
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
@@ -30,13 +29,13 @@ public class Request {
 
     /**
      * GET|PUT|UPDATE|DELETE
-     * 
+     *
      */
     @JsonProperty("requestMethod")
     private String requestMethod;
     /**
-     * Criteria to be used for this request. {ALL, element1,element2,...}. NOTE: 'ALL' criteria can be only used for UPDATE or INSERT operations. 
-     * 
+     * Criteria to be used for this request. {ALL, element1,element2,...}. NOTE: 'ALL' criteria can be only used for UPDATE or INSERT operations.
+     *
      */
     @JsonProperty("requestCriteria")
     private String requestCriteria;
@@ -47,7 +46,7 @@ public class Request {
 
     /**
      * GET|PUT|UPDATE|DELETE
-     * 
+     *
      * @return
      *     The requestMethod
      */
@@ -58,7 +57,7 @@ public class Request {
 
     /**
      * GET|PUT|UPDATE|DELETE
-     * 
+     *
      * @param requestMethod
      *     The requestMethod
      */
@@ -68,8 +67,8 @@ public class Request {
     }
 
     /**
-     * Criteria to be used for this request. {ALL, element1,element2,...}. NOTE: 'ALL' criteria can be only used for UPDATE or INSERT operations. 
-     * 
+     * Criteria to be used for this request. {ALL, element1,element2,...}. NOTE: 'ALL' criteria can be only used for UPDATE or INSERT operations.
+     *
      * @return
      *     The requestCriteria
      */
@@ -79,8 +78,8 @@ public class Request {
     }
 
     /**
-     * Criteria to be used for this request. {ALL, element1,element2,...}. NOTE: 'ALL' criteria can be only used for UPDATE or INSERT operations. 
-     * 
+     * Criteria to be used for this request. {ALL, element1,element2,...}. NOTE: 'ALL' criteria can be only used for UPDATE or INSERT operations.
+     *
      * @param requestCriteria
      *     The requestCriteria
      */
@@ -90,7 +89,7 @@ public class Request {
     }
 
     /**
-     * 
+     *
      * @return
      *     The requestMessage
      */
@@ -100,7 +99,7 @@ public class Request {
     }
 
     /**
-     * 
+     *
      * @param requestMessage
      *     The requestMessage
      */

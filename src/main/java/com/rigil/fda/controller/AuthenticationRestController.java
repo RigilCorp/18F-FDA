@@ -17,28 +17,28 @@ import com.rigil.fda.support.AuthenticationEnterpriseDocumentSupport;
 @RestController
 @RequestMapping("/authentication")
 public class AuthenticationRestController {
-	
-	private static final Logger logger = LoggerFactory.getLogger(UserRestController.class);
-	
-	@Autowired
-	AuthenticationEnterpriseDocumentSupport enterpriseDocumentSupport;
 
-	@RequestMapping(method={
-			RequestMethod.POST,RequestMethod.PUT}, 
-			consumes="application/json", produces = "application/json"
-	)
-	@ResponseBody
-	public final EnterpriseDocument handleRequest(@Valid @RequestBody EnterpriseDocument enterpriseDocumentRequest ){
-		
-		logger.debug("Request recevied [{}]", enterpriseDocumentRequest);
+    private static final Logger logger = LoggerFactory.getLogger(UserRestController.class);
 
-		EnterpriseDocument enterpriseDocumentResponse = new EnterpriseDocument();
+    @Autowired
+    AuthenticationEnterpriseDocumentSupport enterpriseDocumentSupport;
 
-		enterpriseDocumentSupport.processRequest(enterpriseDocumentRequest, enterpriseDocumentResponse);
+    @RequestMapping(method={
+            RequestMethod.POST,RequestMethod.PUT},
+            consumes="application/json", produces = "application/json"
+    )
+    @ResponseBody
+    public final EnterpriseDocument handleRequest(@Valid @RequestBody EnterpriseDocument enterpriseDocumentRequest ){
 
-		logger.debug("Response sent [{}]", enterpriseDocumentResponse);
-		return enterpriseDocumentResponse;
-	}
-	
-	
+        logger.debug("Request received [{}]", enterpriseDocumentRequest);
+
+        EnterpriseDocument enterpriseDocumentResponse = new EnterpriseDocument();
+
+        enterpriseDocumentSupport.processRequest(enterpriseDocumentRequest, enterpriseDocumentResponse);
+
+        logger.debug("Response sent [{}]", enterpriseDocumentResponse);
+        return enterpriseDocumentResponse;
+    }
+
+
 }

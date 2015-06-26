@@ -1,8 +1,6 @@
 package com.rigil.fda.json;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -16,10 +14,9 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-
 /**
  * Authentication Request Details
- * 
+ *
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -37,9 +34,9 @@ public class FDADataRequest {
     private String dataDesc;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-    
+
     /**
-     * 
+     *
      * @return
      *     The dataCode
      */
@@ -49,7 +46,7 @@ public class FDADataRequest {
     }
 
     /**
-     * 
+     *
      * @param dataCode
      *     The dataCode
      */
@@ -59,7 +56,7 @@ public class FDADataRequest {
     }
 
     /**
-     * 
+     *
      * @return
      *     The dataName
      */
@@ -69,17 +66,17 @@ public class FDADataRequest {
     }
 
     /**
-     * 
+     *
      * @param dataName
      *     The dataName
      */
     @JsonProperty("dataName")
     public void setdataName(String dataName) {
         this.dataName = dataName;
-    }     
+    }
 
     /**
-     * 
+     *
      * @return
      *     The dataDesc
      */
@@ -89,14 +86,14 @@ public class FDADataRequest {
     }
 
     /**
-     * 
+     *
      * @param dataDesc
      *     The dataDesc
      */
     @JsonProperty("dataDesc")
     public void setDataDesc(String dataDesc) {
         this.dataDesc = dataDesc;
-    }   
+    }
 
     @Override
     public String toString() {

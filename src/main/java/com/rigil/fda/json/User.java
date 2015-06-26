@@ -43,12 +43,12 @@ public class User {
     @JsonProperty("zipcode")
     private String zipcode;
     @JsonProperty("preferencesList")
-    private List<Preference> preferencesList = new ArrayList<Preference>();
+    private List<PreferenceJsonDataObject> preferencesList = new ArrayList<PreferenceJsonDataObject>();
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
-     * 
+     *
      * @return
      *     The userEmail
      */
@@ -58,7 +58,7 @@ public class User {
     }
 
     /**
-     * 
+     *
      * @param userEmail
      *     The userEmail
      */
@@ -68,7 +68,7 @@ public class User {
     }
 
     /**
-     * 
+     *
      * @return
      *     The firstName
      */
@@ -78,7 +78,7 @@ public class User {
     }
 
     /**
-     * 
+     *
      * @param firstName
      *     The firstName
      */
@@ -88,7 +88,7 @@ public class User {
     }
 
     /**
-     * 
+     *
      * @return
      *     The middleName
      */
@@ -98,7 +98,7 @@ public class User {
     }
 
     /**
-     * 
+     *
      * @param middleName
      *     The middleName
      */
@@ -108,7 +108,7 @@ public class User {
     }
 
     /**
-     * 
+     *
      * @return
      *     The lastName
      */
@@ -118,7 +118,7 @@ public class User {
     }
 
     /**
-     * 
+     *
      * @param lastName
      *     The lastName
      */
@@ -128,7 +128,7 @@ public class User {
     }
 
     /**
-     * 
+     *
      * @return
      *     The phone
      */
@@ -138,7 +138,7 @@ public class User {
     }
 
     /**
-     * 
+     *
      * @param phone
      *     The phone
      */
@@ -148,7 +148,7 @@ public class User {
     }
 
     /**
-     * 
+     *
      * @return
      *     The zipcode
      */
@@ -158,7 +158,7 @@ public class User {
     }
 
     /**
-     * 
+     *
      * @param zipcode
      *     The zipcode
      */
@@ -166,25 +166,25 @@ public class User {
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
     }
-    
+
 
     /**
-     * 
+     *
      * @return
      *     The preferencesList
      */
     @JsonProperty("preferencesList")
-    public List<Preference> getPreferencesList() {
+    public List<PreferenceJsonDataObject> getPreferencesList() {
         return preferencesList;
     }
 
     /**
-     * 
+     *
      * @param preferencesList
      *     The preferencesList
      */
     @JsonProperty("preferencesList")
-    public void setPreferencesList(List<Preference> preferencesList) {
+    public void setPreferencesList(List<PreferenceJsonDataObject> preferencesList) {
         this.preferencesList = preferencesList;
     }
 

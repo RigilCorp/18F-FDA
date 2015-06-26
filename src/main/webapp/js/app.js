@@ -9,7 +9,7 @@ var fdaApp = angular.module('fda.app',[
     'fda.filters'
 ]);
 
-//Configure routeProvider 
+//Configure routeProvider
 fdaApp.config(function($routeProvider){
     $routeProvider
     .when('/login', {
@@ -38,23 +38,23 @@ fdaApp.config(function($routeProvider){
 });
 
 fdaApp.run(function($rootScope, $location, $cookieStore, $http, $log){
- 
+
     //Keep user logged in after page refresh
     $rootScope.globals = $cookieStore.get('globals') || {};
- 
+
     if ($rootScope.globals.currentUser) {
-            $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; 
+            $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
     }
-    
+
     $rootScope.$on('$locationChangeStart', function(event, next, current){
         //Redirect to login page if not logged in and trying to access a restricted page
         var restrictedPage = $.inArray($location.path(),['/login', '/registration']) === -1;
         var loggedIn = $rootScope.globals.currentUser;
-       
+
         if(restrictedPage && !loggedIn){
-        	if(!$rootScope.redirectTo){
-        		$rootScope.redirectTo = $location.path();
-        	}
+            if(!$rootScope.redirectTo){
+                $rootScope.redirectTo = $location.path();
+            }
             $location.path('/login');
         }
     });
