@@ -10,13 +10,13 @@ import org.springframework.context.annotation.ImportResource;
 @Configuration
 @ImportResource(value = { "classpath:spring/common-context.xml" })
 public class BeanContextConfig {
-	
-	@Value("${date.format}")
-	private String dateFormat;
 
-	@Bean(name="dateFormatter")
-	public SimpleDateFormat createSimpleDateFormat(){
-		return new SimpleDateFormat(dateFormat);
-	}
+    @Value("${date.format}")
+    private String dateFormat;
+
+    @Bean(name="dateFormatter")
+    public SimpleDateFormat createSimpleDateFormat(){
+        return new SimpleDateFormat(dateFormat);
+    }
 
 }

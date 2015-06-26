@@ -10,20 +10,20 @@ import org.springframework.context.annotation.Bean;
 @Configurable
 public class SupportContextConfig {
 
-	@Bean
-	public UserEnterpriseDocumentSupport userEnterpriseDocumentSupport(){
-		return new UserEnterpriseDocumentSupport();
-	}
-	
-	@Bean
-	public AuthenticationEnterpriseDocumentSupport authenticationEnterpriseDocumentSupport(){
-		return new AuthenticationEnterpriseDocumentSupport();
-	}
-	
-	@Bean
-	public FDADataEnterpriseDocumentSupport fdaDataEnterpriseDocumentSupport(){
-		return new FDADataEnterpriseDocumentSupport();
-	}
+    @Bean
+    public UserEnterpriseDocumentSupport userEnterpriseDocumentSupport(){
+        return new UserEnterpriseDocumentSupport();
+    }
+
+    @Bean
+    public AuthenticationEnterpriseDocumentSupport authenticationEnterpriseDocumentSupport(){
+        return new AuthenticationEnterpriseDocumentSupport();
+    }
+
+    @Bean
+    public FDADataEnterpriseDocumentSupport fdaDataEnterpriseDocumentSupport(){
+        return new FDADataEnterpriseDocumentSupport();
+    }
 
 
 }

@@ -16,41 +16,41 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "fdaData",
+    "fdaJsonDataObject",
     "fdaResponse"
 })
 
-public class Preference {
+public class PreferenceJsonDataObject {
 
-    @JsonProperty("fdaData")
-    private FDAData fdaData;
+    @JsonProperty("fdaJsonDataObject")
+    private FDAJsonDataObject fdaJsonDataObject;
     @JsonProperty("fdaResponse")
     private FDADataResponse fdaResponse;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
-     * 
+     *
      * @return
-     *     The fdaData
+     *     The fdaJsonDataObject
      */
-    @JsonProperty("fdaData")
-    public FDAData getFdaData() {
-        return fdaData;
+    @JsonProperty("fdaJsonDataObject")
+    public FDAJsonDataObject getFdaJsonDataObject() {
+        return fdaJsonDataObject;
     }
 
     /**
-     * 
-     * @param fdaData
-     *     The fdaData
+     *
+     * @param fdaJsonDataObject
+     *     The fdaJsonDataObject
      */
-    @JsonProperty("fdaData")
-    public void setFdaData(FDAData fdaData) {
-        this.fdaData = fdaData;
+    @JsonProperty("fdaJsonDataObject")
+    public void setFdaJsonDataObject(FDAJsonDataObject fdaJsonDataObject) {
+        this.fdaJsonDataObject = fdaJsonDataObject;
     }
 
     /**
-     * 
+     *
      * @return
      *     The fdaResponse
      */
@@ -60,7 +60,7 @@ public class Preference {
     }
 
     /**
-     * 
+     *
      * @param fdaResponse
      *     The fdaResponse
      */
@@ -86,7 +86,7 @@ public class Preference {
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder().append(fdaData).append(fdaResponse).append(additionalProperties).toHashCode();
+        return new HashCodeBuilder().append(fdaJsonDataObject).append(fdaResponse).append(additionalProperties).toHashCode();
     }
 
     @Override
@@ -94,11 +94,11 @@ public class Preference {
         if (other == this) {
             return true;
         }
-        if ((other instanceof Preference) == false) {
+        if ((other instanceof PreferenceJsonDataObject) == false) {
             return false;
         }
-        Preference rhs = ((Preference) other);
-        return new EqualsBuilder().append(fdaData, rhs.fdaData).append(fdaResponse, rhs.fdaResponse).append(additionalProperties, rhs.additionalProperties).isEquals();
+        PreferenceJsonDataObject rhs = ((PreferenceJsonDataObject) other);
+        return new EqualsBuilder().append(fdaJsonDataObject, rhs.fdaJsonDataObject).append(fdaResponse, rhs.fdaResponse).append(additionalProperties, rhs.additionalProperties).isEquals();
     }
 
 }

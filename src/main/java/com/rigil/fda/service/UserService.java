@@ -1,12 +1,12 @@
 package com.rigil.fda.service;
 
-import com.rigil.fda.dao.entity.User;
+import com.rigil.fda.dao.entity.UserEntity;
 
 public interface UserService {
-	
-	public User findByEmail(String email);
-	public User findByPhone(String phone);
-	public User save(User user);
-	public void alertNotifications(String email);
-	
+
+    UserEntity findByEmail(String email);
+    UserEntity findByPhone(String phone);
+    UserEntity save(UserEntity userEntity);
+    void alertNotifications(String email);
+
 }

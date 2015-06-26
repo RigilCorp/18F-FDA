@@ -14,10 +14,9 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-
 /**
  * Error Message
- * 
+ *
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
@@ -38,7 +37,7 @@ public class DocumentError {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
-     * 
+     *
      * @return
      *     The id
      */
@@ -48,7 +47,7 @@ public class DocumentError {
     }
 
     /**
-     * 
+     *
      * @param id
      *     The id
      */
@@ -58,7 +57,7 @@ public class DocumentError {
     }
 
     /**
-     * 
+     *
      * @return
      *     The errorMessage
      */
@@ -68,7 +67,7 @@ public class DocumentError {
     }
 
     /**
-     * 
+     *
      * @param errorMessage
      *     The errorMessage
      */
@@ -78,7 +77,7 @@ public class DocumentError {
     }
 
     /**
-     * 
+     *
      * @return
      *     The originalData
      */
@@ -88,7 +87,7 @@ public class DocumentError {
     }
 
     /**
-     * 
+     *
      * @param originalData
      *     The originalData
      */

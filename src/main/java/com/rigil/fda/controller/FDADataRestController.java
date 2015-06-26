@@ -17,28 +17,28 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/fdadata")
 public class FDADataRestController {
-	
-	private static final Logger logger = LoggerFactory.getLogger(FDADataRestController.class);
-	
-	@Autowired
-	FDADataEnterpriseDocumentSupport enterpriseDocumentSupport;
 
-	@RequestMapping(method={
-			RequestMethod.POST,RequestMethod.PUT}, 
-			consumes="application/json", produces = "application/json"
-	)
-	@ResponseBody
-	public final EnterpriseDocument handleRequest(@Valid @RequestBody EnterpriseDocument enterpriseDocumentRequest ){
-		
-		logger.debug("Request recevied [{}]", enterpriseDocumentRequest);
+    private static final Logger logger = LoggerFactory.getLogger(FDADataRestController.class);
 
-		EnterpriseDocument enterpriseDocumentResponse = new EnterpriseDocument();
+    @Autowired
+    FDADataEnterpriseDocumentSupport enterpriseDocumentSupport;
 
-		enterpriseDocumentSupport.processRequest(enterpriseDocumentRequest, enterpriseDocumentResponse);
+    @RequestMapping(method={
+            RequestMethod.POST,RequestMethod.PUT},
+            consumes="application/json", produces = "application/json"
+    )
+    @ResponseBody
+    public final EnterpriseDocument handleRequest(@Valid @RequestBody EnterpriseDocument enterpriseDocumentRequest ){
 
-		logger.debug("Response sent [{}]", enterpriseDocumentResponse);
-		return enterpriseDocumentResponse;
-	}
-	
-	
+        logger.debug("Request received [{}]", enterpriseDocumentRequest);
+
+        EnterpriseDocument enterpriseDocumentResponse = new EnterpriseDocument();
+
+        enterpriseDocumentSupport.processRequest(enterpriseDocumentRequest, enterpriseDocumentResponse);
+
+        logger.debug("Response sent [{}]", enterpriseDocumentResponse);
+        return enterpriseDocumentResponse;
+    }
+
+
 }

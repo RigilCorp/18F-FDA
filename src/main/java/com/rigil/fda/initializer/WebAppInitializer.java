@@ -18,41 +18,38 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.servlet.DispatcherServlet;
 
 public class WebAppInitializer implements WebApplicationInitializer{
-	private static final Logger logger = LoggerFactory.getLogger(WebAppInitializer.class);
-	private static final String DISPATCHER_SERVLET = "dispatcher";
+    private static final Logger logger = LoggerFactory.getLogger(WebAppInitializer.class);
+    private static final String DISPATCHER_SERVLET = "dispatcher";
 
-	@Override
-	public void onStartup(ServletContext servletContext) throws ServletException {
-		registerContextListener(servletContext);
-		registerDispatcherServlet(servletContext);
-		
-	}
+    @Override
+    public void onStartup(ServletContext servletContext) throws ServletException {
+        registerContextListener(servletContext);
+        registerDispatcherServlet(servletContext);
+    }
 
-	private void registerDispatcherServlet(ServletContext servletContext) {
-		logger.debug("Registering Dispatcher Servlet {} [name:{}]", WebMvcContextConfig.class.getName(), DISPATCHER_SERVLET);
-		WebApplicationContext dispatcherContext = createContext(WebMvcContextConfig.class);
-		DispatcherServlet dispatcherServlet = new DispatcherServlet(dispatcherContext);
-		ServletRegistration.Dynamic dispatcher = servletContext.addServlet(DISPATCHER_SERVLET, dispatcherServlet);
-		dispatcher.addMapping("/");
-		dispatcher.setLoadOnStartup(1);
-		
-		FilterRegistration.Dynamic filter = servletContext.addFilter("openEntityManagerInViewFilter", OpenEntityManagerInViewFilter.class);
-		//filter.setInitParameter("singleSession", "true");
-		filter.addMappingForServletNames(null, true, "dispatcher");
-	}
+    private void registerDispatcherServlet(ServletContext servletContext) {
+        logger.debug("Registering Dispatcher Servlet {} [name:{}]", WebMvcContextConfig.class.getName(), DISPATCHER_SERVLET);
+        WebApplicationContext dispatcherContext = createContext(WebMvcContextConfig.class);
+        DispatcherServlet dispatcherServlet = new DispatcherServlet(dispatcherContext);
+        ServletRegistration.Dynamic dispatcher = servletContext.addServlet(DISPATCHER_SERVLET, dispatcherServlet);
+        dispatcher.addMapping("/");
+        dispatcher.setLoadOnStartup(1);
 
-	private void registerContextListener(ServletContext servletContext) {
-		logger.debug("Registering ContextListener {}", RootContextConfig.class.getName());
-		WebApplicationContext rootContext = createContext(RootContextConfig.class);
-		servletContext.addListener(new ContextLoaderListener(rootContext));
-		
-	}
+        FilterRegistration.Dynamic filter = servletContext.addFilter("openEntityManagerInViewFilter", OpenEntityManagerInViewFilter.class);
+        filter.addMappingForServletNames(null, true, "dispatcher");
+    }
 
-	private WebApplicationContext createContext(Class<?> configClass) {
-		AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
-		ctx.register(configClass);
-//		ctx.getEnvironment().setActiveProfiles("production");
-		return ctx;
-	}
+    private void registerContextListener(ServletContext servletContext) {
+        logger.debug("Registering ContextListener {}", RootContextConfig.class.getName());
+        WebApplicationContext rootContext = createContext(RootContextConfig.class);
+        servletContext.addListener(new ContextLoaderListener(rootContext));
+
+    }
+
+    private WebApplicationContext createContext(Class<?> configClass) {
+        AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
+        ctx.register(configClass);
+        return ctx;
+    }
 
 }

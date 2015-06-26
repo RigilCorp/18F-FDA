@@ -8,12 +8,12 @@ import com.rigil.common.config.BaseJpaConfig;
 
 @Configuration
 @Import(value={
-		BaseJndiDataBaseConfig.class, 
-		BaseJpaConfig.class, 
-		TransactionManagerConfig.class
+        BaseJndiDataBaseConfig.class,
+        BaseJpaConfig.class,
+        TransactionManagerConfig.class
 })
 public class RootContextConfig {
 
-	
-	
+
+
 }

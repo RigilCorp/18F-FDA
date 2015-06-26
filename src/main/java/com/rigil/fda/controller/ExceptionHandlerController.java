@@ -34,102 +34,102 @@ import com.google.common.collect.Maps;
 
 @ControllerAdvice
 public class ExceptionHandlerController {
-	
-	private static final Logger logger = LoggerFactory.getLogger(ExceptionHandlerController.class);
-	
-	@Autowired
-	private MessageSource messageSource;
 
-	/**
-	 * Intercept Request Validation Exception.
-	 * @param ex
-	 * @return
-	 */
-	@RequestMapping(produces="application/json")
-	@ExceptionHandler({MethodArgumentNotValidException.class})
-	@ResponseStatus(value=HttpStatus.BAD_REQUEST)
-	@ResponseBody 
-	public EnterpriseDocument handleRequestException(MethodArgumentNotValidException ex){
+    private static final Logger logger = LoggerFactory.getLogger(ExceptionHandlerController.class);
 
-		ex.printStackTrace();
-		
-		EnterpriseDocument document = buildEnterPriseDocument();
-		DocumentError error = new DocumentError();
-		document.getEnterpriseDocument().setDocumentError(error);
-		error.setErrorMessage(ServiceErrorCode.VALIDATION_FAILED.toString());
-		
-		Map<String, Object> errors = Maps.newHashMap();
-		
-		BindingResult result = ex.getBindingResult();
-		List<FieldError> fieldErrors = result.getFieldErrors();
-		
-		for(FieldError fieldError : fieldErrors){
-			String localizedErrorMessage = resolveLocalizedErrorMessage(fieldError);
-			errors.put(fieldError.getField(), localizedErrorMessage);
-		}
-		
-		error.setAdditionalProperty("errors", errors);
-		return document;
-	}
-	
-	
+    @Autowired
+    private MessageSource messageSource;
 
-	/**
-	 * Intercept FoundationServiceException
-	 * @param ex
-	 * @return
-	 */
-	@RequestMapping(produces="application/json")
-	@ExceptionHandler({ServiceException.class,
-		HttpMediaTypeNotSupportedException.class,
-		HttpMessageNotReadableException.class,
-		DataAccessResourceFailureException.class})
-	@ResponseStatus(value=HttpStatus.BAD_REQUEST)
-	@ResponseBody 
-	public EnterpriseDocument handleRuntimeException(Exception ex){
-		
-		ex.printStackTrace();
-		
-		EnterpriseDocument document = buildEnterPriseDocument();
-		DocumentError error = new DocumentError();
-		document.getEnterpriseDocument().setDocumentError(error);
-		
-		if(ex instanceof ServiceException){
-			error.setErrorMessage(ex.getMessage());
-		}
-		else if( ex instanceof HttpMediaTypeNotSupportedException){
-			error.setErrorMessage("ErrorCode[" + ServiceErrorCode.HTTP_MEDIA_TYPE_NOT_SUPPORTED.getCode() + "]:" + " Http " + ex.getMessage());
-		}
-		else if(ex instanceof HttpMessageNotReadableException){
-			error.setErrorMessage(ServiceErrorCode.HTTP_MESSAGE_NOT_READABLE_EXCEPTION.toString());
-		}
-		else if(ex instanceof DataAccessResourceFailureException){
-			error.setErrorMessage(ServiceErrorCode.DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION.toString());
-		}
-		
-		return document;
-	}
-	
-	@RequestMapping(produces="application/json")
-	@ExceptionHandler({Exception.class})
-	@ResponseStatus(value=HttpStatus.BAD_REQUEST)
-	@ResponseBody 
-	public EnterpriseDocument handleUncaughtException(Exception ex){
-		
-		ex.printStackTrace();
-		
-		EnterpriseDocument document = buildEnterPriseDocument();
-		DocumentError error = new DocumentError();
-		document.getEnterpriseDocument().setDocumentError(error);
-		
-		error.setErrorMessage("Unknown Exception has accured");
-		return document;
-	}
-	
-	private String resolveLocalizedErrorMessage(FieldError fieldError) {
+    /**
+     * Intercept Request Validation Exception.
+     * @param ex
+     * @return EnterpriseDocument
+     */
+    @RequestMapping(produces="application/json")
+    @ExceptionHandler({MethodArgumentNotValidException.class})
+    @ResponseStatus(value=HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public EnterpriseDocument handleRequestException(MethodArgumentNotValidException ex){
+
+        ex.printStackTrace();
+
+        EnterpriseDocument document = buildEnterPriseDocument();
+        DocumentError error = new DocumentError();
+        document.getEnterpriseDocument().setDocumentError(error);
+        error.setErrorMessage(ServiceErrorCode.VALIDATION_FAILED.toString());
+
+        Map<String, Object> errors = Maps.newHashMap();
+
+        BindingResult result = ex.getBindingResult();
+        List<FieldError> fieldErrors = result.getFieldErrors();
+
+        for(FieldError fieldError : fieldErrors){
+            String localizedErrorMessage = resolveLocalizedErrorMessage(fieldError);
+            errors.put(fieldError.getField(), localizedErrorMessage);
+        }
+
+        error.setAdditionalProperty("errors", errors);
+        return document;
+    }
+
+
+
+    /**
+     * Intercept FoundationServiceException
+     * @param ex
+     * @return EnterpriseDocument
+     */
+    @RequestMapping(produces="application/json")
+    @ExceptionHandler({ServiceException.class,
+        HttpMediaTypeNotSupportedException.class,
+        HttpMessageNotReadableException.class,
+        DataAccessResourceFailureException.class})
+    @ResponseStatus(value=HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public EnterpriseDocument handleRuntimeException(Exception ex){
+
+        ex.printStackTrace();
+
+        EnterpriseDocument document = buildEnterPriseDocument();
+        DocumentError error = new DocumentError();
+        document.getEnterpriseDocument().setDocumentError(error);
+
+        if(ex instanceof ServiceException){
+            error.setErrorMessage(ex.getMessage());
+        }
+        else if( ex instanceof HttpMediaTypeNotSupportedException){
+            error.setErrorMessage("ErrorCode[" + ServiceErrorCode.HTTP_MEDIA_TYPE_NOT_SUPPORTED.getCode() + "]:" + " Http " + ex.getMessage());
+        }
+        else if(ex instanceof HttpMessageNotReadableException){
+            error.setErrorMessage(ServiceErrorCode.HTTP_MESSAGE_NOT_READABLE_EXCEPTION.toString());
+        }
+        else if(ex instanceof DataAccessResourceFailureException){
+            error.setErrorMessage(ServiceErrorCode.DATA_ACCESS_RESOURCE_FAILURE_EXCEPTION.toString());
+        }
+
+        return document;
+    }
+
+    @RequestMapping(produces="application/json")
+    @ExceptionHandler({Exception.class})
+    @ResponseStatus(value=HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public EnterpriseDocument handleUncaughtException(Exception ex){
+
+        ex.printStackTrace();
+
+        EnterpriseDocument document = buildEnterPriseDocument();
+        DocumentError error = new DocumentError();
+        document.getEnterpriseDocument().setDocumentError(error);
+
+        error.setErrorMessage("Unknown Exception has accured");
+        return document;
+    }
+
+    private String resolveLocalizedErrorMessage(FieldError fieldError) {
         Locale currentLocale =  LocaleContextHolder.getLocale();
         String localizedErrorMessage = messageSource.getMessage(fieldError, currentLocale);
- 
+
         //If the message was not found, return the most accurate field error code instead.
         //You can remove this check if you prefer to get the default error message.
         if (localizedErrorMessage.equals(fieldError.getDefaultMessage())) {
@@ -138,12 +138,12 @@ public class ExceptionHandlerController {
         }
         return localizedErrorMessage;
     }
-	
-	private EnterpriseDocument buildEnterPriseDocument() {
-		EnterpriseDocument document = new EnterpriseDocument();
-		document.setEnterpriseDocument(new EnterpriseDocument_());
-		document.getEnterpriseDocument().setDocumentHeader(new DocumentHeader());
-		document.getEnterpriseDocument().setDocumentTimeStamp(new Date());
-		return document;
-	}
+
+    private EnterpriseDocument buildEnterPriseDocument() {
+        EnterpriseDocument document = new EnterpriseDocument();
+        document.setEnterpriseDocument(new EnterpriseDocument_());
+        document.getEnterpriseDocument().setDocumentHeader(new DocumentHeader());
+        document.getEnterpriseDocument().setDocumentTimeStamp(new Date());
+        return document;
+    }
 }

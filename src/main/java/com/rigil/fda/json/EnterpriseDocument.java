@@ -14,10 +14,9 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-
 /**
  * Enterprise Document Base Schema. NOTE: This schema can be extended to include any JSON compliant schemas within request and response elements that are part of the DocumentBody element.
- * 
+ *
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
@@ -32,7 +31,7 @@ public class EnterpriseDocument {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
-     * 
+     *
      * @return
      *     The enterpriseDocument
      */
@@ -42,7 +41,7 @@ public class EnterpriseDocument {
     }
 
     /**
-     * 
+     *
      * @param enterpriseDocument
      *     The enterpriseDocument
      */

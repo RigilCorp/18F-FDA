@@ -8,15 +8,15 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class BuilderContextConfig {
-	
-	@Bean
-	public UserBuilder userBuilder(){
-		return new UserBuilder();
-	}
-	
-	@Bean
-	public FDADataBuilder fdaDataBuilder(){
-		return new FDADataBuilder();
-	}
-	
+
+    @Bean
+    public UserBuilder userBuilder(){
+        return new UserBuilder();
+    }
+
+    @Bean
+    public FDADataBuilder fdaDataBuilder(){
+        return new FDADataBuilder();
+    }
+
 }

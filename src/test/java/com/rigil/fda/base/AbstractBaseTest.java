@@ -20,24 +20,24 @@ import com.rigil.fda.config.JunitDataSourceConfig;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextHierarchy({
-	@ContextConfiguration(classes={
-			JunitDataSourceConfig.class, 
-			JunitBaseJpaConfig.class }),
-	@ContextConfiguration(classes={WebMvcContextConfig.class})
+    @ContextConfiguration(classes={
+            JunitDataSourceConfig.class,
+            JunitBaseJpaConfig.class }),
+    @ContextConfiguration(classes={WebMvcContextConfig.class})
 })
 @WebAppConfiguration("src/main/webapp")
 @ActiveProfiles(profiles={"unitTest"})
 @TestExecutionListeners({
-	DependencyInjectionTestExecutionListener.class,
-	DirtiesContextTestExecutionListener.class,
-	TransactionalTestExecutionListener.class,
-	DbUnitTestExecutionListener.class})
+    DependencyInjectionTestExecutionListener.class,
+    DirtiesContextTestExecutionListener.class,
+    TransactionalTestExecutionListener.class,
+    DbUnitTestExecutionListener.class})
 @DatabaseSetup(value={
-		"classpath:schema/HibernateIdGenerationData.xml"
-	})
+        "classpath:schema/HibernateIdGenerationData.xml"
+    })
 public class AbstractBaseTest {
-	
-	public static final String email = "ravi@rigil.com";
-	public static final String phone = "703-473-0117";
+
+    public static final String email = "ravi@rigil.com";
+    public static final String phone = "703-473-0117";
 
 }

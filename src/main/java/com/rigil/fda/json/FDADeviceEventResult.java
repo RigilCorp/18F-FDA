@@ -1,8 +1,6 @@
 package com.rigil.fda.json;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -44,7 +42,7 @@ public class FDADeviceEventResult {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
-     * 
+     *
      * @return
 manufacturerName
      */
@@ -54,7 +52,7 @@ manufacturerName
     }
 
     /**
-     * 
+     *
      * @param manufacturerName
      *     The manufacturerName
      */
@@ -64,7 +62,7 @@ manufacturerName
     }
 
     /**
-     * 
+     *
      * @return
      *     The genericName
      */
@@ -74,7 +72,7 @@ manufacturerName
     }
 
     /**
-     * 
+     *
      * @param genericName
      *     The genericName
      */
@@ -84,7 +82,7 @@ manufacturerName
     }
 
     /**
-     * 
+     *
      * @return
      *     The modelNumber
      */
@@ -94,7 +92,7 @@ manufacturerName
     }
 
     /**
-     * 
+     *
      * @param modelNumber
      *     The modelNumber
      */
@@ -104,7 +102,7 @@ manufacturerName
     }
 
     /**
-     * 
+     *
      * @return
      *     The eventType
      */
@@ -114,7 +112,7 @@ manufacturerName
     }
 
     /**
-     * 
+     *
      * @param eventType
      *     The eventType
      */
@@ -124,7 +122,7 @@ manufacturerName
     }
 
     /**
-     * 
+     *
      * @return
      *     The dateOfEvent
      */
@@ -134,7 +132,7 @@ manufacturerName
     }
 
     /**
-     * 
+     *
      * @param dateOfEvent
      *     The dateOfEvent
      */
@@ -144,7 +142,7 @@ manufacturerName
     }
 
     /**
-     * 
+     *
      * @return
      *     The text
      */
@@ -154,7 +152,7 @@ manufacturerName
     }
 
     /**
-     * 
+     *
      * @param text
      *     The text
      */
@@ -162,7 +160,7 @@ manufacturerName
     public void setText(String text) {
         this.text = text;
     }
-    
+
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);

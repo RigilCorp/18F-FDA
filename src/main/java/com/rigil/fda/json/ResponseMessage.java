@@ -21,23 +21,23 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
 @JsonPropertyOrder({
-	"authenticationResponse",
+    "authenticationResponse",
      "user",
-     "fdaDataList"
+     "fdaJsonDataObjectList"
     })
 public class ResponseMessage {
 
-	@JsonProperty("authenticationResponse")
+    @JsonProperty("authenticationResponse")
     private AuthenticationResponse authenticationResponse = new AuthenticationResponse();
     @JsonProperty("user")
     private User user = new User();
-    @JsonProperty("fdaDataList")
-    private List<FDAData> fdaDataList = new ArrayList<FDAData>();
+    @JsonProperty("fdaJsonDataObjectList")
+    private List<FDAJsonDataObject> fdaJsonDataObjectList = new ArrayList<FDAJsonDataObject>();
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    
+
     /**
-    * 
+    *
     * @return
     *     The authenticationResponse
     */
@@ -47,7 +47,7 @@ public class ResponseMessage {
    }
 
    /**
-    * 
+    *
     * @param authenticationResponse
     *     The authenticationResponse
     */
@@ -55,11 +55,11 @@ public class ResponseMessage {
    public void setAuthenticationResponse(AuthenticationResponse authenticationResponse) {
        this.authenticationResponse = authenticationResponse;
    }
- 
+
     /**
-    * 
+    *
     * @return
-    *     The User
+    *     The UserEntity
     */
    @JsonProperty("user")
    public User getUser() {
@@ -67,7 +67,7 @@ public class ResponseMessage {
    }
 
    /**
-    * 
+    *
     * @param user
     *     The user
     */
@@ -75,28 +75,28 @@ public class ResponseMessage {
    public void setUser(User user) {
        this.user = user;
    }
-   
+
    /**
-   * 
+   *
    * @return
-   *     The fdaDataList
+   *     The fdaJsonDataObjectList
    */
-  @JsonProperty("fdaDataList")
-  public List<FDAData> getFDADataList() {
-      return fdaDataList;
+  @JsonProperty("fdaJsonDataObjectList")
+  public List<FDAJsonDataObject> getFDADataList() {
+      return fdaJsonDataObjectList;
   }
 
   /**
-   * 
-   * @param fdaDataList
-   *     The fdaDataList
+   *
+   * @param fdaJsonDataObjectList
+   *     The fdaJsonDataObjectList
    */
-  @JsonProperty("fdaDataList")
-  public void setFDADataList(List<FDAData> fdaDataList) {
-      this.fdaDataList = fdaDataList;
+  @JsonProperty("fdaJsonDataObjectList")
+  public void setFDADataList(List<FDAJsonDataObject> fdaJsonDataObjectList) {
+      this.fdaJsonDataObjectList = fdaJsonDataObjectList;
   }
 
-    
+
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
