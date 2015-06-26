@@ -1,3 +1,4 @@
+
 package com.rigil.fda.builder;
 
 import com.rigil.fda.dao.entity.FDAData;
@@ -5,8 +6,15 @@ import com.rigil.fda.dao.entity.Preference;
 import com.rigil.fda.dao.entity.User;
 import com.rigil.fda.repository.FDADataRepository;
 import com.rigil.fda.repository.PreferencesRepository;
+import com.rigil.fda.service.MailService;
 import com.rigil.fda.support.UserEnterpriseDocumentSupport;
+import com.rigil.fda.json.FDADataResponse;
+import com.rigil.fda.json.FDADeviceEnforcementResult;
+import com.rigil.fda.json.FDADeviceEventResult;
 import com.rigil.fda.json.UserRequest;
+import com.rigil.fda.json.event.Device;
+import com.rigil.fda.json.event.FDADeviceResponse;
+import com.rigil.fda.json.event.Result;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -33,6 +41,9 @@ public class UserBuilder {
 	
 	@Autowired
 	FDADataRepository fdaDataRepo;
+	
+	@Autowired
+	MailService mailService;
 	
 	/**
 	 * @param userRequest.
@@ -70,7 +81,6 @@ public class UserBuilder {
 		if(fdaDataList.size() > 0)
 		{
 			FDAData fdaData = fdaDataList.get(0);
-			System.out.println("FDA Data - " + fdaData.getDataName());
 			preferenceEntity.setPreferenceUser(user);
 			preferenceEntity.setFdaData(fdaData);
 		}		
@@ -107,8 +117,7 @@ public class UserBuilder {
 				fdaData.setDataCode(preference.getFdaData().getDataCode());
 				fdaData.setDataDesc(preference.getFdaData().getDataDescription());
 				preferenceJson.setFdaData(fdaData);
-				preferenceJson.setFdaResponse("FDA Response");
-				//preferenceJson.setFdaResponse(getFDAResponse(preference.getFdaData().getDataName()));
+				preferenceJson.setFdaResponse(getFDADeviceResponse(preference.getFdaData().getDataName()));
 				preferencesJsonList.add(preferenceJson);
 			}
 		}
@@ -118,15 +127,47 @@ public class UserBuilder {
 		return jsonUser;
 	}
 	
-	private String getFDAResponse(String dataName)
+	private FDADataResponse getFDADeviceResponse(String dataName)
 	{
+		FDADataResponse fdaDataResponse = new FDADataResponse();
+		List<FDADeviceEventResult> eventResulstList = new ArrayList<FDADeviceEventResult>();
+		List<FDADeviceEnforcementResult> enforcementResultsList = new ArrayList<FDADeviceEnforcementResult>();
 		StringBuilder uriSB = new StringBuilder();
-		uriSB.append("https://api.fda.gov/drug/event.json?search=patient.drug.medicinalproduct:\"");
+		uriSB.append("https://api.fda.gov/device/event.json?search=device.generic_name:\"");
 		uriSB.append(dataName);
-		uriSB.append("\"&limit=10");
+		uriSB.append("\"&limit=1");
+		System.out.println("uriSB - "+ uriSB.toString());
+		//uriSB.append("https://api.fda.gov/device/event.json?search=device.generic_name:x-ray&limit=1");
         RestTemplate restTemplate = new RestTemplate();
-        String fdaResponse = restTemplate.getForObject(uriSB.toString(), String.class);
-        return fdaResponse;
+        try{
+	        FDADeviceResponse fdaDeviceResponse = restTemplate.getForObject(uriSB.toString(), FDADeviceResponse.class);
+	        List<Result> resultsList = fdaDeviceResponse.getResults();
+	        for(Result result : resultsList)
+	        {
+	        	FDADeviceEventResult deviceEventResult = new FDADeviceEventResult();
+	        	List<Device> deviceList = result.getDevice();
+	            Device device = deviceList.get(0);
+	            System.out.println("manufacturer_name - " + device.getManufacturerDName());
+	            deviceEventResult.setManufacturerName(device.getManufacturerDName());
+	            System.out.println("generic_name - " + device.getGenericName());
+	            deviceEventResult.setGenericName(device.getGenericName());
+	            System.out.println("model_number - " + device.getModelNumber());
+	            deviceEventResult.setModelNumber(device.getModelNumber());
+	            System.out.println("event_type - " + result.getEventType());
+	            deviceEventResult.setEventType(result.getEventType());
+	            System.out.println("date_of_event - " + result.getDateOfEvent());
+	            deviceEventResult.setDateOfEvent(result.getDateOfEvent());
+	            eventResulstList.add(deviceEventResult);
+	            
+	        }
+	        fdaDataResponse.setEventResultsList(eventResulstList);
+	        fdaDataResponse.setEnforcementResultsList(enforcementResultsList);
+        }catch(Exception e)
+        {
+        	logger.error("Error while querying the FDA Web Service for Device - " + dataName, e);
+        	e.printStackTrace();
+        }
+        return fdaDataResponse;
 	}
 
 	/**

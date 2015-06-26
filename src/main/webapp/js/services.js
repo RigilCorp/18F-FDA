@@ -81,8 +81,9 @@ fdaServices.service('FdaDataService', ['$http', '$log', '$rootScope',function($h
         }
      	$http.post(FDA_SAVE_PREFERENCES_URL, request)
 		.success(function(data, status, headers, config) {
-            var response = {};
+			var response = {};
             response.success = true;
+            response.preferenceObjects = data.enterpriseDocument.documentBody.response.responseMessage.user.preferencesList;
             callback(response);
         })
 		.error(function(data, status, headers, config) {

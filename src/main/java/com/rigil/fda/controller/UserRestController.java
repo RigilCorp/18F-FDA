@@ -1,5 +1,6 @@
 package com.rigil.fda.controller;
 
+import com.rigil.fda.service.UserService;
 import com.rigil.fda.support.UserEnterpriseDocumentSupport;
 import com.rigil.fda.json.EnterpriseDocument;
 
@@ -22,7 +23,7 @@ public class UserRestController {
 	
 	@Autowired
 	UserEnterpriseDocumentSupport enterpriseDocumentSupport;
-
+	
 	@RequestMapping(method={
 			RequestMethod.POST,RequestMethod.PUT}, 
 			consumes="application/json", produces = "application/json"

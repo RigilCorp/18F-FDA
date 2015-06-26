@@ -7,5 +7,6 @@ public interface UserService {
 	public User findByEmail(String email);
 	public User findByPhone(String phone);
 	public User save(User user);
+	public void alertNotifications(String email);
 	
 }
