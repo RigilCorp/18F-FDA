@@ -15,6 +15,7 @@ import com.rigil.fda.json.UserRequest;
 import com.rigil.fda.json.event.Device;
 import com.rigil.fda.json.event.FDADeviceResponse;
 import com.rigil.fda.json.event.Result;
+import com.rigil.fda.json.report.FDADeviceEnforcementResponse;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -130,13 +131,21 @@ public class UserBuilder {
 	private FDADataResponse getFDADeviceResponse(String dataName)
 	{
 		FDADataResponse fdaDataResponse = new FDADataResponse();
-		List<FDADeviceEventResult> eventResulstList = new ArrayList<FDADeviceEventResult>();
-		List<FDADeviceEnforcementResult> enforcementResultsList = new ArrayList<FDADeviceEnforcementResult>();
+		List<FDADeviceEventResult> eventResulstList = getAdverseEventsList(dataName);
+		List<FDADeviceEnforcementResult> enforcementResultsList = getEnforcementReportsList(dataName);
+        fdaDataResponse.setEventResultsList(eventResulstList);
+        fdaDataResponse.setEnforcementResultsList(enforcementResultsList);
+        return fdaDataResponse;
+	}
+	
+	public List<FDADeviceEventResult> getAdverseEventsList(String deviceName)
+	{
+		List<FDADeviceEventResult> eventResultsList = new ArrayList<FDADeviceEventResult>();
 		StringBuilder uriSB = new StringBuilder();
 		uriSB.append("https://api.fda.gov/device/event.json?search=device.generic_name:\"");
-		uriSB.append(dataName);
+		uriSB.append(deviceName);
 		uriSB.append("\"&limit=1");
-		System.out.println("uriSB - "+ uriSB.toString());
+		logger.debug("uriSB - "+ uriSB.toString());
 		//uriSB.append("https://api.fda.gov/device/event.json?search=device.generic_name:x-ray&limit=1");
         RestTemplate restTemplate = new RestTemplate();
         try{
@@ -147,27 +156,57 @@ public class UserBuilder {
 	        	FDADeviceEventResult deviceEventResult = new FDADeviceEventResult();
 	        	List<Device> deviceList = result.getDevice();
 	            Device device = deviceList.get(0);
-	            System.out.println("manufacturer_name - " + device.getManufacturerDName());
+	            logger.debug("manufacturer_name - " + device.getManufacturerDName());
 	            deviceEventResult.setManufacturerName(device.getManufacturerDName());
-	            System.out.println("generic_name - " + device.getGenericName());
+	            logger.debug("generic_name - " + device.getGenericName());
 	            deviceEventResult.setGenericName(device.getGenericName());
-	            System.out.println("model_number - " + device.getModelNumber());
+	            logger.debug("model_number - " + device.getModelNumber());
 	            deviceEventResult.setModelNumber(device.getModelNumber());
-	            System.out.println("event_type - " + result.getEventType());
+	            logger.debug("event_type - " + result.getEventType());
 	            deviceEventResult.setEventType(result.getEventType());
-	            System.out.println("date_of_event - " + result.getDateOfEvent());
+	            logger.debug("date_of_event - " + result.getDateOfEvent());
 	            deviceEventResult.setDateOfEvent(result.getDateOfEvent());
-	            eventResulstList.add(deviceEventResult);
-	            
+	            eventResultsList.add(deviceEventResult);	            
 	        }
-	        fdaDataResponse.setEventResultsList(eventResulstList);
-	        fdaDataResponse.setEnforcementResultsList(enforcementResultsList);
+
         }catch(Exception e)
         {
-        	logger.error("Error while querying the FDA Web Service for Device - " + dataName, e);
-        	e.printStackTrace();
+        	logger.error("Error while querying the FDA Adverse Report Web Service for Device - " + deviceName, e);
+        	//e.printStackTrace();
+        }		
+		return eventResultsList;
+	}
+	
+	public List<FDADeviceEnforcementResult> getEnforcementReportsList(String deviceName)
+	{
+		List<FDADeviceEnforcementResult> enforcementsResultsList = new ArrayList<FDADeviceEnforcementResult>();
+		StringBuilder uriSB = new StringBuilder();
+		uriSB.append("https://api.fda.gov/device/enforcement.json?search=product_description:\"");
+		uriSB.append(deviceName);
+		uriSB.append("\"&limit=1");
+		logger.debug("uriSB - "+ uriSB.toString());
+	    RestTemplate restTemplate = new RestTemplate();
+        try{
+			List<com.rigil.fda.json.report.Result> resultsList = restTemplate.getForObject(uriSB.toString(), FDADeviceEnforcementResponse.class).getResults();
+	        for(com.rigil.fda.json.report.Result result : resultsList)
+	        {
+	        	FDADeviceEnforcementResult enforcementResult = new FDADeviceEnforcementResult();
+	        	logger.debug("recalling_firm - " + result.getRecallingFirm());
+	        	enforcementResult.setRecallingFirm(result.getRecallingFirm());
+	        	logger.debug("product_description: " + result.getProductDescription());
+	            enforcementResult.setProductDescription(result.getProductDescription());
+	            logger.debug("reason_for_recall: " + result.getReasonForRecall());
+	            enforcementResult.setReasonForRecall(result.getReasonForRecall());
+	            logger.debug("recall_initiation_date - " + result.getRecallInitiationDate());
+	            enforcementResult.setRecallInitiationDate(result.getRecallInitiationDate());	  
+	            enforcementsResultsList.add(enforcementResult);
+		     }
+        }catch(Exception e)
+        {
+        	logger.error("Error while querying the FDA Enforcement Report Web Service for Device - " + deviceName, e);
+        	//e.printStackTrace();
         }
-        return fdaDataResponse;
+		return enforcementsResultsList;
 	}
 
 	/**
