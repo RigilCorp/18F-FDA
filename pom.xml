@@ -88,6 +88,11 @@
 			<id>spring-releases</id>
 			<url>https://repo.spring.io/libs-release</url>
 		</repository>
+		<repository>
+			<id>rigil-common-spring-starter</id>
+			<name>Rigil Common Spring Starter</name>
+			<url>file://${project.basedir}/src/main/resources/lib</url>
+		</repository>		
 	</repositories>
 
 	<dependencies>	
@@ -95,8 +100,6 @@
 			<groupId>com.rigil.base</groupId>
 			<artifactId>common-spring-starter</artifactId>
 			<version>1.0.0-RELEASE</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/src/main/resources/lib/rigil-common-spring-starter-1.0.0-RELEASE.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
