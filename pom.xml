@@ -110,15 +110,28 @@
 	</repositories>
 
 	<dependencies>	
-<!-- 		<dependency> -->
-<!-- 			<groupId>com.rigil.base</groupId> -->
-<!-- 			<artifactId>common-spring-starter</artifactId> -->
-<!-- 		</dependency> -->
 		<dependency>
-				<groupId>com.rigil.base</groupId>
-				<artifactId>common-spring-starter</artifactId>
-				<version>1.0.0-RELEASE</version>
+			<groupId>com.rigil.base</groupId>
+			<artifactId>common-spring-starter</artifactId>
+			<version>1.0.0-RELEASE</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/resources/lib/rigil-common-spring-starter-1.0.0-RELEASE.jar</systemPath>
 		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.35</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/resources/lib/mysql-connector-java-5.1.35.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/resources/lib/mail-1.4.jar</systemPath>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
