@@ -32,9 +32,16 @@ controllers.controller('loginController', ['$rootScope', '$scope', '$log', '$loc
                     
                 } else {
                      $scope.dataloading = false;
+                     $scope.data.password = '';
+                     $scope.loginForm.password.$setUntouched();
                      $scope.error = response.message;
                 }
             });
+         }
+         
+         //Reset Valiation to clear error message
+         $scope.resetTouched = function(formField){
+         	formField.$setUntouched();
          }
 }]);
 
@@ -48,8 +55,8 @@ controllers.controller('logoutController', ['$scope', '$log', '$location', 'Auth
 }]);
 
 //REGISTRATION CONTROLLER.
-controllers.controller('registrationController', ['$scope', '$log', '$location', 'RegistrationService',
-    function($scope, $log, $location, RegistrationService){
+controllers.controller('registrationController', ['$scope', '$log', '$location', '$modal', 'RegistrationService',
+    function($scope, $log, $location, $modal, RegistrationService){
     
         //save user registration data.
         $scope.submitRegistrationForm = function(isValid){
@@ -67,7 +74,24 @@ controllers.controller('registrationController', ['$scope', '$log', '$location',
             
             RegistrationService.register(registrationData, function(response){
                 if(response.success){
-                    $location.path("/login");
+                    
+                    var modelResult = $modal.open({
+                        animation: true,
+                        templateUrl: 'pages/registration-modal.html',
+                        controller: 'registrationModalController',
+                        size: 'modal-sm',
+                        resolve : {
+                            username : function(){
+                                return registrationData.email;
+                            }
+                        }
+                    });
+                    
+                    modelResult.result.then(function(){
+                        $location.path("/login");
+                    }, function(){
+                        
+                    });
                 }
                 else {
                     $scope.dataloading = false;
@@ -75,6 +99,20 @@ controllers.controller('registrationController', ['$scope', '$log', '$location',
                 }
             });
         }
+        
+        //Reset Valiation to clear error message
+        $scope.resetTouched = function(formField){
+        	formField.$setUntouched();
+        }
+}]);
+
+//REGISTRATION MODAL WINDOW CONTROLLER
+controllers.controller('registrationModalController',['$scope', '$log', '$modalInstance', 'username', function($scope, $log, $modalInstance, username){
+    $scope.username = username;
+    
+    $scope.ok = function(){
+        $modalInstance.close({});
+    }
 }]);
 
 

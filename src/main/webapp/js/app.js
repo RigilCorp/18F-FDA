@@ -2,6 +2,7 @@
 var fdaApp = angular.module('fda.app',[
     'ngRoute',
     'ngCookies',
+    'ui.bootstrap',
     'angucomplete',
     'fda.controllers',
     'fda.services',
