@@ -1,7 +1,5 @@
 package com.rigil.fda.base;
 
-import com.rigil.fda.config.WebMvcContextConfig;
-
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -17,27 +15,32 @@ import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.rigil.fda.config.JunitBaseJpaConfig;
 import com.rigil.fda.config.JunitDataSourceConfig;
+import com.rigil.fda.config.WebMvcContextConfig;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextHierarchy({
-    @ContextConfiguration(classes={
-            JunitDataSourceConfig.class,
-            JunitBaseJpaConfig.class }),
-    @ContextConfiguration(classes={WebMvcContextConfig.class})
+	@ContextConfiguration(classes={
+			JunitDataSourceConfig.class, 
+			JunitBaseJpaConfig.class }),
+	@ContextConfiguration(classes={WebMvcContextConfig.class})
 })
 @WebAppConfiguration("src/main/webapp")
 @ActiveProfiles(profiles={"unitTest"})
 @TestExecutionListeners({
-    DependencyInjectionTestExecutionListener.class,
-    DirtiesContextTestExecutionListener.class,
-    TransactionalTestExecutionListener.class,
-    DbUnitTestExecutionListener.class})
+	DependencyInjectionTestExecutionListener.class,
+	DirtiesContextTestExecutionListener.class,
+	TransactionalTestExecutionListener.class,
+	DbUnitTestExecutionListener.class})
 @DatabaseSetup(value={
-        "classpath:schema/HibernateIdGenerationData.xml"
-    })
-public class AbstractBaseTest {
+		"classpath:schema/FDAData.xml",
+		"classpath:schema/UserData.xml",
+		"classpath:schema/PreferencesData.xml"
 
-    public static final String email = "ravi@rigil.com";
-    public static final String phone = "703-473-0117";
+	})
+public class AbstractBaseTest {
+	public static final String fdaDataType = "DEVICE";
+	public static final String fdaDeviceName = "NEBULIZER";
+	public static final String email = "18f@fda.gov";
+	public static final String phone = "123-456-7890";
 
 }

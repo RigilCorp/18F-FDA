@@ -10,15 +10,15 @@ import org.springframework.data.repository.query.Param;
 public interface FDADataRepository extends
 JpaRepository<FDADataEntity, Integer> {
 
-    @Query("Select f from FDAData f where f.dataCode=:dataCode order by f.dataName")
+    @Query("Select f from FDADataEntity f where f.dataCode=:dataCode order by f.dataName")
     List<FDADataEntity> findFDADataByCode(
             @Param("dataCode") String dataCode);
 
-    @Query("Select f from FDAData f where f.dataName=:dataName")
+    @Query("Select f from FDADataEntity f where f.dataName=:dataName")
     List<FDADataEntity> findFDADataByName(
             @Param("dataName") String dataName);
 
-    @Query("Select f from FDAData f where f.dataName=:dataName and f.dataCode=:dataCode")
+    @Query("Select f from FDADataEntity f where f.dataName=:dataName and f.dataCode=:dataCode")
     FDADataEntity findFDADataByNameAndCode(
             @Param("dataName") String dataName, @Param("dataCode") String dataCode);
 

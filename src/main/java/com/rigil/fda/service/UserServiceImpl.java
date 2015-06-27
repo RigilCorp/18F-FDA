@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity findByPhone(String phone) {
         logger.debug("Query UserEntity by [Phone: {}]", phone);
-        List<UserEntity> userEntityList = repository.findUserByEmail(phone);
+        List<UserEntity> userEntityList = repository.findUserByPhone(phone);
         if(userEntityList != null && userEntityList.size() > 0)
             return userEntityList.get(0);
         else

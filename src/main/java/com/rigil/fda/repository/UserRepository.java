@@ -12,11 +12,11 @@ import org.springframework.data.repository.query.Param;
 public interface UserRepository extends
 JpaRepository<UserEntity, Integer> {
 
-    @Query("Select u from User u where u.email=:email")
+    @Query("Select u from UserEntity u where u.email=:email")
     List<UserEntity> findUserByEmail(
             @Param("email") String email);
 
-    @Query("Select u from User u where u.phone=:phone")
+    @Query("Select u from UserEntity u where u.phone=:phone")
     List<UserEntity> findUserByPhone(
             @Param("phone") String phone);
 }

@@ -11,15 +11,15 @@ import org.springframework.data.repository.query.Param;
 public interface PreferencesRepository extends
 JpaRepository<PreferenceEntity, Integer> {
 
-    @Query("Select p from Preference p where p.preferenceUser.email=:email")
+    @Query("Select p from PreferenceEntity p where p.preferenceUserEntity.email=:email")
     List<PreferenceEntity> findPreferencesByEmail(
             @Param("email") String email);
 
-    @Query("Select p from Preference p where p.preferenceUser.email=:email and p.fdaData.dataName=:dataName")
+    @Query("Select p from PreferenceEntity p where p.preferenceUserEntity.email=:email and p.fdaDataEntity.dataName=:dataName")
     List<PreferenceEntity> findPreferencesByEmailAndDataName(
             @Param("email") String email, @Param("dataName") String dataName);
 
-    @Query("Select p from Preference p where p.preferenceUser.phone=:phone")
+    @Query("Select p from PreferenceEntity p where p.preferenceUserEntity.phone=:phone")
     List<PreferenceEntity> findPreferencesByPhone(
             @Param("phone") String phone);
 }

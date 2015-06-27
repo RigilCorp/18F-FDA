@@ -11,24 +11,24 @@ import com.rigil.fda.dao.entity.UserEntity;
 
 
 public class UserEntityRepositoryTest extends AbstractBaseTest {
+	
+	@Autowired
+	UserRepository repository;
+	
+	@Test
+	public void testFindUserByEmail(){
+		UserEntity user = repository.findUserByEmail(email).get(0);
+		assertThat("user should not be null.",user, is(not(nullValue())));
+		assertThat("retrived incorrect user", user.getUserEmail(), is(email));
 
-    @Autowired
-    UserRepository repository;
+	}
+	
+	@Test
+	public void testFindUserByPhone(){
+		UserEntity user = repository.findUserByPhone(phone).get(0);
+		assertThat("user should not be null.",user, is(not(nullValue())));
+		assertThat("retrived incorrect user", user.getPhone(), is(phone));
 
-    @Test
-    public void testFindUserByEmail(){
-        UserEntity userEntity = repository.findUserByEmail(email).get(0);
-        assertThat("userEntity should not be null.", userEntity, is(not(nullValue())));
-        assertThat("retrived incorrect userEntity", userEntity.getUserEmail(), is(email));
-
-    }
-
-    @Test
-    public void testFindUserByPhone(){
-        UserEntity userEntity = repository.findUserByEmail(phone).get(0);
-        assertThat("userEntity should not be null.", userEntity, is(not(nullValue())));
-        assertThat("retrived incorrect userEntity", userEntity.getPhone(), is(phone));
-
-    }
+	}
 
 }

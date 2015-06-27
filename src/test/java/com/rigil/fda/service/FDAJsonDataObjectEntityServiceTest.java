@@ -13,16 +13,32 @@ import com.rigil.fda.dao.entity.FDADataEntity;
 
 
 public class FDAJsonDataObjectEntityServiceTest extends AbstractBaseTest {
-
-    @Autowired
-    FDADataService service;
-
-    @Test
-    public void testGetFDAData(){
-        FDADataEntity aFDADataEntity = service.getFDAData("Tylenol", "Drug");
-        assertThat("FDADataEntity should not be null.", aFDADataEntity, is(not(nullValue())));
-    }
-
-
-
+	
+	@Autowired
+	FDADataService service;
+	
+	@Test
+	public void testGetFDAData(){		
+		FDADataEntity aFDAData = service.getFDAData(fdaDeviceName, fdaDataType);
+		assertThat("FDAData should not be null.",aFDAData, is(not(nullValue())));		
+	}
+	
+	@Test
+	public void testGetDevicesData(){		
+		FDADataEntity aFDAData = service.getDevicesData().get(0);
+		assertThat("FDA Device Data should not be null.",aFDAData, is(not(nullValue())));		
+	}
+	
+	@Test
+	public void testGetFoodData(){		
+		FDADataEntity aFDAData = service.getFoodData().get(0);
+		assertThat("FDA Device Data should not be null.",aFDAData, is(not(nullValue())));		
+	}
+	
+	@Test
+	public void testGetDrugData(){		
+		FDADataEntity aFDAData = service.getDrugData().get(0);
+		assertThat("FDA Device Data should not be null.",aFDAData, is(not(nullValue())));		
+	}
+	
 }
