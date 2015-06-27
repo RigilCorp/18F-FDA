@@ -4,59 +4,77 @@
             <h2>Registration</h2>
             <form class="form-horizontal" name="registrationForm" novalidate role="form" ng-submit="submitRegistrationForm(registrationForm.$valid)">
                 <fieldset>
-                    <div class="form-group" ng-class="{ 'has-error' : registrationForm.firstname.$invalid && !registrationForm.firstname.$pristine}">
+                    <div class="form-group" ng-class="{ 'has-error' : registrationForm.firstname.$invalid && (registrationForm.firstname.$touched || registrationForm.$submitted)}">
                         <label for="firstname" class="col-sm-3 control-label">First name</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="firstname"
-                                placeholder="Enter first name" ng-model="data.firstname" required>
-                            <p ng-show="registrationForm.firstname.$invalid && !registrationForm.firstname.$pristine"
-                            class="help-block">Firstname is required.</p>
-                        </div> <!-- .col-sm-9 -->
-                    </div><!-- .form-group -->
+                            <input type="text" class="form-control" name="firstname" placeholder="Enter first name" ng-model="data.firstname" required ng-focus="resetTouched(registrationForm.firstname)">
+                            <div class="help-block" ng-show="registrationForm.firstname.$invalid && (registrationForm.firstname.$touched || registrationForm.$submitted)">
+                                <div ng-show="registrationForm.firstname.$error.required">Firstname is required</div>
+                            </div>
+                        </div>
+                        <!-- .col-sm-9 -->
+                    </div>
+                    <!-- .form-group -->
                     <div class="form-group">
                         <label for="middleName" class="control-label col-sm-3 ">Middle name</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="middlename"
-                                placeholder="Enter middle name" ng-model="data.middlename">
-                        </div><!-- .col-sm-9 -->
-                    </div><!-- .form-group -->
-                    <div class="form-group" ng-class="{ 'has-error' : registrationForm.lastname.$invalid && !registrationForm.lastname.$pristine }">
+                            <input type="text" class="form-control" name="middlename" placeholder="Enter middle name" ng-model="data.middlename">
+                        </div>
+                        <!-- .col-sm-9 -->
+                    </div>
+                    <!-- .form-group -->
+                    <div class="form-group" ng-class="{ 'has-error' : registrationForm.lastname.$invalid && (registrationForm.lastname.$touched || registrationForm.$submitted)}">
                         <label for="lastname" class="col-sm-3 control-label">Last name</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="lastname"
-                                placeholder="Enter last name" ng-model="data.lastname" required>
-                            <p ng-show="registrationForm.lastname.$invalid && !registrationForm.lastname.$pristine"
-                            class="help-block">Lastname is required.</p>
-                        </div><!-- .col-sm-9 -->
-                    </div><!-- .form-group -->
-                    <div class="form-group" ng-class="{ 'has-error' : registrationForm.email.$invalid && !registrationForm.email.$pristine }">
+                            <input type="text" class="form-control" name="lastname" placeholder="Enter last name" ng-model="data.lastname" required ng-focus="resetTouched(registrationForm.lastname)">
+                            <div class="help-block" ng-show="registrationForm.lastname.$invalid && (registrationForm.lastname.$touched || registrationForm.$submitted)">
+                                <div ng-show="registrationForm.lastname.$error.required">Lastname is required.</div>
+                            </div>
+                        </div>
+                        <!-- .col-sm-9 -->
+                    </div>
+                    <!-- .form-group -->
+                    <div class="form-group" ng-class="{ 'has-error' : registrationForm.email.$invalid && (registrationForm.email.$touched || registrationForm.$submitted)}">
                         <label for="email" class="col-sm-3 control-label">Email</label>
                         <div class="col-sm-9">
-                            <input type="email" class="form-control" name="email" placeholder="Email address" ng-model="data.email" required>
-                            <p ng-show="registrationForm.email.$invalid && !registrationForm.email.$pristine"
-                            class="help-block">Email is required.</p>
-                        </div><!-- .col-sm-9 -->
-                    </div><!-- .form-group -->
+                            <input type="email" class="form-control" name="email" placeholder="Email address" 
+                            	ng-pattern="/^[_A-Za-z0-9]+(\.[_A-Za-z0-9]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*(\.[A-Za-z]{2,4})$/" 
+                            	ng-model="data.email" required ng-focus="resetTouched(registrationForm.email)">
+                            <div class="help-block" ng-show="registrationForm.email.$invalid && (registrationForm.email.$touched || registrationForm.$submitted)">
+                                <div ng-show="registrationForm.email.$error.required">Email is required</div>
+                                <div ng-show="registrationForm.email.$error.pattern">Invalid email format</div>
+                            </div>
+                        </div>
+                        <!-- .col-sm-9 -->
+                    </div>
+                    <!-- .form-group -->
                     <div class="form-group">
                         <label for="phone" class="col-sm-3 control-label">Phone</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="phone"
-                                placeholder="Phone number" ng-model="data.phone">
-                        </div><!-- .col-sm-9 -->
-                    </div><!-- .form-group -->
-                    <div class="form-group">
+                            <input type="text" class="form-control" id="phone" placeholder="Phone number" ng-model="data.phone">
+                        </div>
+                        <!-- .col-sm-9 -->
+                    </div>
+                    <!-- .form-group -->
+                    <div class="form-group" ng-class="{'has-error': registrationForm.zipcode.$invalid && (registrationForm.zipcode.$touched || registrationForm.$submitted)}">
                         <label for="zipcode" class="col-sm-3 control-label">Zipcode</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="zipcode"
-                                placeholder="Zipcode" ng-model="data.zip">
-                        </div><!-- .col-sm-9 -->
-                    </div><!-- .form-group -->
+                            <input type="text" class="form-control" name="zipcode" placeholder="Zipcode" ng-model="data.zip" ng-pattern="/^(\d{5}(-\d{4})?|[A-Z]\d[A-Z] *\d[A-Z]\d)$/"
+                            	ng-focus="resetTouched(registrationForm.zipcode)">
+                            <div class="help-block" ng-show="registrationForm.zipcode.$invalid && (registrationForm.zipcode.$touched || registrationForm.$submitted)">
+                                <div ng-show="registrationForm.zipcode.$error.pattern">Invalid zipcode</div>
+                            </div>
+                        </div>
+                        <!-- .col-sm-9 -->
+                    </div>
+                    <!-- .form-group -->
                     <button class="btn btn-primary col-sm-3" type="submit">Register</button>
                     <div class="col-sm-9">
-                        <dataload-spinner dataloading='dataloading'></dataload-spinner>
-                           <div ng-show="error" class="custom-alert-danger">{{error}}</div>
-                    </div><!-- .col-sm-9 -->
-                   </fieldset>
+                       <div class="load-spinner" ng-show="dataloading"><i class="fa fa-cog fa-spin fa-3x"></i></div>
+                        <div ng-show="error" class="custom-alert-danger">{{error}}</div>
+                    </div>
+                    <!-- .col-sm-9 -->
+                </fieldset>
             </form>
         </div>
     </div>

@@ -304,12 +304,29 @@ fdaServices.factory('RegistrationService', ['$http','$log', function($http, $log
             callback(response);
         })
         .error(function(data, status, headers, config) {
-            response = {
-                success : false,
-                 message : 'Unable to save data.'
-            };
-            callback(response);
-        });
+
+        	var errorMessage = null;
+            
+        	if(data.enterpriseDocument){
+                errorMessage = data.enterpriseDocument.documentError.errorMessage;
+                
+            }
+            else{
+                errorMessage = data;
+            }
+             var message = null;
+             if(!(errorMessage.indexOf('ErrorCode[10506]') === -1)){
+             	message = 'User email already exist in system.';
+             }
+             else{
+            	 message = 'Unable to save registration data.';
+             }
+         	response = {
+                 success : true,
+                  message : message
+             };
+            callback(response);	
+		});
     }
 
     service.register = register;
