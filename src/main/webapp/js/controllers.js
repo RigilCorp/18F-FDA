@@ -149,7 +149,7 @@ controllers.controller('preferenceController', ['$scope', '$log', '$filter', '$t
         });
     })();
 
-
+    //Parse reponse and prepare preferences.
     function handleResponse(response){
     	for(var i = 0; i < response.preferenceObjects.length; i++){
             var id = i+1;
@@ -243,16 +243,6 @@ controllers.controller('preferenceController', ['$scope', '$log', '$filter', '$t
             if(response.success){
                 $scope.preferences.splice(0, $scope.preferences.length);
             	handleResponse(response);
-            	
-            	
-            	/*for(var i = 0; i < $scope.preferences.length; i ++){
-                    $scope.preferences[i].status = 'saved';
-                    var eventResultsList = response.preferenceObjects[i].fdaResponse.eventResultsList;
-                    var enforcementResultsList = response.preferenceObjects[i].fdaResponse.enforcementResultsList;
-                    $scope.preferences[i].eventResultsList = eventResultsList;
-                    $scope.preferences[i].enforcementResultsList =  enforcementResultsList;
-
-                }*/
                 $scope.dataloading = false;
                 $scope.dataSaved = true;
                 $timeout(function(){
@@ -282,7 +272,6 @@ controllers.controller('mainController', ['$scope', '$log', '$location', functio
 
     $scope.showLogout = function(){
         return !($location.path().indexOf('/preference') === -1);
-        //return !($.inArray($location.path(), ['/preference']) === -1);
     }
 }])
 

@@ -1,53 +1,65 @@
 
 <div class="content login-content">
 	<div class="login-form">
-			<h2>Login</h2>
-			<form name="loginForm" ng-submit="signin(loginForm.$valid)"
-				novalidate role="form">
-				<fieldset>
-                    <div class="form-group"
-                        ng-class="{ 'has-error' : loginForm.username.$invalid && loginForm.username.$touched }">
-                        <input name="username" class="form-control" type="text"
-                            placeholder="Email address" ng-model="data.username"
-                            ng-pattern="/^[_A-Za-z0-9]+(\.[_A-Za-z0-9]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*(\.[A-Za-z]{2,4})$/"
-                            required ng-focus="resetTouched(loginForm.username)"/>
-                        <div ng-show="loginForm.username.$invalid && loginForm.username.$touched" class="help-block">
-                            <div ng-show="loginForm.username.$error.pattern">Invalid email format</div>
-                            <div ng-show="loginForm.username.$error.required">Username is required.</div>
-                        </div>
-                         
-                    </div>
-                    <!-- .form-group -->
-                    <div class="form-group"
-                        ng-class="{ 'has-error' : loginForm.password.$invalid && loginForm.password.$touched }">
-                        <input name="password" class="form-control" type="password"
-                            placeholder="Password" ng-model="data.password" required ng-focus="resetTouched(loginForm.password)">
-                        <div ng-show="loginForm.password.$invalid && loginForm.password.$touched" class="help-block">
-                            <div ng-show="loginForm.password.$error.required">Password is required.</div>
-                        </div>
-                    </div>
-                    <!-- .form-group -->
-                    <div>
-                    <button class="btn btn-primary" type="submit"
-                        ng-disabled="loginForm.$invalid">Sign in</button>
-                    <span class="load-spinner" ng-show="dataloading"><i class="fa fa-cog fa-spin fa-3x"></i></span>
-                    </div>
-                    <div ng-show="error" class="custom-alert-danger">{{error}}</div>
-                </fieldset>
-			</form>
-			<p>
-				<a href="#/registration">Register an account</a>
-			</p>
-		</div>
-		<!-- login-form -->
+		<h2>Login</h2>
+		<form name="loginForm" ng-submit="signin(loginForm.$valid)" novalidate role="form">
+			<fieldset>
+				<div class="form-group"
+					ng-class="{ 'has-error' : loginForm.username.$invalid && loginForm.username.$touched }">
+					<label class="sr-only">Username</label>
+					<input name="username" class="form-control" type="text"
+						placeholder="Email address" ng-model="data.username"
+						ng-pattern="/^[_A-Za-z0-9]+(\.[_A-Za-z0-9]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*(\.[A-Za-z]{2,4})$/"
+						required ng-focus="resetTouched(loginForm.username)" />
+					<div ng-show="loginForm.username.$invalid && loginForm.username.$touched" class="help-block">
+						<div ng-show="loginForm.username.$error.pattern">Invalid email format</div>
+						<div ng-show="loginForm.username.$error.required">Username is required.</div>
+					</div><!--.help-block -->
+				</div><!-- .form-group -->
+				<div class="form-group"
+					ng-class="{ 'has-error' : loginForm.password.$invalid && loginForm.password.$touched }">
+					<label class="sr-only">Password</label>
+					<input name="password" class="form-control" type="password"
+						placeholder="Password" ng-model="data.password" required
+						ng-focus="resetTouched(loginForm.password)">
+					<div ng-show="loginForm.password.$invalid && loginForm.password.$touched" class="help-block">
+						<div ng-show="loginForm.password.$error.required">Password is required.</div>
+					</div><!--.help-block -->
+				</div><!-- .form-group -->
+				<div>
+					<button class="btn btn-primary" type="submit"
+						ng-disabled="loginForm.$invalid">Sign in</button>
+					<span class="load-spinner" ng-show="dataloading">
+						<i class="fa fa-cog fa-spin fa-3x"></i>
+					</span>
+				</div>
+				<div ng-show="error" class="custom-alert-danger">{{error}}</div>
+			</fieldset>
+		</form>
+		<p>
+			<a href="#/registration">Register an account</a>
+		</p>
+	</div><!-- login-form -->
 </div><!-- .content -->
 <div class="content about-content">
-    <div class="row">
-        <div class="bs-callout bs-callout-info" id="callout-navbar-breakpoint">
-            <h4>Register at FDAlerts for alerts on:</h4>
-            <p><span class="label label-info">Adverse events:</span> FDA’s publically available drug adverse event and medication error reports, and medical device adverse event reports.</p>
-            <p><span class="label label-info">Recalls:</span> Enforcement report data, containing information gathered from public notices about certain recalls of FDA-regulated products.</p>
-            <p><span class="label label-info">Labeling:</span> Structured Product Labeling (SPL) data for FDA-regulated human prescription drug, OTC drug and biological product labeling.</p>
-          </div>
-    </div><!-- .row -->
+	<div class="row">
+		<div class="bs-callout bs-callout-info" id="callout-navbar-breakpoint">
+			<h4>Register at FDAlerts for alerts on:</h4>
+			<p>
+				<span class="label label-info">Adverse events:</span> FDA’s
+				publically available drug adverse event and medication error
+				reports, and medical device adverse event reports.
+			</p>
+			<p>
+				<span class="label label-info">Recalls:</span> Enforcement report
+				data, containing information gathered from public notices about
+				certain recalls of FDA-regulated products.
+			</p>
+			<p>
+				<span class="label label-info">Labeling:</span> Structured Product
+				Labeling (SPL) data for FDA-regulated human prescription drug, OTC
+				drug and biological product labeling.
+			</p>
+		</div>
+	</div><!-- .row -->
 </div>
