@@ -26,7 +26,14 @@ controllers.controller('loginController', ['$rootScope', '$scope', '$log', '$loc
              AuthenticationService.login($scope.data.username, $scope.data.password, function (response) {
                  if (response.success) {
                     AuthenticationService.setCredentials($scope.data.username, $scope.data.password);
-                    var redirectTo = $rootScope.redirectTo;
+                    var redirectTo = null
+                    if($rootScope.redirectTo){
+                    	redirectTo = $rootScope.redirectTo;	
+                    }
+                    else {
+                    	redirectTo = '/preference';
+                    }
+                    
                     $rootScope.redirectTo = null;
                     $location.path(redirectTo);
 
@@ -128,26 +135,7 @@ controllers.controller('preferenceController', ['$scope', '$log', '$filter', '$t
     (function initController(){
         FdaDataService.getPreference(function(response){
             if(response.success){
-                for(var i = 0; i < response.preferenceObjects.length; i++){
-                    var id = i+1;
-                    var category = $filter('capitalize')(response.preferenceObjects[i].fdaData.dataCode);
-                    var searchStr = response.preferenceObjects[i].fdaData.dataName;
-                    var eventResultsList = response.preferenceObjects[i].fdaResponse.eventResultsList;
-                    var enforcementResultsList = response.preferenceObjects[i].fdaResponse.enforcementResultsList;
-                    var preference = {id : id,
-                            searchData : [],
-                            searchedKeyword:'',
-                            showAddButton:false,
-                            category : category,
-                            isSearchKeywordAdded:false,
-                            addKeyword:'',
-                            searchStr: searchStr,
-                            status : 'saved',
-                            eventResultsList: eventResultsList,
-                            enforcementResultsList: enforcementResultsList
-                        };
-                    $scope.preferences.push(preference);
-                }
+                handleResponse(response);
                 if($routeParams.device && $routeParams.name){
                     var category = $filter('capitalize')($routeParams.device);
                     var preferences = $filter('filter')($scope.preferences, {category:category});
@@ -157,13 +145,34 @@ controllers.controller('preferenceController', ['$scope', '$log', '$filter', '$t
                         $scope.enforcementReportData = $filter('orderBy')(preference[0].enforcementResultsList, ['-recallInitiationDate']); //preference[0].enforcementResultsList;
                     }
                 }
-
             }
-
         });
     })();
 
 
+    function handleResponse(response){
+    	for(var i = 0; i < response.preferenceObjects.length; i++){
+            var id = i+1;
+            var category = $filter('capitalize')(response.preferenceObjects[i].fdaJsonDataObject.dataCode);
+            var searchStr = response.preferenceObjects[i].fdaJsonDataObject.dataName;
+            var eventResultsList = response.preferenceObjects[i].fdaResponse.eventResultsList;
+            var enforcementResultsList = response.preferenceObjects[i].fdaResponse.enforcementResultsList;
+            var preference = {id : id,
+                    searchData : [],
+                    searchedKeyword:'',
+                    showAddButton:false,
+                    category : category,
+                    isSearchKeywordAdded:false,
+                    addKeyword:'',
+                    searchStr: searchStr,
+                    status : 'saved',
+                    eventResultsList: eventResultsList,
+                    enforcementResultsList: enforcementResultsList
+                };
+            $scope.preferences.push(preference);
+        }
+    }
+    
 
     //Add prefernece object dynamicly to show preferences in UI.
     $scope.addPreference = function(){
@@ -232,14 +241,18 @@ controllers.controller('preferenceController', ['$scope', '$log', '$filter', '$t
         $scope.dataloading = true;
         FdaDataService.savePreferences($scope.preferences, function(response){
             if(response.success){
-                for(var i = 0; i < $scope.preferences.length; i ++){
+                $scope.preferences.splice(0, $scope.preferences.length);
+            	handleResponse(response);
+            	
+            	
+            	/*for(var i = 0; i < $scope.preferences.length; i ++){
                     $scope.preferences[i].status = 'saved';
                     var eventResultsList = response.preferenceObjects[i].fdaResponse.eventResultsList;
                     var enforcementResultsList = response.preferenceObjects[i].fdaResponse.enforcementResultsList;
                     $scope.preferences[i].eventResultsList = eventResultsList;
                     $scope.preferences[i].enforcementResultsList =  enforcementResultsList;
 
-                }
+                }*/
                 $scope.dataloading = false;
                 $scope.dataSaved = true;
                 $timeout(function(){

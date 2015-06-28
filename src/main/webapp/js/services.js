@@ -23,7 +23,7 @@ fdaServices.service('FdaDataService', ['$http', '$log', '$rootScope',function($h
         .success(function(data, status, headers, config) {
             var response = {};
             response.success = true;
-            response.searchData = data.enterpriseDocument.documentBody.response.responseMessage.fdaDataList;
+            response.searchData = data.enterpriseDocument.documentBody.response.responseMessage.fdaJsonDataObjectList;
             callback(response);
         })
         .error(function(data, status, headers, config) {
@@ -41,7 +41,7 @@ fdaServices.service('FdaDataService', ['$http', '$log', '$rootScope',function($h
         request.enterpriseDocument.documentBody.request.requestCriteria = 'email';
         var email = $rootScope.globals.currentUser.username;
 
-        request.enterpriseDocument.documentBody.request.requestMessage.userRequest.email = email;
+        request.enterpriseDocument.documentBody.request.requestMessage.userRequestJsonDataObject.email = email;
 
         $http.post(FDA_SAVE_PREFERENCES_URL, request)
         .success(function(data, status, headers, config) {
@@ -67,19 +67,19 @@ fdaServices.service('FdaDataService', ['$http', '$log', '$rootScope',function($h
 
         var username = $rootScope.globals.currentUser.username;
 
-        request.enterpriseDocument.documentBody.request.requestMessage.userRequest.email = username;
+        request.enterpriseDocument.documentBody.request.requestMessage.userRequestJsonDataObject.email = username;
 
         for(var i = 0; i < preferences.length; i++){
             if(preferences[i].status === 'new'){
                 var preferenceObject = requestTemplates.createPreferenceObject();
-                preferenceObject.fdaData.dataCode = preferences[i].category;
+                preferenceObject.fdaJsonDataObject.dataCode = preferences[i].category;
                 if(preferences[i].match > 0 && preferences[i].selectedObject){
-                    preferenceObject.fdaData.dataName = preferences[i].selectedObject.title;
+                    preferenceObject.fdaJsonDataObject.dataName = preferences[i].selectedObject.title;
                 }
                 else {
-                    preferenceObject.fdaData.dataName = preferences[i].searchedKeyword;
+                    preferenceObject.fdaJsonDataObject.dataName = preferences[i].searchedKeyword;
                 }
-                 request.enterpriseDocument.documentBody.request.requestMessage.userRequest.preferencesList.push(preferenceObject);
+                 request.enterpriseDocument.documentBody.request.requestMessage.userRequestJsonDataObject.preferencesList.push(preferenceObject);
             }
         }
          $http.post(FDA_SAVE_PREFERENCES_URL, request)
@@ -289,12 +289,12 @@ fdaServices.factory('RegistrationService', ['$http','$log', function($http, $log
 
         var request = requestTemplates.createRegistrationRequest()
         request.enterpriseDocument.documentBody.request.requestMethod = 'PUT';
-        request.enterpriseDocument.documentBody.request.requestMessage.userRequest.firstName = userRegistrationData.firstname;
-        request.enterpriseDocument.documentBody.request.requestMessage.userRequest.middleName = userRegistrationData.middlename;
-        request.enterpriseDocument.documentBody.request.requestMessage.userRequest.lastName = userRegistrationData.lastname;
-        request.enterpriseDocument.documentBody.request.requestMessage.userRequest.email = userRegistrationData.email;
-        request.enterpriseDocument.documentBody.request.requestMessage.userRequest.phone = userRegistrationData.phone;
-        request.enterpriseDocument.documentBody.request.requestMessage.userRequest.zipcode = userRegistrationData.zipcode;
+        request.enterpriseDocument.documentBody.request.requestMessage.userRequestJsonDataObject.firstName = userRegistrationData.firstname;
+        request.enterpriseDocument.documentBody.request.requestMessage.userRequestJsonDataObject.middleName = userRegistrationData.middlename;
+        request.enterpriseDocument.documentBody.request.requestMessage.userRequestJsonDataObject.lastName = userRegistrationData.lastname;
+        request.enterpriseDocument.documentBody.request.requestMessage.userRequestJsonDataObject.email = userRegistrationData.email;
+        request.enterpriseDocument.documentBody.request.requestMessage.userRequestJsonDataObject.phone = userRegistrationData.phone;
+        request.enterpriseDocument.documentBody.request.requestMessage.userRequestJsonDataObject.zipcode = userRegistrationData.zipcode;
 
         $http.post(FDA_REGISTRATION_URL, request)
         .success(function(data, status, headers, config) {
@@ -316,13 +316,13 @@ fdaServices.factory('RegistrationService', ['$http','$log', function($http, $log
             }
              var message = null;
              if(!(errorMessage.indexOf('ErrorCode[10506]') === -1)){
-             	message = 'User email already exist in system.';
+             	message = 'This e-mail address already exists in our system.';
              }
              else{
             	 message = 'Unable to save registration data.';
              }
          	response = {
-                 success : true,
+                 success : false,
                   message : message
              };
             callback(response);	

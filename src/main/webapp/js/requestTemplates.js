@@ -65,7 +65,7 @@ var requestTemplates = {
                     "requestMethod" : "",
                     "requestCriteria" : "",
                     "requestMessage" : {
-                        "userRequest" : {
+                        "userRequestJsonDataObject" : {
                             "email" : "",
                             "firstName" : "",
                             "middleName" : "",
@@ -82,7 +82,7 @@ var requestTemplates = {
         return angular.copy(this.registrationRequest);
     },
     preferenceObject : {
-        "fdaData" : {
+        "fdaJsonDataObject" : {
             "dataName" : "",
             "dataCode" : ""
         }
@@ -102,7 +102,7 @@ var requestTemplates = {
                     "requestMethod" : "",
                     "requestCriteria" : "",
                     "requestMessage" : {
-                        "userRequest" : {
+                        "userRequestJsonDataObject" : {
                             "email" : "",
                             "firstName" : "",
                             "middleName" : "",

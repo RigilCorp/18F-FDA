@@ -40,16 +40,17 @@
 						ng-click="addPreference()">Set Preferences</button>
 					<button class="btn btn-primary col-sm-2 col-sm-offset-1 push-right-10"
 						ng-click="savePreferences()">Save</button>
-					<label id="dataSaved" class="col-sm-2 control-label"
-						ng-show="dataSaved">Data Saved.</label>
 					<div class="load-spinner col-sm-1" ng-show="dataloading"><i class="fa fa-cog fa-spin fa-3x"></i></div>
+					<span id="dataSaved" class="col-sm-2 alert alert-success"
+						ng-show="dataSaved">Data Saved.</span>
+					
 				</div>
 			</fieldset>
 		</form>
 	</div><!-- login-form -->
 	<hr class="hr-weight-6">
 	<div class="height-50-per" id="resultPage">
-		<div class="container" ng-show="adverseReportData">
+		<div ng-show="adverseReportData">
 		  <h2>Adverse Events</h2>
 		  <table class="table .table-striped .table-hover">
 		    <thead>
@@ -72,7 +73,7 @@
 		    </tbody>
 		  </table>
 		</div><!-- .container -->
-		<div class="container" ng-show="enforcementReportData">
+		<div ng-show="enforcementReportData">
 			  <h2>Enforcement Reports</h2>
 			  <table class="table .table-striped .table-hover">
 			    <thead>
@@ -80,7 +81,7 @@
 			        <th class="col-sm-3">Recalling Firm</th>
 			        <th class="col-sm-4">Product Description</th>
 			        <th class="col-sm-3">Reason for Recall</th>
-			        <th class="col-sm-2">Recall Initiation Date</th>
+			        <th class="col-sm-2">Recall Init Date</th>
 			      </tr>
 			    </thead>
 			    <tbody>

@@ -55,12 +55,11 @@ label.col-sm-3.control-label, label.col-sm-2.control-label, label.col-sm-1.contr
 	margin-top: 15px;
 }
 
-#dataSaved {
-	margin-top: 15px;
-	margin-left: 15px;
-	color: #002E0F;
-	font-weight: 700;
-	font-size: 16px;
+span#dataSaved {
+  padding: 8px 0px;
+  top: 12px;
+  left: 34px;
+  text-align: center;
 }
 
 .push-right-10 {
@@ -77,7 +76,7 @@ label.col-sm-3.control-label, label.col-sm-2.control-label, label.col-sm-1.contr
 
 .height-50-per {
 	max-height: 50%;
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 
 .no-x-overflow {
