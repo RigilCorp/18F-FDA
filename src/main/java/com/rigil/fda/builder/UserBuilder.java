@@ -129,7 +129,7 @@ public class UserBuilder {
         return jsonUser;
     }
 
-    private FDADataResponse getFDADeviceResponse(String dataName)
+    public FDADataResponse getFDADeviceResponse(String dataName)
     {
         FDADataResponse fdaDataResponse = new FDADataResponse();
         List<FDADeviceEventResult> eventResultsList = getAdverseEventsList(dataName);

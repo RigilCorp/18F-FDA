@@ -4,6 +4,8 @@ import com.rigil.fda.service.AuthenticationService;
 import com.rigil.fda.service.AuthenticationServiceImpl;
 import com.rigil.fda.service.FDADataService;
 import com.rigil.fda.service.FDADataServiceImpl;
+import com.rigil.fda.service.FDASearchService;
+import com.rigil.fda.service.FDASearchServiceImpl;
 import com.rigil.fda.service.MailService;
 import com.rigil.fda.service.MailServiceImpl;
 import com.rigil.fda.service.UserService;
@@ -33,6 +35,11 @@ public class ServiceContextConfig {
     @Bean
     public MailService mailService(){
         return new MailServiceImpl();
+    }
+    
+    @Bean
+    public FDASearchService fdaSearchService(){
+        return new FDASearchServiceImpl();
     }
 
 
