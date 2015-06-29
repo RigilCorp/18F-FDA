@@ -135,7 +135,7 @@ public class UserServiceImpl implements UserService {
                 logger.debug("date_of_event - " + result.getDateOfEvent());
                 emailMsgSB.append("\n" + "Date of Event: " + result.getDateOfEvent());
             }
-            emailMsgSB.append("\n\n\n" + "Click on the following link to view more details - http://localhost:8080/rigil-18f/#/preferenceEntity/Device/");
+            emailMsgSB.append("\n\n\n" + "Click on the following link to view more details - http://fdalerts.com/#/preferenceEntity/Device/");
             emailMsgSB.append(deviceName);
             mailService.sendMail(email, "Adverse Event Alert Notification - " + deviceName, emailMsgSB.toString());
         }catch(Exception e)
@@ -167,7 +167,7 @@ public class UserServiceImpl implements UserService {
                 logger.debug("recall_initiation_date - " + result.getRecallInitiationDate());
                 emailMsgSB.append("\n" + "Recall Initiation Date: " + result.getRecallInitiationDate());
             }
-            emailMsgSB.append("\n\n\n" + "Click on the following link to view more details - http://localhost:8080/rigil-18f/#/preferenceEntity/Device/");
+            emailMsgSB.append("\n\n\n" + "Click on the following link to view more details - http://fdalerts.com/#/preferenceEntity/Device/");
             emailMsgSB.append(deviceName);
             mailService.sendMail(email, "Enforcement Report Alert Notification for - " + deviceName, emailMsgSB.toString());
         }catch(Exception e)
