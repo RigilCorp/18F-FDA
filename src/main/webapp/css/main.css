@@ -103,6 +103,10 @@ span#dataSaved {
     color: #fff;
 }
 
+p.navbar-text {
+  margin-top: 20px;
+}
+
 .navbar-default .navbar-nav>li>a, 
 .navbar-default .navbar-nav>li>a:hover
 	{
