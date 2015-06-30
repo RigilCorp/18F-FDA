@@ -130,6 +130,7 @@ controllers.controller('preferenceController', ['$scope', '$log', '$filter', '$t
     $scope.searchPlaceholder = {Device: "Search for a device", Drug: "Search for a Drug", Food: "Search for a Food"};
     $scope.adverseReportData = null;
     $scope.enforcementReportData = null;
+    $scope.showSaveButton = false;
 
     //function runs at controller load.
     (function initController(){
@@ -203,6 +204,7 @@ controllers.controller('preferenceController', ['$scope', '$log', '$filter', '$t
         });
 
         $scope.preferences.push(preference);
+        $scope.showSaveButton = true;
     }
 
 
@@ -245,6 +247,7 @@ controllers.controller('preferenceController', ['$scope', '$log', '$filter', '$t
             	handleResponse(response);
                 $scope.dataloading = false;
                 $scope.dataSaved = true;
+                $scope.showSaveButton = false;
                 $timeout(function(){
                     $scope.dataSaved = false;
                 }, 2000);

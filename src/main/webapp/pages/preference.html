@@ -32,17 +32,17 @@
 					</div><!-- .col-sm-3 -->
 					<button class="btn btn-danger col-sm-2"
 						ng-click="addSearchKeyword($index)"
-						ng-show="prefernce.showAddButton && prefernce.searchedKeyword && prefernce.status !== 'saved'"
-						ng-disabled="prefernce.isSearchKeywordAdded">Add Keyword</button>
+						ng-show="prefernce.showAddButton && prefernce.searchedKeyword && prefernce.status !== 'saved' && !prefernce.isSearchKeywordAdded"
+						ng-disable="prefernce.isSearchKeywordAdded">Add Keyword</button>
 					<button class="btn btn-info col-sm-2" ng-click="viewReport($index)"
 						ng-show="prefernce.status === 'saved'" ng-disabled="false">View Report</button>
 				</div><!-- .form-group .row -->
 				<div class="form-group row">
 					<button class="btn btn-info col-sm-2 col-sm-offset-2 push-right-10"
-						ng-click="addPreference()">Set Preferences</button>
+						ng-click="addPreference()">Add Preferences</button>
 					<button
 						class="btn btn-primary col-sm-2 col-sm-offset-1 push-right-10"
-						ng-click="savePreferences()">Save</button>
+						ng-click="savePreferences()" ng-show="showSaveButton">Save</button>
 					<div class="load-spinner col-sm-1" ng-show="dataloading">
 						<i class="fa fa-cog fa-spin fa-3x"></i>
 					</div><!-- .load-spinner.col-sm-1 -->
