@@ -13,15 +13,16 @@
 						<select class="form-control" placeholder="Select preference"
 							ng-model="prefernce.category"
 							ng-change="preferenceSelectChanged($index)"
-							ng-disabled="prefernce.status === 'saved'">
+							ng-hide="prefernce.status === 'saved'">
 							<option>Drug</option>
 							<option>Device</option>
 							<option>Food</option>
 						</select>
+						<label class="read-control" ng-show="prefernce.status === 'saved'">{{prefernce.category}}</label>
 					</div><!-- .col-sm-2 -->
-					<label class="col-sm-1 control-label" ng-show="prefernce.category">Search</label>
+					<label class="col-sm-1 control-label" ng-show="prefernce.category && prefernce.status !== 'saved'" ng-hide="prefernce.status === 'saved'">Search</label>
 					<div class="col-sm-3" ng-show="prefernce.category">
-						<angucomplete
+						<angucomplete ng-hide="prefernce.status === 'saved'"
 							placeholder="{{searchPlaceholder[prefernce.category]}}"
 							prefernce="prefernce" pause="100"
 							selectedobject="prefernce.selectedObject"
@@ -29,12 +30,14 @@
 							searchfields="dataName" titlefield="dataName" minlength="1"
 							inputclass="form-control form-control-small"
 							matchclass="highlight" />
+							<label class="read-control col-sm-offset-4" ng-show="prefernce.status === 'saved'">{{prefernce.searchStr}}</label>
 					</div><!-- .col-sm-3 -->
+					
 					<button class="btn btn-danger col-sm-2"
 						ng-click="addSearchKeyword($index)"
 						ng-show="prefernce.showAddButton && prefernce.searchedKeyword && prefernce.status !== 'saved' && !prefernce.isSearchKeywordAdded"
 						ng-disable="prefernce.isSearchKeywordAdded">Add Keyword</button>
-					<button class="btn btn-info col-sm-2" ng-click="viewReport($index)"
+					<button class="btn btn-info col-sm-2 col-sm-offset-1" ng-click="viewReport($index)"
 						ng-show="prefernce.status === 'saved'" ng-disabled="false">View Report</button>
 				</div><!-- .form-group .row -->
 				<div class="form-group row">

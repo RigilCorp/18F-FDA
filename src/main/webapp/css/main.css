@@ -135,3 +135,9 @@ bs-callout+.bs-callout {
 .bs-callout>h4 {
 	color: #1b809e;
 }
+
+label.read-control.ng-binding {
+  margin-top: 24px;
+  font-weight: 500;
+  padding-left: 15px;
+}
