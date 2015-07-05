@@ -14,6 +14,7 @@ import com.rigil.fda.support.UserEnterpriseDocumentSupport;
 import com.rigil.fda.json.FDADataResponse;
 import com.rigil.fda.json.FDADeviceEnforcementResult;
 import com.rigil.fda.json.FDADeviceEventResult;
+import com.rigil.fda.json.count.event.FDAEventCountResponse;
 import com.rigil.fda.json.event.Device;
 import com.rigil.fda.json.event.FDADeviceResponse;
 import com.rigil.fda.json.event.Result;
@@ -137,6 +138,20 @@ public class UserBuilder {
         fdaDataResponse.setEventResultsList(eventResultsList);
         fdaDataResponse.setEnforcementResultsList(enforcementResultsList);
         return fdaDataResponse;
+    }
+    
+    public FDAEventCountResponse getFDADeviceCountResponse()
+    {
+    	FDAEventCountResponse fdaEventCountResponse = new FDAEventCountResponse();
+        String url = "https://api.fda.gov/device/event.json?&count=device.generic_name.exact&limit=10";
+        RestTemplate restTemplate = new RestTemplate();
+        try{
+        	fdaEventCountResponse = restTemplate.getForObject(url, FDAEventCountResponse.class);
+        }catch(Exception e)
+        {
+            logger.error("Error while querying the FDA Adverse Report Web Service for Device Alert Events Count", e);
+        }
+        return fdaEventCountResponse;
     }
 
     public List<FDADeviceEventResult> getAdverseEventsList(String deviceName)

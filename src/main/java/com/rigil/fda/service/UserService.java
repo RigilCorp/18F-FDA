@@ -8,5 +8,6 @@ public interface UserService {
     UserEntity findByPhone(String phone);
     UserEntity save(UserEntity userEntity);
     void alertNotifications(String email);
+    String getPhoneEmail(String phone);
 
 }

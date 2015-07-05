@@ -1,11 +1,16 @@
 package com.rigil.fda.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import com.rigil.fda.dao.entity.PreferenceEntity;
 import com.rigil.fda.dao.entity.UserEntity;
@@ -23,6 +28,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 @Transactional(readOnly=true)
 @Service
@@ -78,7 +85,7 @@ public class UserServiceImpl implements UserService {
         {
             logger.debug("There is a thread already running for the UserEntity");
         }else{
-            logger.debug("First request for the UserEntity so start a new Thread");
+        	logger.debug("First request for the UserEntity so start a new Thread");
             ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(2);
             scheduledFuture = scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
             @Override
@@ -93,10 +100,16 @@ public class UserServiceImpl implements UserService {
 
     public void sendAlertNotifications(String email)
     {
-        logger.debug("Sending Alert Notifications for " + email);
-
+    	logger.debug("Sending Alert Notifications for " + email);
         List<PreferenceEntity> preferencesList = preferencesRepo.findPreferencesByEmail(email);
-        List<PreferenceJsonDataObject> preferencesJsonList = new ArrayList<PreferenceJsonDataObject>();
+        UserEntity user = findByEmail(email);
+        String phone = user.getPhone();
+        if(phone != null)
+        {
+        	String phoneEmail = getPhoneEmail(phone);
+        	email = email + "," + phoneEmail;
+        }
+        logger.debug("User Emails - " + email);
         for(PreferenceEntity preferenceEntity : preferencesList)
         {
             if(preferenceEntity != null)
@@ -176,5 +189,29 @@ public class UserServiceImpl implements UserService {
             //e.printStackTrace();
         }
     }
+    
+    @Override
+	public String getPhoneEmail(String phoneNumber) {
+		String result = "";
+		String url = "https://api.data24-7.com/v/2.0?api=T&user=testtest88&pass=testtest88&p1=1"
+				+ phoneNumber;
+		try {
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
+					.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(url);
+			doc.getDocumentElement().normalize();
+			result = doc.getElementsByTagName("sms_address").item(0)
+					.getTextContent();
+
+		} catch (ParserConfigurationException e) {
+			// e.printStackTrace();
+		} catch (SAXException e) {
+			// e.printStackTrace();
+		} catch (IOException e) {
+			// e.printStackTrace();
+		}
+		return result;
+	}
 
 }

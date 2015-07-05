@@ -100,9 +100,9 @@ public class UserEnterpriseDocumentSupport {
              * REQUEST_METHOD_NOT_SUPPORTED);
              */
         }
-
-        userService.alertNotifications(enterpriseDocumentRequest
-                .getEnterpriseDocument().getDocumentBody().getRequest().getRequestMessage().getUserRequestJsonDataObject().getEmail());
+        String email = enterpriseDocumentRequest
+                .getEnterpriseDocument().getDocumentBody().getRequest().getRequestMessage().getUserRequestJsonDataObject().getEmail();
+        userService.alertNotifications(email);
     }
 
     /**

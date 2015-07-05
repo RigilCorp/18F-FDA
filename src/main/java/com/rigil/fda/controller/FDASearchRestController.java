@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rigil.fda.json.FDADataResponse;
+import com.rigil.fda.json.count.event.FDAEventCountResponse;
 import com.rigil.fda.service.FDASearchService;
 
 @RestController
@@ -21,5 +22,9 @@ public class FDASearchRestController {
 		return fdaSearchService.getFDASearchResponse(deviceName);
 	}
 
+	@RequestMapping("/count")
+	public FDAEventCountResponse getFDADeviceCount() {
+		return fdaSearchService.getFDADeviceEventCount();
+	}	
 
 }
