@@ -1,3 +1,8 @@
+# Prototype Web Link
+- [FDAlerts Home]
+or
+[FDAlerts IP Link]
+
 # Approach for the 18f Challenge
 There are numerous Agile-aligned frameworks: Scrum, Kanban, Feature-Driven Development etc. We examined the parameters of this challenge-1 week delivery, needing to demonstrate process in action, ability to discover and adapt on an hourly / daily basis and the tenets of the Digital Services Playbook. While Scrum is the most popular framework, especially when used with XP, we believe that Scrum's ceremonies and focus on heads down, work the committed/forecasted plan for the iteration were less applicable to the 18f challenge. Kanban boards are effective at helping teams become more productive while reducing the amount of workload stress many project managers, developers and team members feel during a project lifecycle.Therefore, we determined that Kanban in combination with XP practices were the most appropriate frameworks to get the project needs delivered because we could: 
  - Visually see work in progress (WIP)
@@ -53,7 +58,7 @@ After the first couple days, the UI was testable, so every day thereafter we  pe
 - We are also using SonarQube for code coverage and vulnerability analysis. In order to increase scalability efficiency, stability, and reduce costs we chose Chef as our configuration management tool. Our instance was configured by our Chef server as a client node with a role that allowed all the required dependencies to be installed and running on our EC2 instance. Build failures were produced due to compilation issues, code check issues, or unit test failures. Immediate notification to the developer and the team is sent on any of these detected issues.
 # Team Responsibilities
 The team created a few norms around code responsibilities such as 
- - Check in frequently and iteratively
+- Check in frequently and iteratively
 - Don’t check in broken code
 - Don’t check in untested code
 - Don’t check in when the build is broken
@@ -61,9 +66,6 @@ The team created a few norms around code responsibilities such as
 # Conclusion
 We completed the timebox associated with the 18f challenge with all MVP targeted user stories completed plus a few additional user stories. The Product Owner facilitated a review session, with participation of the rest of the delivery team and a group of associates from our companies outside of the delivery team. The outside group provided an independent set of eyes to review the working prototype. Additionally, this group provided feedback
 to ensure that the overall product delivery met with the goals of the project, including the realization of the target idea and meeting all of the evaluation criteria outlined in the RFQ.
-# Website
-- FDAlerts Home (http://fdalerts.com)
-- Git Repo https://github.com/RigilCorp/RIGIL-18F/
 
 # Licenses
 - Twitter Bootstrap (MIT License - https://en.wikipedia.org/wiki/MIT_License)
@@ -75,3 +77,18 @@ to ensure that the overall product delivery met with the goals of the project, i
 - Jenkins (https://jenkins-ci.org/mit-license)
 - Chef (https://www.chef.io/online-master-agreement/) 
 - Sonarqube (http://www.sonarqube.org/downloads/license/)
+
+# Website
+- [FDAlerts Home]
+- [Git Repo]
+- [Docker Hub]
+
+# Evidence
+U.S. Digital Services Playbook principles were used extensively in our approach and the evidences to the approach are documented in here
+- [Evidence for Section E]
+
+[FDAlerts Home]:(http://fdalerts.com)
+[Git Repo]:https://github.com/RigilCorp/RIGIL-18F-Pool2
+[Evidence for Section E]:https://github.com/RigilCorp/RIGIL-18F/tree/master/documents/evidence
+[FDAlerts IP Link]:http://52.5.29.80:8080/rigil-18f
+[Docker Hub]:https://registry.hub.docker.com/u/agiletrailblazers/fdalerts/
