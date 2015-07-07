@@ -1,5 +1,5 @@
 # Approach for the 18f Challenge
-There are numerous Agile-aligned frameworks: Scrum, Kanban, Feature-Driven Development etc. We examined the parameters of this challenge-1 week delivery, needing to demonstrate process in action, ability to discover and adapt on an hourly / daily basis and the tenets of the Digital Srvices Playbook. While Scrum is the most popular framework, especially when used with XP, we believe that Scrum's ceremonies and focus on heads down, work the committed/forecasted plan for the iteration were less applicable to the 18f challenge. Kanban boards are effective at helping teams become more productive while reducing the amount of workload stress many project managers, developers and team members feel during a project lifecycle.Therefore, we determined that Kanban in combination with XP practices were the most appropriate frameworks to get the project needs delivered because we could: 
+There are numerous Agile-aligned frameworks: Scrum, Kanban, Feature-Driven Development etc. We examined the parameters of this challenge-1 week delivery, needing to demonstrate process in action, ability to discover and adapt on an hourly / daily basis and the tenets of the Digital Services Playbook. While Scrum is the most popular framework, especially when used with XP, we believe that Scrum's ceremonies and focus on heads down, work the committed/forecasted plan for the iteration were less applicable to the 18f challenge. Kanban boards are effective at helping teams become more productive while reducing the amount of workload stress many project managers, developers and team members feel during a project lifecycle.Therefore, we determined that Kanban in combination with XP practices were the most appropriate frameworks to get the project needs delivered because we could: 
  - Visually see work in progress (WIP)
  - Instantly understand delays and impediments and take steps to resolve them  
  - Improve communication amongst all team members
@@ -75,8 +75,3 @@ to ensure that the overall product delivery met with the goals of the project, i
 - Jenkins (https://jenkins-ci.org/mit-license)
 - Chef (https://www.chef.io/online-master-agreement/) 
 - Sonarqube (http://www.sonarqube.org/downloads/license/)
-
-
-
-
-
